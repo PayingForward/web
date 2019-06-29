@@ -1,64 +1,16 @@
 <?php
-namespace WhizSid\FormGen\Inputs;
+namespace App\FormGen\Inputs;
 
-use WhizSid\FormGen\Inputs\Attribute;
+use App\FormGen\HasAttributes;
 
 class Input {
-    /**
-     * Attributes main tag in the input
-     * 
-     * @var Attribute[]
-     */
-    protected $attributes = [];
-    /**
-     * Name of the input
-     * 
-     * @var string
-     */
-    protected $name;
-    /**
-     * Input type name
-     *
-     * @var string
-     */
-    protected $type;
+    use HasAttributes;
     /**
      * Validation for the input value
      *
      * @var callback<mixed>
      */
     protected $validation;
-    /**
-     * Setting an attribute to the input
-     * 
-     * @param string $name
-     * @param int|string|bool $value
-     * 
-     * @return self
-     */
-    public function setAttribute($name,$value){
-        $this->attributes[] = new Attribute($name,$value);
-
-        return $this;
-    }
-    /**
-     * Setter for the input name
-     * 
-     * @param string $name
-     * 
-     * @return string
-     */
-    public function setName($name){
-        $this->name = $name;
-    }
-    /**
-     * Returning the type of the input
-     * 
-     * @return string
-     */
-    public function getType(){
-        return $this->type;
-    }
     /**
      * Validating value
      * 

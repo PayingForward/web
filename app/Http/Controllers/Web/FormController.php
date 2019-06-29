@@ -4,8 +4,39 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\Base;
+use App\FormGen\Form;
+use Illuminate\Support\Facades\Route;
 
 class FormController extends Controller {
+    public function __construct()
+    {
+        $formName = Route::current()->getParameter('form');
+        $this->makeModel($formName);
+    }
+    /**
+     * Modal instance
+     *
+     * @var Form
+     */
+    protected $form;
+    /**
+     * Setting up the relavant form modal
+     *
+     * @param string $form form name in camel case notation
+     * @return Base
+     */
+    protected function makeModel($form){
+        $classNameSpace = '\App\Forms\\'.ucfirst(camel_case($form));
+
+        if(class_exists($classNameSpace)){
+            $class = new $classNameSpace();
+
+            $this->form = $class;
+        } else {
+            abort(404);
+        }
+    }
     /**
      * Records searching for a dropdown
      *
@@ -15,7 +46,14 @@ class FormController extends Controller {
      * @return JsonResponse
      */
     public function dropdown(Request $request, string $form){
+        $keyword = $request->input('keyword','');
+        $where = $request->input('where',[]);
+        $page = $request->input('page',0);
+        $perPage = $request->input('perPage',30);
 
+        $model = $this->form->getModel();
+
+        
     }
     /**
      * Creating a record

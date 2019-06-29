@@ -33,8 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "WhizSid\\FormGen\\": "app/FormGen"
+            "App\\": "app/"
         },
         "classmap": [
             "database/seeds",

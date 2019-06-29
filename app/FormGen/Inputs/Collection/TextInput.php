@@ -1,7 +1,7 @@
 <?php
-namespace WhizSid\FormGen\Inputs\Collection;
+namespace App\FormGen\Inputs\Collection;
 
-use WhizSid\FormGen\Inputs\Input;
+use App\FormGen\Inputs\Input;
 
 class TextInput extends Input {
     protected $type = "text";

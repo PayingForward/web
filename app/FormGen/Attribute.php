@@ -1,6 +1,6 @@
 <?php
 
-namespace WhizSid\FormGen\Inputs;
+namespace App\FormGen;
 
 class Attribute {
     /**

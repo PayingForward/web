@@ -1,8 +1,9 @@
 <?php
-namespace WhizSid\FormGen;
+namespace App\FormGen;
 
-use WhizSid\FormGen\Inputs\Input;
-use WhizSid\FormGen\Inputs\Collection\TextInput;
+use App\FormGen\Inputs\Input;
+use App\FormGen\Inputs\Collection\TextInput;
+use App\FormGen\Columns\Column;
 
 /**
  * This model is generating form informations
@@ -23,11 +24,25 @@ class Form {
      */
     protected $inputs = [];
     /**
+     * Collection fo columns
+     *
+     * @var array
+     */
+    protected $columns = [];
+    /**
      * Structure for the inputs
      * 
      * @var array
      */
     protected $structure;
+    /**
+     * Authorized where variables and column names
+     *
+     * @var array key as parameter name and value as column name
+     */
+    protected $dropdownWhere = [
+        // 'param1'=>'col1'
+    ];
 
     public function __construct()
     {
@@ -42,7 +57,7 @@ class Form {
      */
     public function __call($name, $arguments)
     {
-        $namespace = 'WhizSid\FormGen\Inputs\Collection\\';
+        $namespace = 'App\FormGen\Inputs\Collection\\';
 
         if(class_exists($namespace.ucfirst($name))){
             if(!count($arguments)){
@@ -133,6 +148,29 @@ class Form {
         // Codes
     }
     /**
+     * Returning a column by name
+     *
+     * @param string $name
+     * 
+     * @return Column
+     */
+    public function getColumn($name){
+        if(!isset($this->columns[$name]))
+            throw new \InvalidArgumentException("$name is not in the form.");
+
+        $column =  $this->columns[$name];
+
+        return $this->filterColumn($column)?$column:null;
+    }
+    /**
+     * Setting the columns in the table
+     *
+     * @return void
+     */
+    protected function setColumns(){
+        // Codes
+    }
+    /**
      * Filtering the inputs
      *
      * @param Input $input
@@ -197,5 +235,13 @@ class Form {
      */
     public function getModel(){
         return $this->model;
+    }
+    /**
+     * Returning the authorized keys and column names for dropdown where clause
+     *
+     * @return array
+     */
+    public function getDropdownWhere(){
+        return $this->dropdownWhere;
     }
 }

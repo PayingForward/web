@@ -1,7 +1,7 @@
 <?php
 namespace App\Forms\User;
 
-use WhizSid\FormGen\Form;
+use App\FormGen\Form;
 use App\User as UserModel;
 
 class User extends Form {
