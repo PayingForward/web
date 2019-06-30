@@ -6,11 +6,12 @@
 
     - app/Http/Controllers/Web/UserController.php
 
-2. User has deleted or blocked.
+2. The record has deleted or blocked.
 
-   When the use is exists with the username and set the status to deleted.
+   When the using record is deleted.
 
     - app/Http/Controllers/Web/UserController.php
+    - app/Http/Controllers/Web/FormController.php
 
 3. Password incorrect.
 
@@ -23,3 +24,9 @@
     When all checks passed and user has not a user type.
 
     - app/Http/Controllers/Web/UserController.php
+
+5. Invalid values supplied.
+
+    When expected parameters not in the request.
+
+    - app/Http/Controllers/Web/FormController.php

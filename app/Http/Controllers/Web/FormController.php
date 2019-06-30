@@ -8,6 +8,8 @@ use App\Models\Base;
 use App\FormGen\Form;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
+use App\Exceptions\WebApiException;
 
 class FormController extends Controller {
     public function __construct()
@@ -92,8 +94,69 @@ class FormController extends Controller {
      * 
      * @return JsonResponse
      */
-    public function create(Request $request, string $form){
+    public function createOrUpdate(Request $request, string $form,string $mode){
+        $model = $this->form->getModel();
+        /** @var Base $instance */
+        $instance = new $model();
 
+        $rules = [
+            'values'=>'required|array'
+        ];
+
+        if($mode=='update'){
+            $rules['id'] = 'required|exists:'.$instance->getTable().','.$instance->getKeyName();
+        }
+
+        $validation = Validator::make($request->all(),$rules);
+
+        if($validation->fails()){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        if($mode=='update'){
+            $instance = $model::find($request->input('id'));
+
+            if(!$instance){
+                throw new WebApiException("The record has deleted or blocked!",2);
+            }
+        }
+
+        $values = $request->input('values');
+
+        $inputs = $this->form->getInputs();
+
+        $rules = [];
+
+        // Making validation rules
+        foreach ($inputs as $name => $input) {
+            $rule = $input->getValidationRule();
+
+            if(isset($rule)){
+                $rules[$name] = $rule;
+            }
+
+            $instance->{$input->getColumnName()} = isset($values[$name])?$values[$name]:$input->getDefaultValue();
+        }
+
+        $secondValidation = Validator::make($values,$rules);
+
+        if($secondValidation->fails()){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        $thirdValidation = $this->form->validateValues($instance);
+
+        if(!$thirdValidation){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        $this->form->{'before'.ucfirst($mode)}($instance,$values);
+
+        $instance->save();
+
+        $this->form->{'after'.ucfirst($mode)}($instance,$values);
+
+        return success_response(['message'=>"Successfully created!"]);
     }
 
     /**

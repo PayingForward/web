@@ -22,7 +22,7 @@ class UserController extends Controller {
         $user  = User::with('userType')->where('u_email',$request->email)->first();
 
         if(!$user){
-            throw new WebApiException("User has deleted or blocked.",2);
+            throw new WebApiException("The record has deleted or blocked.",2);
         }
 
         if(!Hash::check($request->password,$user->u_password)){

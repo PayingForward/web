@@ -5,22 +5,62 @@ use App\FormGen\HasAttributes;
 
 class Input {
     use HasAttributes;
+
     /**
-     * Validation for the input value
+     * Default value for the input. We are picking this if passed null value
      *
-     * @var callback<mixed>
+     * @var mixed
      */
-    protected $validation;
+    protected $defaultValue =null;
+
     /**
-     * Validating value
+     * Validation tule for the input
+     *
+     * @var string
+     */
+    protected $validationRule = null;
+
+    /**
+     * Validation rule for the input
      * 
-     * @param callback<mixed> $func
+     * @param string $rule
      * 
      * @return self
      */
-    public function setValidation($func){
-        $this->validation = $func;
+    public function setValidationRule($rule){
+        $this->validationRule = $rule;
 
         return $this;
+    }
+
+    /**
+     * Returning the validation rule
+     *
+     * @return string
+     */
+    public function getValidationRule(){
+        return $this->validationRule;
+    }
+
+    /**
+     * Setting a default value to the input
+     *
+     * @param mixed $value
+     * 
+     * @return self
+     */
+    public function setDefaultValue($value){
+        $this->defaultValue = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returning the default value for input
+     *
+     * @return mixed
+     */
+    public function getDefaultValue(){
+        return $this->defaultValue;
     }
 }

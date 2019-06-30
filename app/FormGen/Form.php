@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * This model is generating form informations
  * 
- * @method TextInput textInput(string $name)
- * @method TextColumn textColumn(string $name)
+ * @method TextInput textInput(string $name,string $columnName=$name)
+ * @method TextColumn textColumn(string $name,string $columnName=$name)
  */
 class Form {
     /**
@@ -91,18 +91,31 @@ class Form {
                 throw new \InvalidArgumentException("Invalid $type name supplied.");
             }
 
+            $name = $arguments[0];
+            $columnName = isset($arguments[1])?$arguments[1]:$name;
+
             /** @var Input|Column $instance */
             $instance = new $namespace;
 
-            $instance->setName($arguments[0]);
+            $instance->setName($name);
+            $instance->setColumnName($columnName);
 
-            $this->{$type.'s'}[$arguments[0]] = $instance;
+            $this->{$type.'s'}[$name] = $instance;
 
             return $instance;
             
         } else {
             throw new \BadMethodCallException("Can not find a input or column type '$name'.");
         }
+    }
+
+    /**
+     * Returning the based model name
+     * 
+     * @return string|Base
+     */
+    public function getModel(){
+        return $this->model;
     }
 
     /**
@@ -149,113 +162,6 @@ class Form {
     }
 
     /**
-     * Returning an input by name
-     * 
-     * @param string
-     * 
-     * @return Input
-     */
-    public function getInput($name){
-
-        if(!isset($this->inputs[$name]))
-            throw new \InvalidArgumentException("$name is not in the form.");
-
-        $input =  $this->inputs[$name];
-
-        return $this->filterInput($input)?$input:null;
-    }
-
-    /**
-     * Initial the form by setting inputs and structure
-     *
-     * @return void
-     */
-    protected function setInputs(){
-        // Codes
-    }
-
-    /**
-     * Filtering the inputs
-     *
-     * @param Input $input
-     * 
-     * @return bool
-     */
-    protected function filterInput($input){
-        return true;
-    }
-
-    /**
-     * Returning the filtered inputs
-     *
-     * @return Input[]
-     */
-    public function getInputs(){
-        $filteredInputs = [];
-
-        foreach($this->inputs as $name=>$input){
-            if($this->getInput($name)){
-                $filteredInputs[$name] = $input;
-            }
-        }
-
-        return $filteredInputs;
-    }
-
-    /**
-     * Returning a column by name
-     *
-     * @param string $name
-     * 
-     * @return Column
-     */
-    public function getColumn($name){
-        if(!isset($this->columns[$name]))
-            throw new \InvalidArgumentException("$name is not in the form.");
-
-        $column =  $this->columns[$name];
-
-        return $this->filterColumn($column)?$column:null;
-    }
-
-    /**
-     * Setting the columns in the table
-     *
-     * @return void
-     */
-    protected function setColumns(){
-        // Codes
-    }
-
-    /**
-     * Returning the filtered columns
-     *
-     * @return Column[]
-     */
-    public function getColumns(){
-        $filteredColumns = [];
-
-        foreach($this->columns as $name=>$column){
-            if($this->getColumn($name)){
-                $filteredColumns[$name] = $column;
-            }
-        }
-
-        return $filteredColumns;
-    }
-
-    /**
-     * Filtering a column
-     *
-     * @param Column $column
-     * 
-     * @return bool
-     */
-    protected function filterColumn($column){
-        return true;
-    }
-
-    /**
      * Returning the filtered form structure
      * 
      * @return array
@@ -289,12 +195,110 @@ class Form {
     }
 
     /**
-     * Returning the based model name
-     * 
-     * @return string|Base
+     * Initial the form by setting inputs and structure
+     *
+     * @return void
      */
-    public function getModel(){
-        return $this->model;
+    protected function setInputs(){
+        // Codes
+    }
+
+    /**
+     * Returning the filtered inputs
+     *
+     * @return Input[]
+     */
+    public function getInputs(){
+        $filteredInputs = [];
+
+        foreach($this->inputs as $name=>$input){
+            if($this->getInput($name)){
+                $filteredInputs[$name] = $input;
+            }
+        }
+
+        return $filteredInputs;
+    }
+
+    /**
+     * Returning an input by name
+     * 
+     * @param string
+     * 
+     * @return Input
+     */
+    public function getInput($name){
+
+        if(!isset($this->inputs[$name]))
+            throw new \InvalidArgumentException("$name is not in the form.");
+
+        $input =  $this->inputs[$name];
+
+        return $this->filterInput($input)?$input:null;
+    }
+
+    /**
+     * Filtering the inputs
+     *
+     * @param Input $input
+     * 
+     * @return bool
+     */
+    protected function filterInput($input){
+        return true;
+    }
+
+    /**
+     * Setting the columns in the table
+     *
+     * @return void
+     */
+    protected function setColumns(){
+        // Codes
+    }
+
+    /**
+     * Returning the filtered columns
+     *
+     * @return Column[]
+     */
+    public function getColumns(){
+        $filteredColumns = [];
+
+        foreach($this->columns as $name=>$column){
+            if($this->getColumn($name)){
+                $filteredColumns[$name] = $column;
+            }
+        }
+
+        return $filteredColumns;
+    }
+
+    /**
+     * Returning a column by name
+     *
+     * @param string $name
+     * 
+     * @return Column
+     */
+    public function getColumn($name){
+        if(!isset($this->columns[$name]))
+            throw new \InvalidArgumentException("$name is not in the form.");
+
+        $column =  $this->columns[$name];
+
+        return $this->filterColumn($column)?$column:null;
+    }
+
+    /**
+     * Filtering a column
+     *
+     * @param Column $column
+     * 
+     * @return bool
+     */
+    protected function filterColumn($column){
+        return true;
     }
 
     /**
@@ -328,6 +332,63 @@ class Form {
      * @return string
      */
     public function formatDropdownLabel($instance,$where){
+    }
+
+    /**
+     * Validating values before create or update
+     *
+     * @param Base $inst
+     * 
+     * @return bool
+     */
+    public function validateValues(Base $inst){
+    }
+    
+    /**
+     * Trigger an action before create a record
+     *
+     * @param Base $inst
+     * @param array $values
+     * 
+     * @return void
+     */
+    public function beforeCreate(Base $inst,$values){
+
+    }
+
+    /**
+     * Trigger an action after create a record
+     *
+     * @param Base $inst
+     * @param array $values
+     * 
+     * @return void
+     */
+    public function afterCreate(Base $inst,$values){
+
+    }
+    
+    /**
+     * Trigger an action before update a record
+     *
+     * @param Base $inst
+     * @param array $values
+     * 
+     * @return void
+     */
+    public function beforeUpdate(Base $inst,$values){
+
+    }
+
+    /**
+     * Trigger an action after update a record
+     *
+     * @param Base $inst
+     * @param array $values
+     * 
+     * @return void
+     */
+    public function afterUpdate(Base $inst,$values){
 
     }
 }

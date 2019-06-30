@@ -70,6 +70,6 @@ class Column {
      * @return void
      */
     public function makeCondition($query,$value){
-        $query->where($this->name,$value);
+        $query->where($this->columnName,$value);
     }
 }
