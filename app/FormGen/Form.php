@@ -3,12 +3,18 @@ namespace App\FormGen;
 
 use App\FormGen\Inputs\Input;
 use App\FormGen\Inputs\Collection\TextInput;
+
 use App\FormGen\Columns\Column;
+use App\FormGen\Columns\Collection\TextColumn;
+
+use App\Models\Base;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * This model is generating form informations
  * 
  * @method TextInput textInput(string $name)
+ * @method TextColumn textColumn(string $name)
  */
 class Form {
     /**
@@ -17,24 +23,28 @@ class Form {
      * @var string
      */
     protected $model;
+
     /**
      * Collection of inputs
      *
      * @var Input
      */
     protected $inputs = [];
+
     /**
      * Collection fo columns
      *
      * @var array
      */
     protected $columns = [];
+
     /**
      * Structure for the inputs
      * 
      * @var array
      */
     protected $structure;
+
     /**
      * Authorized where variables and column names
      *
@@ -48,6 +58,7 @@ class Form {
     {
         $this->setInputs();
     }
+
     /**
      * Creating an input in the form
      *
@@ -57,19 +68,30 @@ class Form {
      */
     public function __call($name, $arguments)
     {
-        $namespace = 'App\FormGen\Inputs\Collection\\';
+        $inputNamespace = 'App\FormGen\Inputs\Collection\\'.ucfirst($name);
+        $columnNamespace = 'App\FormGen\Columns\Collection\\'.ucfirst($name);
+        $namespace = null;
+        $type=null;
 
-        if(class_exists($namespace.ucfirst($name))){
+        if(class_exists($inputNamespace)){
+            $namespace = $inputNamespace;
+            $type = "input";
+        } else if(class_exists($columnNamespace)){
+            $namespace = $columnNamespace;
+            $type="column";
+        }
+
+        if($namespace){
             if(!count($arguments)){
-                throw new \InvalidArgumentException("Input name is not supplied.");
+                throw new \InvalidArgumentException("{ucfirst($type)} name is not supplied.");
             }
 
             if(!is_string($arguments[0])){
-                throw new \InvalidArgumentException("Invalid input name supplied.");
+                throw new \InvalidArgumentException("Invalid $type name supplied.");
             }
 
             /** @var Input $input */
-            $input = new $namespace.ucfirst($name);
+            $input = new $namespace;
 
             $input->setName($arguments[0]);
 
@@ -78,9 +100,10 @@ class Form {
             return $input;
             
         } else {
-            throw new \BadMethodCallException("Can not find a input named '$name'.");
+            throw new \BadMethodCallException("Can not find a input or column type '$name'.");
         }
     }
+
     /**
      * Setting the form structure
      *
@@ -123,6 +146,7 @@ class Form {
 
         $this->structure = $formatedStructure;
     }
+
     /**
      * Returning an input by name
      * 
@@ -139,6 +163,7 @@ class Form {
 
         return $this->filterInput($input)?$input:null;
     }
+
     /**
      * Initial the form by setting inputs and structure
      *
@@ -147,29 +172,7 @@ class Form {
     protected function setInputs(){
         // Codes
     }
-    /**
-     * Returning a column by name
-     *
-     * @param string $name
-     * 
-     * @return Column
-     */
-    public function getColumn($name){
-        if(!isset($this->columns[$name]))
-            throw new \InvalidArgumentException("$name is not in the form.");
 
-        $column =  $this->columns[$name];
-
-        return $this->filterColumn($column)?$column:null;
-    }
-    /**
-     * Setting the columns in the table
-     *
-     * @return void
-     */
-    protected function setColumns(){
-        // Codes
-    }
     /**
      * Filtering the inputs
      *
@@ -180,6 +183,7 @@ class Form {
     protected function filterInput($input){
         return true;
     }
+
     /**
      * Returning the filtered inputs
      *
@@ -196,6 +200,60 @@ class Form {
 
         return $filteredInputs;
     }
+
+    /**
+     * Returning a column by name
+     *
+     * @param string $name
+     * 
+     * @return Column
+     */
+    public function getColumn($name){
+        if(!isset($this->columns[$name]))
+            throw new \InvalidArgumentException("$name is not in the form.");
+
+        $column =  $this->columns[$name];
+
+        return $this->filterColumn($column)?$column:null;
+    }
+
+    /**
+     * Setting the columns in the table
+     *
+     * @return void
+     */
+    protected function setColumns(){
+        // Codes
+    }
+
+    /**
+     * Returning the filtered columns
+     *
+     * @return Column[]
+     */
+    public function getColumns(){
+        $filteredColumns = [];
+
+        foreach($this->columns as $name=>$column){
+            if($this->getColumn($name)){
+                $filteredColumns[$name] = $column;
+            }
+        }
+
+        return $filteredColumns;
+    }
+
+    /**
+     * Filtering a column
+     *
+     * @param Column $column
+     * 
+     * @return bool
+     */
+    protected function filterColumn($column){
+        return true;
+    }
+
     /**
      * Returning the filtered form structure
      * 
@@ -228,14 +286,16 @@ class Form {
 
         return $filteredStructure;
     }
+
     /**
      * Returning the based model name
      * 
-     * @return string
+     * @return string|Base
      */
     public function getModel(){
         return $this->model;
     }
+
     /**
      * Returning the authorized keys and column names for dropdown where clause
      *
@@ -243,5 +303,30 @@ class Form {
      */
     public function getDropdownWhere(){
         return $this->dropdownWhere;
+    }
+
+    /**
+     * Trigger an action before dropdown search
+     *
+     * @param Builder $query
+     * @param string $keyword
+     * @param array $where
+     * 
+     * @return void
+     */
+    public function beforeDropdownSearch($query,$keyword,$where){
+
+    }
+
+    /**
+     * Formating the dropdown label
+     *
+     * @param Base $instance
+     * @param array $where
+     * 
+     * @return string
+     */
+    public function formatDropdownLabel($instance,$where){
+
     }
 }

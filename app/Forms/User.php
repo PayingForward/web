@@ -9,6 +9,11 @@ class User extends Form {
 
     protected function setInputs()
     {
-        $this->textInput('user_name')->setLowerCase();
+        $this->textInput('u_name')->setLowerCase();
+    }
+
+    protected function setColumns()
+    {
+        $this->textColumn('u_name');
     }
 }
