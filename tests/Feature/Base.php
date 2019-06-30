@@ -3,6 +3,7 @@ namespace Tests\Feature;
 
 use Tests\Feature\Helpers\WithUser;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * This is the base class for all test cases
@@ -46,5 +47,9 @@ class Base extends TestCase {
         $this->assertIsString($response['token']);
 
         $this->authToken =  $response['token'];
+    }
+
+    public function store($name,$request){
+        Storage::put("/public/tests/$name.json",json_encode($request));
     }
 }

@@ -57,6 +57,7 @@ class Form {
     public function __construct()
     {
         $this->setInputs();
+        $this->setColumns();
     }
 
     /**
@@ -90,14 +91,14 @@ class Form {
                 throw new \InvalidArgumentException("Invalid $type name supplied.");
             }
 
-            /** @var Input $input */
-            $input = new $namespace;
+            /** @var Input|Column $instance */
+            $instance = new $namespace;
 
-            $input->setName($arguments[0]);
+            $instance->setName($arguments[0]);
 
-            $this->inputs[$arguments[0]] = $input;
+            $this->{$type.'s'}[$arguments[0]] = $instance;
 
-            return $input;
+            return $instance;
             
         } else {
             throw new \BadMethodCallException("Can not find a input or column type '$name'.");

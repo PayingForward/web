@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 class FormController extends Controller {
     public function __construct()
     {
-        $formName = Route::current()->getParameter('form');
+        $formName = Route::current()->parameter('form');
         $this->makeModel($formName);
     }
 
@@ -31,7 +31,7 @@ class FormController extends Controller {
      */
     protected function makeModel($form){
         $classNameSpace = '\App\Forms\\'.ucfirst(camel_case($form));
-
+        
         if(class_exists($classNameSpace)){
             $class = new $classNameSpace();
 
@@ -140,7 +140,7 @@ class FormController extends Controller {
      * 
      * @return JsonResponse
      */
-    public function validate(Request $request, string $form){
+    public function validateInput(Request $request, string $form){
 
     }
 }

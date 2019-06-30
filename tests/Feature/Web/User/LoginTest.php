@@ -7,13 +7,23 @@ use Tests\Feature\Base;
 class LoginTest extends Base
 {
     /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
+    protected function setUp():void
+    {
+        parent::setUp();
+
+        $this->makeUser();
+    }
+    /**
      * Trying to login with a wrong email.
      *
      * @return void
      */
     public function testLoginWithWrongEmail()
     {
-        $this->makeUser();
         $response = $this->request('web/user/login',[
             'email'=>'wrong@abandonedseed.com',
             'password'=>'123'
@@ -21,13 +31,13 @@ class LoginTest extends Base
 
         $this->assertWebApiException($response,1);
     }
+
     /**
      * Testing with correct email and wrong password
      *
      * @return void
      */
     public function testLoginWithCorrectEmailWrongPassword(){
-        $this->makeUser();
         $response = $this->request('web/user/login',[
             'email'=>$this->user->u_email,
             'password'=>'8979'
@@ -35,13 +45,13 @@ class LoginTest extends Base
 
         $this->assertWebApiException($response,3);
     }
+
     /**
      * Testing with correct email and password to delted user
      *
      * @return void
      */
     public function testWithCorrectPasswordToDeletedUser(){
-        $this->makeUser();
         $this->user->delete();
 
         $response = $this->request('web/user/login',[
@@ -76,8 +86,6 @@ class LoginTest extends Base
      * @return void
      */
     public function testSuccessfullLogin(){
-        $this->makeUser();
-        
         $response = $this->request('web/user/login',[
             'email'=>$this->user->u_email,
             'password'=>123

@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
                     'code' => 'WE' . $exception->getCode(),
                 ]);
             default:
-                Storage::put('/public/errors/'.date('Y-m-d-H-i-s').".txt",date("H:m:s")."\n\nStack Trace:-\n".$exception->__toString()."\n\nRequest:-\n".json_encode($request->all())."\n\n");
+                Storage::put('/public/errors/'.date('Y-m-d').".txt",date("H:m:s")."\n\nStack Trace:-\n".$exception->__toString()."\n\nRequest:-\n".json_encode($request->all())."\n\n");
                 return parent::render($request, $exception);
         }
     }
