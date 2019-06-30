@@ -2,7 +2,7 @@
 namespace App\Forms\User;
 
 use App\FormGen\Form;
-use App\User as UserModel;
+use App\Models\User as UserModel;
 
 class User extends Form {
     protected $model = UserModel::class;

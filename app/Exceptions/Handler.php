@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Storage;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        switch (get_class($exception)) {
+            case 'App\Exceptions\WebApiException':
+                return response()->json([
+                    "success"=>false,
+                    'message' => $exception->getMessage(),
+                    'code' => 'WE' . $exception->getCode(),
+                ]);
+            default:
+                Storage::put('/public/errors/'.date('Y-m-d-H-i-s').".txt",date("H:m:s")."\n\nStack Trace:-\n".$exception->__toString()."\n\nRequest:-\n".json_encode($request->all())."\n\n");
+                return parent::render($request, $exception);
+        }
     }
 }
