@@ -135,7 +135,11 @@ class FormController extends Controller {
                 $rules[$name] = $rule;
             }
 
-            $instance->{$input->getColumnName()} = isset($values[$name])?$values[$name]:$input->getDefaultValue();
+            if(isset($values[$name])){
+                $instance->{$input->getColumnName()} = $input->serializeValue($values[$name]);
+            } else {
+                $instance->{$input->getColumnName()} = $input->getDefaultValue();
+            }
         }
 
         $secondValidation = Validator::make($values,$rules);
@@ -152,7 +156,12 @@ class FormController extends Controller {
 
         $this->form->{'before'.ucfirst($mode)}($instance,$values);
 
-        $instance->save();
+        try {
+
+            $instance->save();
+        } catch (\Exception $e){
+            throw new WebApiException("Sorry!. Your operation is not successfull.",6);
+        }
 
         $this->form->{'after'.ucfirst($mode)}($instance,$values);
 
@@ -168,7 +177,35 @@ class FormController extends Controller {
      * @return JsonResponse
      */
     public function delete(Request $request, string $form){
+        $modelName = $this->form->getModel();
 
+        /** @var Base $instance */
+        $instance = new $modelName();
+
+        $tableName = $instance->getTable();
+        $keyName = $instance->getKeyName();
+
+        $validation = Validator::make($request->all(),[
+            'id'=>'required|exists:'.$tableName.','.$keyName
+        ]);
+
+        if($validation->fails()){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        $instance = $modelName::find($request->input('id'));
+
+        if(!$instance){
+            throw new WebApiException("The record has deleted or blocked.",2);
+        }
+
+        $this->form->beforeDelete($instance);
+
+        $instance->delete();
+
+        $this->form->afterDelete($request->input('id'));
+
+        return success_response(['message'=>"Successfully deleted you record."]);
     }
 
     /**
@@ -180,18 +217,6 @@ class FormController extends Controller {
      * @return JsonResponse
      */
     public function search(Request $request, string $form){
-
-    }
-
-    /**
-     * Update a record or more
-     *
-     * @param Request $request
-     * @param string $form
-     * 
-     * @return JsonResponse
-     */
-    public function update(Request $request, string $form){
 
     }
 

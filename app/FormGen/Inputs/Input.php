@@ -63,4 +63,15 @@ class Input {
     public function getDefaultValue(){
         return $this->defaultValue;
     }
+
+    /**
+     * Serializing a value before insert to the database
+     *
+     * @param mixed $value
+     * 
+     * @return void
+     */
+    public function serializeValue($value){
+        return $value;
+    }
 }

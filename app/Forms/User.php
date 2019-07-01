@@ -9,12 +9,15 @@ class User extends Form {
 
     protected function setInputs()
     {
-        $this->textInput('name','u_name')->setLowerCase();
+        $this->textInput('name','u_name')->setLowerCase()->setValidationRule('required');
+        $this->textInput('email','u_email')->setValidationRule('required|email');
+        $this->passwordInput('password','u_password')->setValidationRule('required');
     }
 
     protected function setColumns()
     {
         $this->textColumn('name','u_name');
+        $this->textColumn('email','u_email');
     }
 
     public function formatDropdownLabel($instance, $where)

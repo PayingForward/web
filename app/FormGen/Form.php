@@ -3,6 +3,7 @@ namespace App\FormGen;
 
 use App\FormGen\Inputs\Input;
 use App\FormGen\Inputs\Collection\TextInput;
+use App\FormGen\Inputs\Collection\PasswordInput;
 
 use App\FormGen\Columns\Column;
 use App\FormGen\Columns\Collection\TextColumn;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
  * This model is generating form informations
  * 
  * @method TextInput textInput(string $name,string $columnName=$name)
+ * @method PasswordInput passwordInput(string $name,string $columnName=$name)
  * @method TextColumn textColumn(string $name,string $columnName=$name)
  */
 class Form {
@@ -342,6 +344,7 @@ class Form {
      * @return bool
      */
     public function validateValues(Base $inst){
+        return true;
     }
     
     /**
@@ -389,6 +392,28 @@ class Form {
      * @return void
      */
     public function afterUpdate(Base $inst,$values){
+
+    }
+
+    /**
+     * Trigger an action before deleting the record
+     *
+     * @param Base $inst
+     * 
+     * @return void
+     */
+    public function beforeDelete(Base $inst){
+
+    }
+
+    /**
+     * Trigger an action after deleted the record
+     *
+     * @param int $id
+     * 
+     * @return void
+     */
+    public function afterDelete($id){
 
     }
 }

@@ -30,3 +30,9 @@
     When expected parameters not in the request.
 
     - app/Http/Controllers/Web/FormController.php
+
+6. Sorry! Your operation is not successfull.
+
+    When a database transaction occured or some database exception occured.
+
+    - app/Http/Controllers/Web/FormController.php
