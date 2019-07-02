@@ -64,11 +64,13 @@ class FormController extends Controller {
 
         $this->form->beforeDropdownSearch($query,$keyword,$where);
 
-        foreach ($this->form->getColumns() as $name => $column) {
-            if($column->isSearchable()){
-                $column->makeCondition($query,$keyword);
+        $query->where(function(Builder $query)use($keyword){
+            foreach ($this->form->getColumns() as $name => $column) {
+                if($column->isSearchable()){
+                    $column->makeCondition($query,$keyword);
+                }
             }
-        }
+        });
 
         $query->latest();
         $query->take($perPage);
@@ -218,9 +220,9 @@ class FormController extends Controller {
      */
     public function search(Request $request, string $form){
         $validation = Validator::make($request->all(),[
-            'values'=>'required|array',
-            'page'=>'required|number',
-            'perPage'=>'required|number',
+            'values'=>'array',
+            'page'=>'required',
+            'perPage'=>'required',
             'sortBy'=>'required'
         ]);
 
@@ -253,6 +255,7 @@ class FormController extends Controller {
         $query->skip(($page-1)*$perPage);
 
         $sortColumn = $this->form->getColumn($sortBy);
+
 
         if(!isset($sortColumn)){
             throw new WebApiException("Invalid values supplied.",5);
