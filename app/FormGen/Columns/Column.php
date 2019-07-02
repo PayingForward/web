@@ -69,7 +69,18 @@ class Column {
      * 
      * @return void
      */
-    public function makeCondition($query,$value){
-        $query->where($this->columnName,$value);
+    public function makeCondition($query,$value,$and=true){
+            $query->orWhere($this->columnName,$value);
+    }
+
+    /**
+     * Unserializing the values before sending to frontend
+     *
+     * @param mixed $value
+     * 
+     * @return mixed
+     */
+    public function unserializeValue($value){
+        return $value;
     }
 }

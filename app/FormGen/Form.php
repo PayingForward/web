@@ -416,4 +416,16 @@ class Form {
     public function afterDelete($id){
 
     }
+
+    /**
+     * Trigger an action before search the results
+     *
+     * @param Builder $query
+     * @param array $values
+     * 
+     * @return void
+     */
+    public function beforeSearch($query,$values){
+
+    }
 }

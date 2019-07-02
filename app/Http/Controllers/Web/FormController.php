@@ -217,18 +217,66 @@ class FormController extends Controller {
      * @return JsonResponse
      */
     public function search(Request $request, string $form){
+        $validation = Validator::make($request->all(),[
+            'values'=>'required|array',
+            'page'=>'required|number',
+            'perPage'=>'required|number',
+            'sortBy'=>'required'
+        ]);
 
-    }
+        if($validation->fails()){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
 
-    /**
-     * Validating a record input
-     *
-     * @param Request $request
-     * @param string $form
-     * 
-     * @return JsonResponse
-     */
-    public function validateInput(Request $request, string $form){
+        $values = $request->input('values');
+        $page = $request->input('page');
+        $perPage = $request->input('perPage');
+        $sortBy = $request->input('sortBy');
+
+        $columns = $this->form->getColumns();
+
+        $modelName = $this->form->getModel();
+        /** @var Base $instance */
+        $instance = new $modelName();
+
+        $query = $instance::query();
+
+        foreach ($columns as $name => $column) {
+            if(isset($values[$name])){
+                $column->makeCondition($query,$values[$name]);
+            }
+        }
+
+        $count = $query->count();
+
+        $query->take($page);
+        $query->skip(($page-1)*$perPage);
+
+        $sortColumn = $this->form->getColumn($sortBy);
+
+        if(!isset($sortColumn)){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        $query->orderBy($sortColumn->getColumnName());
+
+        $this->form->beforeSearch($query,$values);
+
+        $results= $query->get();
+
+        $results->transform(function(Base $model) use ( $columns) {
+            $formatedResults = [];
+
+            foreach($columns as $name=>$column){
+                $value = $model->{$column->getColumnName()};
+
+                $formatedResults[$name] = $column->unserializeValue($value);
+            }
+
+            return $formatedResults;
+        });
+
+        return \success_response(['results'=>$results,'count'=>$count]);
 
     }
 }

@@ -69,7 +69,7 @@ class Input {
      *
      * @param mixed $value
      * 
-     * @return void
+     * @return mixed
      */
     public function serializeValue($value){
         return $value;
