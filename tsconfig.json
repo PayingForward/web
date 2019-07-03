@@ -1,21 +1,25 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build/dist",
+    "module": "esnext",
     "target": "es5",
-    "lib": [
-    ],
-    "module": "commonjs",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
     "moduleResolution": "node",
-    "isolatedModules": false,
-    "experimentalDecorators": true,
-    "noImplicitAny": true,
+    "rootDir": "resources/ts",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
     "noImplicitThis": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
     "strictNullChecks": true,
-    "removeComments": true,
     "suppressImplicitAnyIndexErrors": true,
-    "allowSyntheticDefaultImports": true
+    "noUnusedLocals": true
   },
   "include": [
-    "resources/ts/**/*.ts"
-  ],
-  "compileOnSave": false
+    "resources/ts/**/*.ts", "resources/ts/app.ts"
+  ]
 }

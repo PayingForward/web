@@ -48,7 +48,8 @@ class FormController extends Controller {
      *
      * @param Request $request
      * @param string $form
-     * @return void
+     * 
+     * @return JsonResponse
      */
     public function info(Request $request, string $form){
         $inputs = $this->form->getInputs();
