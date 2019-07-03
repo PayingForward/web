@@ -5,6 +5,7 @@ use App\FormGen\Inputs\Input;
 
 class TextInput extends Input {
     protected $type = "text";
+    
     /**
      * Setting to all letters in upper case
      *
@@ -15,6 +16,7 @@ class TextInput extends Input {
 
         return $this;
     }
+
     /**
      * Force all letters to lower case
      *

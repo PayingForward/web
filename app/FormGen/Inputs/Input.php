@@ -2,8 +2,9 @@
 namespace App\FormGen\Inputs;
 
 use App\FormGen\HasAttributes;
+use App\FormGen\Attribute;
 
-class Input {
+class Input implements \JsonSerializable{
     use HasAttributes;
 
     /**
@@ -73,5 +74,14 @@ class Input {
      */
     public function serializeValue($value){
         return $value;
+    }
+
+    public function jsonSerialize(){
+        return [
+            'name'=>$this->name,
+            'type'=>$this->type,
+            'attributes'=>$this->attributes,
+            'validation'=>$this->validationRule
+        ];
     }
 }

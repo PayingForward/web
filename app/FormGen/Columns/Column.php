@@ -83,4 +83,15 @@ class Column {
     public function unserializeValue($value){
         return $value;
     }
+
+
+    public function jsonSerialize(){
+        return [
+            'name'=>$this->name,
+            'type'=>$this->type,
+            'attributes'=>$this->attributes,
+            'searchable'=>$this->searchable,
+            'sortable'=>$this->sortable
+        ];
+    }
 }

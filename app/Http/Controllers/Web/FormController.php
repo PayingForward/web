@@ -44,6 +44,24 @@ class FormController extends Controller {
     }
 
     /**
+     * Returning the informations of form
+     *
+     * @param Request $request
+     * @param string $form
+     * @return void
+     */
+    public function info(Request $request, string $form){
+        $inputs = $this->form->getInputs();
+        $columns = $this->form->getColumns();
+        $title = $this->form->getTitle();
+        $structure = $this->form->getStructure();
+        $actions = $this->form->getActions();
+        $success = true;
+        
+        return compact(['inputs','columns','title','structure','actions','success']);
+    }
+
+    /**
      * Records searching for a dropdown
      *
      * @param Request $request

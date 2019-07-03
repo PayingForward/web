@@ -7,21 +7,14 @@ class PasswordInput extends Input {
     protected $type = "password";
 
     /**
-     * Weather that show or hide mask icon
-     *
-     * @var boolean
-     */
-    protected $maskIcon = true;
-
-    /**
      * Setting mask icon
      *
      * @param boolean $mask
      * 
      * @return self
      */
-    public function setMaskIcon($mask){
-        $this->maskIcon = $mask;
+    public function setMaskIcon($mask=true){
+        $this->setAttribute('maskIcon',$mask);
 
         return $this;
     }

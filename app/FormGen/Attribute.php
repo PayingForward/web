@@ -2,19 +2,24 @@
 
 namespace App\FormGen;
 
-class Attribute {
+use JsonSerializable;
+
+class Attribute implements JsonSerializable {
+
     /**
      * Name of the attribute
      *
      * @var string
      */
     protected $name;
+
     /**
      * Value of the attribute
      *
      * @var int|string|bool
      */
     protected $value;
+
     /**
      * Setting up the attribute
      * 
@@ -26,6 +31,7 @@ class Attribute {
         $this->setName($name);
         $this->setValue($val);
     }
+
     /**
      * Setter for the name
      * 
@@ -34,6 +40,7 @@ class Attribute {
     public function setName($name){
         $this->name = $name;
     }
+
     /**
      * Setter for the value
      * 
@@ -42,6 +49,7 @@ class Attribute {
     public function setValue($val){
         $this->value = $val;
     }
+
     /**
      * Returning the attribute name
      *
@@ -50,6 +58,7 @@ class Attribute {
     public function getName(){
         return $this->name;
     }
+
     /**
      * Returning the attribute value
      * 
@@ -57,5 +66,12 @@ class Attribute {
      */
     public function getValue(){
         return $this->value;
+    }
+
+    public function jsonSerialize(){
+        return [
+            'name'=>$this->name,
+            'value'=>$this->value
+        ];
     }
 }

@@ -19,6 +19,23 @@ use Illuminate\Database\Eloquent\Builder;
  * @method TextColumn textColumn(string $name,string $columnName=$name)
  */
 class Form {
+
+    /**
+     * Title for the form
+     *
+     * @var string
+     */
+    protected $title = "";
+
+    /**
+     * Allowed actions of this form
+     * 
+     * You can override this from here or on setActions() method.
+     *
+     * @var array
+     */
+    protected $allowedActions = [];
+
     /**
      * Base model name for the form
      *
@@ -60,6 +77,7 @@ class Form {
     {
         $this->setInputs();
         $this->setColumns();
+        $this->setActions();
     }
 
     /**
@@ -118,6 +136,37 @@ class Form {
      */
     public function getModel(){
         return $this->model;
+    }
+
+    /**
+     * Returning the title of the form
+     *
+     * @return string
+     */
+    public function getTitle(){
+        return $this->title;
+    }
+
+    /**
+     * You can set allowed actions for this form.
+     * 
+     * Edit $this->allowedActions property in here. You
+     * can add 'create','update','delete','search' 
+     * actions as values to this array.
+     *
+     * @return void
+     */
+    protected function setActions(){
+        $this->allowedActions = ['update','create','delete','search'];
+    }
+
+    /**
+     * Returning the allowed actions
+     *
+     * @return string[]
+     */
+    public function getActions(){
+        return $this->allowedActions;
     }
 
     /**
