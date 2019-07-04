@@ -4,11 +4,20 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Exceptions\WebApiException;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller {
+    /**
+     * Keep login a user
+     *
+     * @param Request $request
+     * 
+     * @return JsonResponse
+     */
     public function login(Request $request){
         $validation = Validator::make($request->all(),[
             'email'=>'required|email|exists:users,u_email',
@@ -40,6 +49,41 @@ class UserController extends Controller {
             'type'=>$user->userType->ut_code,
             'name'=>$user->u_name,
             'id'=>$user->getKey()
+        ]);
+    }
+
+    /**
+     * Returning the current logged user informations
+     *
+     * @param Request $request
+     * 
+     * @return JsonResponse
+     */
+    public function info(Request $request){
+        /** @var User $user */
+        $user = Auth::user();
+
+        $type = "donor";
+
+        switch ($user->ut_id) {
+            case 1:
+                $type="admin";
+                break;
+            case 2 :
+                $type="teacher";
+                break;
+            case 3 :
+                $type="orphan";
+                break;
+            default:
+                $type="donor";
+                break;
+        }
+
+        return success_response([
+            'type'=>$type,
+            'name'=>$user->u_name,
+            'id'=>$user->u_id
         ]);
     }
 }
