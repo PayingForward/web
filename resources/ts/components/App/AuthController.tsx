@@ -5,14 +5,15 @@ import { AppState } from "../../rootReducer";
 import {fetchLoggedUser} from '../../store/AuthController/actions'
 import { UserInformations } from "../../store/AuthController/types";
 import { ThunkDispatch } from "redux-thunk";
-import HomePage from "../HomePage/HomePage";
+import RouteController from "./RouteController";
+import GuestRouteController from './GuestRouteController';
 
 const mapStateToProps = (state: AppState) => ({
     ...state.authController
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-    onLoad:()=>fetchLoggedUser()
+    onLoad:()=> dispatch(fetchLoggedUser())
 });
 
 interface Props {
@@ -34,11 +35,16 @@ class AuthController extends React.Component<Props> {
 
         if(!user){
             return (
-                <HomePage/>
+                <GuestRouteController/>
             )
         }
 
-        return <div />;
+        return (
+            <React.Fragment>
+                <GuestRouteController/>
+                <RouteController  />
+            </React.Fragment>
+        );
     }
 }
 
