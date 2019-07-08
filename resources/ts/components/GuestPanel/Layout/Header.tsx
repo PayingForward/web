@@ -18,6 +18,9 @@ export const styler = withStyles(({ spacing }) => ({
     },
     userArea: {
         width: "50vw"
+    },
+    zIndex:{
+        zIndex:2000
     }
 }));
 
@@ -30,6 +33,7 @@ interface Props {
         grow: string;
         wrapper: string;
         userArea: string;
+        zIndex:string
     };
     user?: UserInformations;
 }
@@ -50,7 +54,7 @@ class Header extends React.Component<Props> {
 
         return (
             <div className={classes.wrapper}>
-                <AppBar>
+                <AppBar className={classes.zIndex}>  
                     <Toolbar variant="dense" >
                         <Typography variant="h6">{APP_NAME}</Typography>
                         <div className={classes.grow} />

@@ -1,18 +1,32 @@
 import * as React from 'react';
 import Header from './Header';
+import { withStyles } from '@material-ui/core';
+
+const styler = withStyles(theme=>({
+    wrapper:{
+        paddingTop:theme.spacing(4)
+    }
+}))
 
 interface Props {
-    children:JSX.Element[] | JSX.Element|string
+    children:JSX.Element[] | JSX.Element|string,
+    classes:{
+        wrapper:string
+    }
 }
 
-export default class MainLayout extends React.Component<Props>{
+class MainLayout extends React.Component<Props>{
     public render(){
-        const {children} = this.props;
+        const {children,classes} = this.props;
         return (
             <div>
                 <Header />
-                {children}
+                <div className={classes.wrapper} >
+                    {children}
+                </div>
             </div>
         );
     }
 }
+
+export default styler(MainLayout);
