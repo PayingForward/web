@@ -7,6 +7,8 @@ import { UserInformations } from "../../store/AuthController/types";
 import { ThunkDispatch } from "redux-thunk";
 import RouteController from "./RouteController";
 import GuestRouteController from './GuestRouteController';
+import Axios from 'axios';
+import { USER_TOKEN_KEY } from '../../constants/config';
 
 const mapStateToProps = (state: AppState) => ({
     ...state.authController
@@ -25,7 +27,8 @@ class AuthController extends React.Component<Props> {
     public constructor(props:Props) {
         super(props);
 
-        if(localStorage.getItem('userToken')){
+        if(localStorage.getItem(USER_TOKEN_KEY)){
+            Axios.defaults.headers.post['Authorization'] = 'Bearer '+localStorage.getItem(USER_TOKEN_KEY)
             props.onLoad();
         }
     }

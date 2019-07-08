@@ -20,6 +20,19 @@ const theme = createMuiTheme({
 				paddingTop:4,
 			}
 		},
+		MuiInputBase:{
+			formControl:{
+				height:30
+			}
+		},
+		MuiInputLabel:{
+			formControl:{
+				marginTop:-8
+			},
+			shrink:{
+				marginTop:2
+			}
+		}
 	},
 	palette: {
 		primary: {

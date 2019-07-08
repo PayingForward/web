@@ -45,6 +45,7 @@ class UserController extends Controller {
         $token = $user->createToken('Web Token', [\strtolower($user->userType->ut_code)])->accessToken;
 
         return \success_response([
+            'message'=>"Successfully logged in. Please wait while redirecting.",
             'token'=>$token,
             'type'=>$user->userType->ut_code,
             'name'=>$user->u_name,

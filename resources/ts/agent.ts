@@ -9,10 +9,11 @@ interface Response {
 
 const request = (
     url: string,
+    parameters?: { [x in string]: any },
     config: undefined | AxiosRequestConfig = undefined
 ) =>
     axios
-        .get(APP_URL + "api/web/" + url, config)
+        .post(APP_URL + "api/web/" + url, parameters, config)
         .then(
             (response: AxiosResponse): Response => ({
                 success: true,
@@ -30,7 +31,9 @@ const request = (
         );
 
 const Auth = {
-    getUser: () => request("user/info")
+    getUser: () => request("user/info"),
+    login: (email: string, password: string) =>
+        request("user/login", { email, password })
 };
 
 export default {
