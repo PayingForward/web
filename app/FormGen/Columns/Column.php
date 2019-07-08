@@ -3,8 +3,9 @@ namespace App\FormGen\Columns;
 
 use App\FormGen\HasAttributes;
 use Illuminate\Database\Eloquent\Builder;
+use JsonSerializable;
 
-class Column {
+class Column implements JsonSerializable {
     use HasAttributes;
 
     /**
@@ -91,7 +92,8 @@ class Column {
             'type'=>$this->type,
             'attributes'=>$this->attributes,
             'searchable'=>$this->searchable,
-            'sortable'=>$this->sortable
+            'sortable'=>$this->sortable,
+            'label'=>$this->getLabel()
         ];
     }
 }

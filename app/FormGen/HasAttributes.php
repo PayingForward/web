@@ -16,14 +16,21 @@ trait HasAttributes {
      * 
      * @var string
      */
-    protected $name;
+    protected $name="";
+
+    /**
+     * Label for the input or column
+     *
+     * @var string
+     */
+    protected $label="";
 
     /**
      * Input type name
      *
      * @var string
      */
-    protected $type;
+    protected $type="";
 
     /**
      * Actual column name in the table
@@ -84,5 +91,28 @@ trait HasAttributes {
      */
     public function getColumnName(){
         return $this->columnName;
+    }
+
+    /**
+     * Setting the displaying label for the input or columns
+     *
+     * @param string $label
+     * 
+     * @return self
+     */
+    public function setLabel($label){
+        $this->label = $label;
+        return $this;
+    }
+
+    /**
+     * Returning the label for the input or column
+     * 
+     * @return string
+     *
+     * @return void
+     */
+    public function getLabel(){
+        return $this->label;
     }
 }

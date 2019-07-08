@@ -36,6 +36,11 @@ const Auth = {
         request("user/login", { email, password })
 };
 
+const CRUD = {
+    info:(form:string)=> request('form/'+form+'/info')
+}
+
 export default {
-    Auth
+    Auth,
+    CRUD
 };

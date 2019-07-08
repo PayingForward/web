@@ -7,6 +7,8 @@ use App\Models\User as UserModel;
 class User extends Form {
     protected $model = UserModel::class;
 
+    protected $title = "Users";
+
     protected function setInputs()
     {
         $this->textInput('name','u_name')->setLowerCase()->setValidationRule('required');

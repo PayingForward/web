@@ -81,7 +81,8 @@ class Input implements \JsonSerializable{
             'name'=>$this->name,
             'type'=>$this->type,
             'attributes'=>$this->attributes,
-            'validation'=>$this->validationRule
+            'validation'=>$this->validationRule,
+            'label'=>$this->getLabel()
         ];
     }
 }

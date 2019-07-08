@@ -72013,6 +72013,307 @@ function warning(message) {
 
 /***/ }),
 
+/***/ "./node_modules/react-router-dom/esm/react-router-dom.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
+  \***************************************************************/
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return BrowserRouter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return HashRouter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return Link; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavLink", function() { return NavLink; });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["MemoryRouter"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["Prompt"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["Redirect"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["Route"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["Router"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["StaticRouter"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["Switch"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "generatePath", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["generatePath"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["matchPath"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "__RouterContext", function() { return react_router__WEBPACK_IMPORTED_MODULE_2__["__RouterContext"]; });
+
+/* harmony import */ var history__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! history */ "./node_modules/history/esm/history.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var tiny_warning__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tiny-warning */ "./node_modules/tiny-warning/dist/tiny-warning.esm.js");
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
+/* harmony import */ var tiny_invariant__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tiny-invariant */ "./node_modules/tiny-invariant/dist/tiny-invariant.esm.js");
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * The public API for a <Router> that uses HTML5 history.
+ */
+
+var BrowserRouter =
+/*#__PURE__*/
+function (_React$Component) {
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(BrowserRouter, _React$Component);
+
+  function BrowserRouter() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.history = Object(history__WEBPACK_IMPORTED_MODULE_3__["createBrowserHistory"])(_this.props);
+    return _this;
+  }
+
+  var _proto = BrowserRouter.prototype;
+
+  _proto.render = function render() {
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["Router"], {
+      history: this.history,
+      children: this.props.children
+    });
+  };
+
+  return BrowserRouter;
+}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
+
+if (true) {
+  BrowserRouter.propTypes = {
+    basename: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+    children: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.node,
+    forceRefresh: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
+    getUserConfirmation: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+    keyLength: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.number
+  };
+
+  BrowserRouter.prototype.componentDidMount = function () {
+     true ? Object(tiny_warning__WEBPACK_IMPORTED_MODULE_5__["default"])(!this.props.history, "<BrowserRouter> ignores the history prop. To use a custom history, " + "use `import { Router }` instead of `import { BrowserRouter as Router }`.") : undefined;
+  };
+}
+
+/**
+ * The public API for a <Router> that uses window.location.hash.
+ */
+
+var HashRouter =
+/*#__PURE__*/
+function (_React$Component) {
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(HashRouter, _React$Component);
+
+  function HashRouter() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.history = Object(history__WEBPACK_IMPORTED_MODULE_3__["createHashHistory"])(_this.props);
+    return _this;
+  }
+
+  var _proto = HashRouter.prototype;
+
+  _proto.render = function render() {
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["Router"], {
+      history: this.history,
+      children: this.props.children
+    });
+  };
+
+  return HashRouter;
+}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
+
+if (true) {
+  HashRouter.propTypes = {
+    basename: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+    children: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.node,
+    getUserConfirmation: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+    hashType: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOf(["hashbang", "noslash", "slash"])
+  };
+
+  HashRouter.prototype.componentDidMount = function () {
+     true ? Object(tiny_warning__WEBPACK_IMPORTED_MODULE_5__["default"])(!this.props.history, "<HashRouter> ignores the history prop. To use a custom history, " + "use `import { Router }` instead of `import { HashRouter as Router }`.") : undefined;
+  };
+}
+
+function isModifiedEvent(event) {
+  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+}
+/**
+ * The public API for rendering a history-aware <a>.
+ */
+
+
+var Link =
+/*#__PURE__*/
+function (_React$Component) {
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(Link, _React$Component);
+
+  function Link() {
+    return _React$Component.apply(this, arguments) || this;
+  }
+
+  var _proto = Link.prototype;
+
+  _proto.handleClick = function handleClick(event, history) {
+    try {
+      if (this.props.onClick) this.props.onClick(event);
+    } catch (ex) {
+      event.preventDefault();
+      throw ex;
+    }
+
+    if (!event.defaultPrevented && // onClick prevented default
+    event.button === 0 && ( // ignore everything but left clicks
+    !this.props.target || this.props.target === "_self") && // let browser handle "target=_blank" etc.
+    !isModifiedEvent(event) // ignore clicks with modifier keys
+    ) {
+        event.preventDefault();
+        var method = this.props.replace ? history.replace : history.push;
+        method(this.props.to);
+      }
+  };
+
+  _proto.render = function render() {
+    var _this = this;
+
+    var _this$props = this.props,
+        innerRef = _this$props.innerRef,
+        replace = _this$props.replace,
+        to = _this$props.to,
+        rest = Object(_babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_7__["default"])(_this$props, ["innerRef", "replace", "to"]); // eslint-disable-line no-unused-vars
+
+
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["__RouterContext"].Consumer, null, function (context) {
+      !context ?  true ? Object(tiny_invariant__WEBPACK_IMPORTED_MODULE_8__["default"])(false, "You should not use <Link> outside a <Router>") : undefined : void 0;
+      var location = typeof to === "string" ? Object(history__WEBPACK_IMPORTED_MODULE_3__["createLocation"])(to, null, null, context.location) : to;
+      var href = location ? context.history.createHref(location) : "";
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_6__["default"])({}, rest, {
+        onClick: function onClick(event) {
+          return _this.handleClick(event, context.history);
+        },
+        href: href,
+        ref: innerRef
+      }));
+    });
+  };
+
+  return Link;
+}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
+
+if (true) {
+  var toType = prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object]);
+  var innerRefType = prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.shape({
+    current: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.any
+  })]);
+  Link.propTypes = {
+    innerRef: innerRefType,
+    onClick: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+    replace: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
+    target: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+    to: toType.isRequired
+  };
+}
+
+function joinClassnames() {
+  for (var _len = arguments.length, classnames = new Array(_len), _key = 0; _key < _len; _key++) {
+    classnames[_key] = arguments[_key];
+  }
+
+  return classnames.filter(function (i) {
+    return i;
+  }).join(" ");
+}
+/**
+ * A <Link> wrapper that knows if it's "active" or not.
+ */
+
+
+function NavLink(_ref) {
+  var _ref$ariaCurrent = _ref["aria-current"],
+      ariaCurrent = _ref$ariaCurrent === void 0 ? "page" : _ref$ariaCurrent,
+      _ref$activeClassName = _ref.activeClassName,
+      activeClassName = _ref$activeClassName === void 0 ? "active" : _ref$activeClassName,
+      activeStyle = _ref.activeStyle,
+      classNameProp = _ref.className,
+      exact = _ref.exact,
+      isActiveProp = _ref.isActive,
+      locationProp = _ref.location,
+      strict = _ref.strict,
+      styleProp = _ref.style,
+      to = _ref.to,
+      rest = Object(_babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_7__["default"])(_ref, ["aria-current", "activeClassName", "activeStyle", "className", "exact", "isActive", "location", "strict", "style", "to"]);
+
+  var path = typeof to === "object" ? to.pathname : to; // Regex taken from: https://github.com/pillarjs/path-to-regexp/blob/master/index.js#L202
+
+  var escapedPath = path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, "\\$1");
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["__RouterContext"].Consumer, null, function (context) {
+    !context ?  true ? Object(tiny_invariant__WEBPACK_IMPORTED_MODULE_8__["default"])(false, "You should not use <NavLink> outside a <Router>") : undefined : void 0;
+    var pathToMatch = locationProp ? locationProp.pathname : context.location.pathname;
+    var match = escapedPath ? Object(react_router__WEBPACK_IMPORTED_MODULE_2__["matchPath"])(pathToMatch, {
+      path: escapedPath,
+      exact: exact,
+      strict: strict
+    }) : null;
+    var isActive = !!(isActiveProp ? isActiveProp(match, context.location) : match);
+    var className = isActive ? joinClassnames(classNameProp, activeClassName) : classNameProp;
+    var style = isActive ? Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_6__["default"])({}, styleProp, activeStyle) : styleProp;
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Link, Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_6__["default"])({
+      "aria-current": isActive && ariaCurrent || null,
+      className: className,
+      style: style,
+      to: to
+    }, rest));
+  });
+}
+
+if (true) {
+  var ariaCurrentType = prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOf(["page", "step", "location", "date", "time", "true"]);
+  NavLink.propTypes = Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_6__["default"])({}, Link.propTypes, {
+    "aria-current": ariaCurrentType,
+    activeClassName: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+    activeStyle: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object,
+    className: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+    exact: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
+    isActive: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+    location: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object,
+    strict: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
+    style: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object
+  });
+}
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/react-router/esm/react-router.js":
 /*!*******************************************************!*\
   !*** ./node_modules/react-router/esm/react-router.js ***!
@@ -79578,8 +79879,12 @@ var Auth = {
         return request("user/login", { email: email, password: password });
     }
 };
+var CRUD = {
+    info: function (form) { return request('form/' + form + '/info'); }
+};
 /* harmony default export */ __webpack_exports__["default"] = ({
-    Auth: Auth
+    Auth: Auth,
+    CRUD: CRUD
 });
 
 
@@ -79796,18 +80101,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Layout */ "./resources/ts/components/CPanel/Layout.tsx");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
-/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
-/* harmony import */ var _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/colors/green */ "./node_modules/@material-ui/core/colors/green.js");
-/* harmony import */ var _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/icons/Search */ "./node_modules/@material-ui/icons/Search.js");
-/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/icons/Create */ "./node_modules/@material-ui/icons/Create.js");
-/* harmony import */ var _material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _CRUDPage_Form__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./CRUDPage/Form */ "./resources/ts/components/CPanel/CRUDPage/Form.tsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Layout */ "./resources/ts/components/CPanel/Layout.tsx");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
+/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
+/* harmony import */ var _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/colors/green */ "./node_modules/@material-ui/core/colors/green.js");
+/* harmony import */ var _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/icons/Search */ "./node_modules/@material-ui/icons/Search.js");
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/icons/Create */ "./node_modules/@material-ui/icons/Create.js");
+/* harmony import */ var _material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _CRUDPage_Form__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CRUDPage/Form */ "./resources/ts/components/CPanel/CRUDPage/Form.tsx");
+/* harmony import */ var _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../store/Admin/CRUDPage/types */ "./resources/ts/store/Admin/CRUDPage/types.ts");
+/* harmony import */ var _store_Admin_CRUDPage_actions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../store/Admin/CRUDPage/actions */ "./resources/ts/store/Admin/CRUDPage/actions.ts");
 
 
 
@@ -79818,40 +80127,74 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var styler = Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_5__["withStyles"])(function (theme) { return ({
+
+
+
+
+var styler = Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_7__["withStyles"])(function (theme) { return ({
     grow: {
         flexGrow: 1
     },
     green: {
-        background: _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_6___default.a[400]
+        background: _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_8___default.a[400]
     },
     margin: {
         margin: theme.spacing(2)
     }
 }); });
+var mapStateToProps = function (state) { return (tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state.CRUDPage)); };
+var mapDispatchToProps = function (dispatch) { return ({
+    onChangeForm: function (form) { return dispatch(Object(_store_Admin_CRUDPage_actions__WEBPACK_IMPORTED_MODULE_13__["fetchInfo"])(form)); }
+}); };
 var CRUDPage = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](CRUDPage, _super);
     function CRUDPage() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    CRUDPage.prototype.componentDidMount = function () {
+        var form = this.props.match.params.form;
+        var onChangeForm = this.props.onChangeForm;
+        onChangeForm(form);
+    };
+    CRUDPage.prototype.componentDidUpdate = function (prevProps) {
+        var form = this.props.match.params.form;
+        var onChangeForm = this.props.onChangeForm;
+        if (form !== prevProps.match.params.form) {
+            onChangeForm(form);
+        }
+    };
+    CRUDPage.prototype.renderSearchButton = function () {
+        var _a = this.props, actions = _a.actions, classes = _a.classes;
+        if (actions.includes("search")) {
+            return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Button"], { className: classes.margin, variant: "contained", color: "primary" },
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_9___default.a, null),
+                "Search"));
+        }
+        return null;
+    };
+    CRUDPage.prototype.renderCreateButton = function () {
+        var _a = this.props, actions = _a.actions, classes = _a.classes;
+        if (actions.includes("create")) {
+            return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Button"], { className: classnames__WEBPACK_IMPORTED_MODULE_3___default()(classes.green, classes.margin), variant: "contained", color: "primary" },
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_10___default.a, null),
+                "Create"));
+        }
+        return null;
+    };
     CRUDPage.prototype.render = function () {
-        var classes = this.props.classes;
-        return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], null,
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Toolbar"], { variant: "dense" },
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Typography"], { variant: "h5" }, "Users"),
+        var _a = this.props, classes = _a.classes, title = _a.title, mode = _a.mode, values = _a.values;
+        return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_Layout__WEBPACK_IMPORTED_MODULE_5__["default"], null,
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Toolbar"], { variant: "dense" },
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Typography"], { variant: "h5" }, title),
                 react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", { className: classes.grow }),
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Button"], { className: classes.margin, variant: "contained", color: "primary" },
-                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_7___default.a, null),
-                    "Search"),
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Button"], { className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(classes.green, classes.margin), variant: "contained", color: "primary" },
-                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_8___default.a, null),
-                    "Create")),
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Divider"], null),
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_CRUDPage_Form__WEBPACK_IMPORTED_MODULE_9__["default"], null)));
+                this.renderSearchButton(),
+                this.renderCreateButton()),
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Divider"], null),
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_CRUDPage_Form__WEBPACK_IMPORTED_MODULE_11__["default"], { open: mode === _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_12__["CRUD_FORM_SEARCH"] || mode === _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_12__["CRUD_FORM_CREATE"], values: values, title: title })));
     };
     return CRUDPage;
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]));
-/* harmony default export */ __webpack_exports__["default"] = (styler(CRUDPage));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(styler(CRUDPage))));
 
 
 /***/ }),
@@ -79868,6 +80211,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
+
 
 
 var Form = /** @class */ (function (_super) {
@@ -79876,7 +80221,12 @@ var Form = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Form.prototype.render = function () {
-        return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", null, "lkmlkml"));
+        var _a = this.props, open = _a.open, title = _a.title;
+        return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Modal"], { open: open },
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("form", null,
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], { variant: "h6", align: "center" }, title),
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Divider"], null),
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Grid"], { container: true }))));
     };
     return Form;
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]));
@@ -80339,6 +80689,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_AuthController_reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/AuthController/reducers */ "./resources/ts/store/AuthController/reducers.ts");
 /* harmony import */ var _store_SnackController_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/SnackController/reducers */ "./resources/ts/store/SnackController/reducers.ts");
 /* harmony import */ var _store_LoginForm_reducers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/LoginForm/reducers */ "./resources/ts/store/LoginForm/reducers.ts");
+/* harmony import */ var _store_Admin_CRUDPage_reducers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/Admin/CRUDPage/reducers */ "./resources/ts/store/Admin/CRUDPage/reducers.ts");
+
 
 
 
@@ -80348,7 +80700,8 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_1__["combineReducers"])(
     loadingBar: react_redux_loading_bar__WEBPACK_IMPORTED_MODULE_0__["loadingBarReducer"],
     authController: _store_AuthController_reducers__WEBPACK_IMPORTED_MODULE_2__["default"],
     snackController: _store_SnackController_reducers__WEBPACK_IMPORTED_MODULE_3__["default"],
-    loginForm: _store_LoginForm_reducers__WEBPACK_IMPORTED_MODULE_4__["default"]
+    loginForm: _store_LoginForm_reducers__WEBPACK_IMPORTED_MODULE_4__["default"],
+    CRUDPage: _store_Admin_CRUDPage_reducers__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
 
@@ -80384,6 +80737,188 @@ if (_constants_config__WEBPACK_IMPORTED_MODULE_4__["APP_LOGGER_ON"]) {
 }
 var createStoreWithMiddleware = redux__WEBPACK_IMPORTED_MODULE_1__["applyMiddleware"].apply(void 0, middleware)(redux__WEBPACK_IMPORTED_MODULE_1__["createStore"]);
 /* harmony default export */ __webpack_exports__["default"] = (createStoreWithMiddleware(_rootReducer__WEBPACK_IMPORTED_MODULE_5__["default"]));
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/Admin/CRUDPage/actions.ts":
+/*!******************************************************!*\
+  !*** ./resources/ts/store/Admin/CRUDPage/actions.ts ***!
+  \******************************************************/
+/*! exports provided: loadedResults, selectToUpdate, selectToDelete, selectToSearch, selectToCreate, toggleSearchMode, loadedInfo, changeValue, fetchInfo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadedResults", function() { return loadedResults; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectToUpdate", function() { return selectToUpdate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectToDelete", function() { return selectToDelete; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectToSearch", function() { return selectToSearch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectToCreate", function() { return selectToCreate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleSearchMode", function() { return toggleSearchMode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadedInfo", function() { return loadedInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeValue", function() { return changeValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchInfo", function() { return fetchInfo; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "./resources/ts/store/Admin/CRUDPage/types.ts");
+/* harmony import */ var react_redux_loading_bar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux-loading-bar */ "./node_modules/react-redux-loading-bar/build/index.js");
+/* harmony import */ var react_redux_loading_bar__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux_loading_bar__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _agent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../agent */ "./resources/ts/agent.ts");
+/* harmony import */ var _SnackController_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../SnackController/actions */ "./resources/ts/store/SnackController/actions.ts");
+var _this = undefined;
+
+
+
+
+
+var loadedResults = function (results, count) { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_LOADED_RESULTS"],
+    results: results,
+    count: count
+}); };
+var selectToUpdate = function (id) { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_SELECT_TO_UPDATE"],
+    id: id
+}); };
+var selectToDelete = function (id) { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_SELECT_TO_DELETE"],
+    id: id
+}); };
+var selectToSearch = function () { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_SELECT_TO_SEARCH"]
+}); };
+var selectToCreate = function () { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_SELECT_TO_CREATE"]
+}); };
+var toggleSearchMode = function () { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_TOGGLE_SEARCH_MODE"]
+}); };
+var loadedInfo = function (title, inputs, columns, structure, actions) { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_LOADED_INFO"],
+    title: title,
+    inputs: inputs,
+    columns: columns,
+    structure: structure,
+    actions: actions
+}); };
+var changeValue = function (name, value) { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_CHANGE_FORM_VALUE"],
+    name: name,
+    value: value
+}); };
+var fetchInfo = function (form) { return function (dispatch) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+    return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+        dispatch(Object(react_redux_loading_bar__WEBPACK_IMPORTED_MODULE_2__["showLoading"])());
+        _agent__WEBPACK_IMPORTED_MODULE_3__["default"].CRUD.info(form).then(function (_a) {
+            var success = _a.success, message = _a.message, title = _a.title, inputs = _a.inputs, columns = _a.columns, structure = _a.structure, actions = _a.actions;
+            if (success) {
+                dispatch(loadedInfo(title, inputs, columns, structure, actions));
+            }
+            else {
+                if (message) {
+                    Object(_SnackController_actions__WEBPACK_IMPORTED_MODULE_4__["errorSnack"])(message);
+                }
+            }
+        });
+        return [2 /*return*/];
+    });
+}); }; };
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/Admin/CRUDPage/reducers.ts":
+/*!*******************************************************!*\
+  !*** ./resources/ts/store/Admin/CRUDPage/reducers.ts ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "./resources/ts/store/Admin/CRUDPage/types.ts");
+
+
+var initialState = {
+    results: [],
+    resultsCount: 0,
+    values: {},
+    title: "",
+    inputs: {},
+    columns: {},
+    structure: [],
+    actions: [],
+    form: "",
+    search: true
+};
+/* harmony default export */ __webpack_exports__["default"] = (function (state, action) {
+    var _a;
+    if (state === void 0) { state = initialState; }
+    switch (action.type) {
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_SELECT_TO_DELETE"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { updatingId: action.id });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_SELECT_TO_UPDATE"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { updatingId: action.id, mode: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_FORM_UPDATE"] });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_SELECT_TO_SEARCH"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { mode: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_FORM_SEARCH"] });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_SELECT_TO_CREATE"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { mode: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_FORM_CREATE"] });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_LOADED_RESULTS"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { results: action.results, resultsCount: action.count });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_CHANGE_FORM"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { form: action.form });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_LOADED_INFO"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { title: action.title, inputs: action.inputs, columns: action.columns, structure: action.structure, actions: action.actions });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_CHANGE_FORM_VALUE"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { values: tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state.values, (_a = {}, _a[action.name] = action.value, _a)) });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_TOGGLE_SEARCH_MODE"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { search: !state.search });
+        case _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_CLEAR_FORM"]:
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { search: false, values: {}, mode: undefined });
+        default:
+            return state;
+    }
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/Admin/CRUDPage/types.ts":
+/*!****************************************************!*\
+  !*** ./resources/ts/store/Admin/CRUDPage/types.ts ***!
+  \****************************************************/
+/*! exports provided: CRUD_CHANGE_FORM_VALUE, CRUD_LOADED_RESULTS, CRUD_SELECT_TO_DELETE, CRUD_SELECT_TO_UPDATE, CRUD_SELECT_TO_SEARCH, CRUD_SELECT_TO_CREATE, CRUD_CHANGE_FORM, CRUD_LOADED_INFO, CRUD_TOGGLE_SEARCH_MODE, CRUD_CLEAR_FORM, CRUD_FORM_UPDATE, CRUD_FORM_SEARCH, CRUD_FORM_CREATE */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_CHANGE_FORM_VALUE", function() { return CRUD_CHANGE_FORM_VALUE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_LOADED_RESULTS", function() { return CRUD_LOADED_RESULTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_SELECT_TO_DELETE", function() { return CRUD_SELECT_TO_DELETE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_SELECT_TO_UPDATE", function() { return CRUD_SELECT_TO_UPDATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_SELECT_TO_SEARCH", function() { return CRUD_SELECT_TO_SEARCH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_SELECT_TO_CREATE", function() { return CRUD_SELECT_TO_CREATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_CHANGE_FORM", function() { return CRUD_CHANGE_FORM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_LOADED_INFO", function() { return CRUD_LOADED_INFO; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_TOGGLE_SEARCH_MODE", function() { return CRUD_TOGGLE_SEARCH_MODE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_CLEAR_FORM", function() { return CRUD_CLEAR_FORM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_FORM_UPDATE", function() { return CRUD_FORM_UPDATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_FORM_SEARCH", function() { return CRUD_FORM_SEARCH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CRUD_FORM_CREATE", function() { return CRUD_FORM_CREATE; });
+var CRUD_CHANGE_FORM_VALUE = "CRUD_CHANGE_FORM_VALUE";
+var CRUD_LOADED_RESULTS = "CRUD_LOADED_RESULTS";
+var CRUD_SELECT_TO_DELETE = "CRUD_SELECT_TO_DELETE";
+var CRUD_SELECT_TO_UPDATE = "CRUD_SELECT_TO_UPDATE";
+var CRUD_SELECT_TO_SEARCH = "CRUD_SELECT_TO_SEARCH";
+var CRUD_SELECT_TO_CREATE = "CRUD_SELECT_TO_CREATE";
+var CRUD_CHANGE_FORM = "CRUD_CHANGE_FORM";
+var CRUD_LOADED_INFO = "CRUD_LOADED_INFO";
+var CRUD_TOGGLE_SEARCH_MODE = "CRUD_TOGGLE_SEARCH_MODE";
+var CRUD_CLEAR_FORM = "CRUD_CLEAR_FORM";
+var CRUD_FORM_UPDATE = "CRUD_FORM_UPDATE";
+var CRUD_FORM_SEARCH = "CRUD_FORM_SEARCH";
+var CRUD_FORM_CREATE = "CRUD_FORM_CREATE";
 
 
 /***/ }),
