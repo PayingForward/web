@@ -18,7 +18,9 @@ import {
     CRUD_SELECT_TO_CREATE,
     ToggleSearchMode,
     CRUD_TOGGLE_SEARCH_MODE,
-    Input
+    Input,
+    ClearForm,
+    CRUD_CLEAR_FORM
 } from "./types";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
@@ -55,6 +57,10 @@ export const selectToCreate = ():SelectToCreate =>({
 
 export const toggleSearchMode = ():ToggleSearchMode =>({
     type:CRUD_TOGGLE_SEARCH_MODE
+});
+
+export const clearForm = ():ClearForm=>({
+    type:CRUD_CLEAR_FORM
 });
 
 export const loadedInfo = (

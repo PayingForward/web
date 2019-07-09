@@ -19,6 +19,7 @@ export interface Input {
     type: string;
     attributes: Attribute[];
     validation: string;
+    label:string;
 }
 
 export interface Inputs {
@@ -35,6 +36,7 @@ export interface Column {
     attributes: Attribute[];
     searchable: boolean;
     sortable: boolean;
+    label:string;
 }
 
 export interface ResultRow {

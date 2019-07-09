@@ -27,10 +27,15 @@ const theme = createMuiTheme({
 		},
 		MuiInputLabel:{
 			formControl:{
-				marginTop:-8
+				marginTop:-12
 			},
 			shrink:{
 				marginTop:2
+			}
+		},
+		MuiSwitch:{
+			switchBase:{
+				margin:0
 			}
 		}
 	},
@@ -41,7 +46,7 @@ const theme = createMuiTheme({
 			main: "#542f88"
 		},
 		text: {
-			primary: "#f0f0f0",
+			primary: "#0f0f0f",
 			secondary: "#000000"
 		}
 	},

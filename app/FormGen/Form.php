@@ -75,9 +75,9 @@ class Form {
 
     public function __construct()
     {
-        $this->setInputs();
         $this->setColumns();
         $this->setActions();
+        $this->setInputs();
     }
 
     /**
@@ -180,7 +180,6 @@ class Form {
 
         foreach ($struct as $key => $value) {
             if(is_string($value)){
-
                 if(!isset($this->inputs[$value]))
                     throw new \InvalidArgumentException("Can not find the name '$value' in the form.");
 
@@ -190,12 +189,12 @@ class Form {
                 $formatedStructure1 = [];
 
                 foreach ($value as $key => $value1) {
-                    if(is_string($value)){
+                    if(is_string($value1)){
 
-                        if(!isset($this->inputs[$value]))
-                            throw new \InvalidArgumentException("Can not find the name '$value' in the form.");
+                        if(!isset($this->inputs[$value1]))
+                            throw new \InvalidArgumentException("Can not find the name '$value1' in the form.");
 
-                        $formatedStructure1[] = $value;
+                        $formatedStructure1[] = $value1;
                     } else {
 
                         throw new \InvalidArgumentException("Invalid value supplied for set structure methos. setstructure will take only strings and arrays that containig strings");
@@ -222,17 +221,16 @@ class Form {
 
         if(isset($this->structure)){
             foreach($this->structure as $row){
-                $row = [];
+                $row1 = [];
 
                 foreach($row as $inputName){
                     $input = $this->getInput($inputName);
-
                     if($input){
-                        $row[] = $input;
+                        $row1[] = $input;
                     }
                 }
 
-                $filteredStructure[] = $row;
+                $filteredStructure[] = $row1;
             }
         } else {
             $inputs = $this->getInputs();

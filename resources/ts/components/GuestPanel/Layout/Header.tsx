@@ -20,7 +20,7 @@ export const styler = withStyles(({ spacing }) => ({
         width: "50vw"
     },
     zIndex:{
-        zIndex:2000
+        zIndex:1900
     }
 }));
 

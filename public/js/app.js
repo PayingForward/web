@@ -80144,7 +80144,11 @@ var styler = Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_7__["withStyles
 }); });
 var mapStateToProps = function (state) { return (tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state.CRUDPage)); };
 var mapDispatchToProps = function (dispatch) { return ({
-    onChangeForm: function (form) { return dispatch(Object(_store_Admin_CRUDPage_actions__WEBPACK_IMPORTED_MODULE_13__["fetchInfo"])(form)); }
+    onChangeForm: function (form) { return dispatch(Object(_store_Admin_CRUDPage_actions__WEBPACK_IMPORTED_MODULE_13__["fetchInfo"])(form)); },
+    onSelectToSearch: function () { return dispatch(Object(_store_Admin_CRUDPage_actions__WEBPACK_IMPORTED_MODULE_13__["selectToSearch"])()); },
+    onSelectToCreate: function () { return dispatch(Object(_store_Admin_CRUDPage_actions__WEBPACK_IMPORTED_MODULE_13__["selectToCreate"])()); },
+    onClearForm: function () { return dispatch(Object(_store_Admin_CRUDPage_actions__WEBPACK_IMPORTED_MODULE_13__["clearForm"])()); },
+    onToggleSearchMode: function () { return dispatch(Object(_store_Admin_CRUDPage_actions__WEBPACK_IMPORTED_MODULE_13__["toggleSearchMode"])()); }
 }); };
 var CRUDPage = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](CRUDPage, _super);
@@ -80164,33 +80168,35 @@ var CRUDPage = /** @class */ (function (_super) {
         }
     };
     CRUDPage.prototype.renderSearchButton = function () {
-        var _a = this.props, actions = _a.actions, classes = _a.classes;
+        var _a = this.props, actions = _a.actions, classes = _a.classes, onSelectToSearch = _a.onSelectToSearch;
         if (actions.includes("search")) {
-            return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Button"], { className: classes.margin, variant: "contained", color: "primary" },
+            return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Button"], { className: classes.margin, variant: "contained", color: "primary", onClick: onSelectToSearch },
                 react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_9___default.a, null),
                 "Search"));
         }
         return null;
     };
     CRUDPage.prototype.renderCreateButton = function () {
-        var _a = this.props, actions = _a.actions, classes = _a.classes;
+        var _a = this.props, actions = _a.actions, classes = _a.classes, onSelectToCreate = _a.onSelectToCreate;
         if (actions.includes("create")) {
-            return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Button"], { className: classnames__WEBPACK_IMPORTED_MODULE_3___default()(classes.green, classes.margin), variant: "contained", color: "primary" },
+            return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Button"], { className: classnames__WEBPACK_IMPORTED_MODULE_3___default()(classes.green, classes.margin), variant: "contained", color: "primary", onClick: onSelectToCreate },
                 react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_icons_Create__WEBPACK_IMPORTED_MODULE_10___default.a, null),
                 "Create"));
         }
         return null;
     };
     CRUDPage.prototype.render = function () {
-        var _a = this.props, classes = _a.classes, title = _a.title, mode = _a.mode, values = _a.values;
+        var _a = this.props, classes = _a.classes, title = _a.title, mode = _a.mode, values = _a.values, onClearForm = _a.onClearForm, search = _a.search, onToggleSearchMode = _a.onToggleSearchMode, structure = _a.structure;
         return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_Layout__WEBPACK_IMPORTED_MODULE_5__["default"], null,
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Toolbar"], { variant: "dense" },
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Typography"], { variant: "h5" }, title),
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", { className: classes.grow }),
-                this.renderSearchButton(),
-                this.renderCreateButton()),
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Divider"], null),
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_CRUDPage_Form__WEBPACK_IMPORTED_MODULE_11__["default"], { open: mode === _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_12__["CRUD_FORM_SEARCH"] || mode === _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_12__["CRUD_FORM_CREATE"], values: values, title: title })));
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", null,
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Toolbar"], { variant: "dense" },
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Typography"], { variant: "h5" }, title),
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", { className: classes.grow }),
+                    this.renderSearchButton(),
+                    this.renderCreateButton()),
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Divider"], null),
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_CRUDPage_Form__WEBPACK_IMPORTED_MODULE_11__["default"], { open: mode === _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_12__["CRUD_FORM_SEARCH"] ||
+                        mode === _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_12__["CRUD_FORM_CREATE"], values: values, title: title, onClose: onClearForm, mode: mode, search: search, onSearchModeToggle: onToggleSearchMode, structure: structure }))));
     };
     return CRUDPage;
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]));
@@ -80212,25 +80218,171 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
+/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
+/* harmony import */ var _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/colors/green */ "./node_modules/@material-ui/core/colors/green.js");
+/* harmony import */ var _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _material_ui_core_colors_red__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/colors/red */ "./node_modules/@material-ui/core/colors/red.js");
+/* harmony import */ var _material_ui_core_colors_red__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_colors_red__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../store/Admin/CRUDPage/types */ "./resources/ts/store/Admin/CRUDPage/types.ts");
+/* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Input */ "./resources/ts/components/CPanel/CRUDPage/Input.tsx");
 
 
 
+
+
+
+
+
+var styler = Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_3__["withStyles"])(function (theme) { return ({
+    paper: {
+        zIndex: 2050,
+        position: "absolute",
+        top: "15vh",
+        left: "25vw",
+        width: "50vw",
+        color: theme.palette.common.black,
+        padding: theme.spacing(4)
+    },
+    grow: {
+        flexGrow: 1
+    },
+    green: {
+        background: _material_ui_core_colors_green__WEBPACK_IMPORTED_MODULE_4___default.a[400],
+        color: theme.palette.common.white
+    },
+    red: {
+        background: _material_ui_core_colors_red__WEBPACK_IMPORTED_MODULE_5___default.a[400],
+        color: theme.palette.common.white,
+        marginLeft: theme.spacing(4)
+    }
+}); });
 var Form = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](Form, _super);
     function Form() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    Form.prototype.renderActionButton = function () {
+        var _a = this.props, mode = _a.mode, classes = _a.classes;
+        switch (mode) {
+            case _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_6__["CRUD_FORM_CREATE"]:
+                return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], { className: classes.green, variant: "contained" }, "Create"));
+            case _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_6__["CRUD_FORM_UPDATE"]:
+                return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], { color: "secondary", variant: "contained" }, "Update"));
+            default:
+                return null;
+        }
+    };
+    Form.prototype.renderInputRows = function () {
+        var _this = this;
+        var structure = this.props.structure;
+        return structure.map(function (row, key) { return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Grid"], { key: key, container: true }, _this.renderRow(row))); });
+    };
+    Form.prototype.renderRow = function (row) {
+        var length;
+        switch (12 / row.length) {
+            case 12:
+                length = 12;
+                break;
+            case 6:
+                length = 6;
+                break;
+            case 4:
+                length = 4;
+                break;
+            case 3:
+                length = 3;
+                break;
+            default:
+                length = 2;
+                break;
+        }
+        return row.map(function (input, key) { return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Grid"], { key: key, item: true, md: length },
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_Input__WEBPACK_IMPORTED_MODULE_7__["default"], tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, input)))); });
+    };
+    Form.prototype.renderMode = function () {
+        var mode = this.props.mode;
+        switch (mode) {
+            case _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_6__["CRUD_FORM_CREATE"]:
+                return "Create";
+            case _store_Admin_CRUDPage_types__WEBPACK_IMPORTED_MODULE_6__["CRUD_FORM_UPDATE"]:
+                return "Update";
+            default:
+                return "Search";
+        }
+    };
     Form.prototype.render = function () {
-        var _a = this.props, open = _a.open, title = _a.title;
-        return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Modal"], { open: open },
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("form", null,
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], { variant: "h6", align: "center" }, title),
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Divider"], null),
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Grid"], { container: true }))));
+        var _a = this.props, open = _a.open, title = _a.title, onClose = _a.onClose, classes = _a.classes, search = _a.search, onSearchModeToggle = _a.onSearchModeToggle;
+        return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Modal"], { open: open, onClose: onClose },
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Paper"], { className: classes.paper },
+                react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("form", null,
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], { color: "inherit", variant: "h6", align: "center" },
+                        this.renderMode(),
+                        " ",
+                        title),
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Divider"], null),
+                    this.renderInputRows(),
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Divider"], null),
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Grid"], { container: true },
+                        react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Grid"], { item: true, xs: 12 },
+                            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Toolbar"], { variant: "dense" },
+                                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Switch"], { onChange: onSearchModeToggle, checked: search }),
+                                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], { variant: "caption" }, "Search"),
+                                react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", { className: classes.grow }),
+                                this.renderActionButton(),
+                                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], { className: classes.red, variant: "contained", onClick: onClose }, "Cancel"))))))));
     };
     return Form;
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]));
-/* harmony default export */ __webpack_exports__["default"] = (Form);
+/* harmony default export */ __webpack_exports__["default"] = (styler(Form));
+
+
+/***/ }),
+
+/***/ "./resources/ts/components/CPanel/CRUDPage/Input.tsx":
+/*!***********************************************************!*\
+  !*** ./resources/ts/components/CPanel/CRUDPage/Input.tsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/TextField */ "./node_modules/@material-ui/core/esm/TextField/index.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
+
+
+
+
+var styler = Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["withStyles"])(function (theme) { return ({
+    inputWrapper: {
+        color: theme.palette.common.black,
+        margin: theme.spacing(4)
+    }
+}); });
+var Input = /** @class */ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](Input, _super);
+    function Input() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Input.prototype.renderInput = function () {
+        var _a = this.props, type = _a.type, label = _a.label;
+        switch (type) {
+            case 'text':
+                return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_2__["default"], { variant: "outlined", color: "inherit", fullWidth: true, label: label }));
+            default:
+                return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_2__["default"], { variant: "outlined", color: "inherit", fullWidth: true, type: type, label: label }));
+        }
+    };
+    Input.prototype.render = function () {
+        var classes = this.props.classes;
+        return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", { className: classes.inputWrapper }, this.renderInput()));
+    };
+    return Input;
+}(react__WEBPACK_IMPORTED_MODULE_1__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (styler(Input));
 
 
 /***/ }),
@@ -80436,7 +80588,7 @@ var styler = Object(_material_ui_styles_withStyles__WEBPACK_IMPORTED_MODULE_5__[
             width: "50vw"
         },
         zIndex: {
-            zIndex: 2000
+            zIndex: 1900
         }
     });
 });
@@ -80646,10 +80798,15 @@ var theme = _material_ui_core_styles_createMuiTheme__WEBPACK_IMPORTED_MODULE_0__
         },
         MuiInputLabel: {
             formControl: {
-                marginTop: -8
+                marginTop: -12
             },
             shrink: {
                 marginTop: 2
+            }
+        },
+        MuiSwitch: {
+            switchBase: {
+                margin: 0
             }
         }
     },
@@ -80660,7 +80817,7 @@ var theme = _material_ui_core_styles_createMuiTheme__WEBPACK_IMPORTED_MODULE_0__
             main: "#542f88"
         },
         text: {
-            primary: "#f0f0f0",
+            primary: "#0f0f0f",
             secondary: "#000000"
         }
     },
@@ -80745,7 +80902,7 @@ var createStoreWithMiddleware = redux__WEBPACK_IMPORTED_MODULE_1__["applyMiddlew
 /*!******************************************************!*\
   !*** ./resources/ts/store/Admin/CRUDPage/actions.ts ***!
   \******************************************************/
-/*! exports provided: loadedResults, selectToUpdate, selectToDelete, selectToSearch, selectToCreate, toggleSearchMode, loadedInfo, changeValue, fetchInfo */
+/*! exports provided: loadedResults, selectToUpdate, selectToDelete, selectToSearch, selectToCreate, toggleSearchMode, clearForm, loadedInfo, changeValue, fetchInfo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80756,6 +80913,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectToSearch", function() { return selectToSearch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectToCreate", function() { return selectToCreate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleSearchMode", function() { return toggleSearchMode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearForm", function() { return clearForm; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadedInfo", function() { return loadedInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeValue", function() { return changeValue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchInfo", function() { return fetchInfo; });
@@ -80792,6 +80950,9 @@ var selectToCreate = function () { return ({
 }); };
 var toggleSearchMode = function () { return ({
     type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_TOGGLE_SEARCH_MODE"]
+}); };
+var clearForm = function () { return ({
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_CLEAR_FORM"]
 }); };
 var loadedInfo = function (title, inputs, columns, structure, actions) { return ({
     type: _types__WEBPACK_IMPORTED_MODULE_1__["CRUD_LOADED_INFO"],

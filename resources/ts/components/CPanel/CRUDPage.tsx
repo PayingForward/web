@@ -15,7 +15,13 @@ import {
     CRUD_FORM_SEARCH,
     CRUD_FORM_CREATE
 } from "../../store/Admin/CRUDPage/types";
-import { fetchInfo } from "../../store/Admin/CRUDPage/actions";
+import {
+    fetchInfo,
+    selectToSearch,
+    clearForm,
+    toggleSearchMode,
+    selectToCreate
+} from "../../store/Admin/CRUDPage/actions";
 import { ThunkDispatch } from "redux-thunk";
 
 const styler = withStyles(theme => ({
@@ -35,7 +41,11 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-    onChangeForm: (form: string) => dispatch(fetchInfo(form))
+    onChangeForm: (form: string) => dispatch(fetchInfo(form)),
+    onSelectToSearch: () => dispatch(selectToSearch()),
+    onSelectToCreate: () => dispatch(selectToCreate()),
+    onClearForm: () => dispatch(clearForm()),
+    onToggleSearchMode: () => dispatch(toggleSearchMode())
 });
 
 interface PathParamsType {
@@ -49,6 +59,10 @@ type Props = RouteComponentProps<PathParamsType> & {
         margin: string;
     };
     onChangeForm: (form: string) => void;
+    onSelectToSearch: () => void;
+    onSelectToCreate: () => void;
+    onClearForm: () => void;
+    onToggleSearchMode: () => void;
 } & CRUDPageState;
 
 class CRUDPage extends React.Component<Props> {
@@ -69,7 +83,7 @@ class CRUDPage extends React.Component<Props> {
     }
 
     renderSearchButton() {
-        const { actions, classes } = this.props;
+        const { actions, classes, onSelectToSearch } = this.props;
 
         if (actions.includes("search")) {
             return (
@@ -77,6 +91,7 @@ class CRUDPage extends React.Component<Props> {
                     className={classes.margin}
                     variant="contained"
                     color="primary"
+                    onClick={onSelectToSearch}
                 >
                     <SearchIcon />
                     Search
@@ -88,7 +103,7 @@ class CRUDPage extends React.Component<Props> {
     }
 
     renderCreateButton() {
-        const { actions, classes } = this.props;
+        const { actions, classes, onSelectToCreate } = this.props;
 
         if (actions.includes("create")) {
             return (
@@ -96,6 +111,7 @@ class CRUDPage extends React.Component<Props> {
                     className={classNames(classes.green, classes.margin)}
                     variant="contained"
                     color="primary"
+                    onClick={onSelectToCreate}
                 >
                     <PlusIcon />
                     Create
@@ -107,24 +123,41 @@ class CRUDPage extends React.Component<Props> {
     }
 
     public render() {
-        const { classes, title, mode,values } = this.props;
+        const {
+            classes,
+            title,
+            mode,
+            values,
+            onClearForm,
+            search,
+            onToggleSearchMode,
+            structure
+        } = this.props;
 
         return (
             <Layout>
-                <Toolbar variant="dense">
-                    <Typography variant="h5">{title}</Typography>
-                    <div className={classes.grow} />
-                    {this.renderSearchButton()}
-                    {this.renderCreateButton()}
-                </Toolbar>
-                <Divider />
-                <Form
-                    open={
-                        mode === CRUD_FORM_SEARCH || mode === CRUD_FORM_CREATE
-                    }
-                    values={values}
-                    title={title}
-                />
+                <div>
+                    <Toolbar variant="dense">
+                        <Typography variant="h5">{title}</Typography>
+                        <div className={classes.grow} />
+                        {this.renderSearchButton()}
+                        {this.renderCreateButton()}
+                    </Toolbar>
+                    <Divider />
+                    <Form
+                        open={
+                            mode === CRUD_FORM_SEARCH ||
+                            mode === CRUD_FORM_CREATE
+                        }
+                        values={values}
+                        title={title}
+                        onClose={onClearForm}
+                        mode={mode}
+                        search={search}
+                        onSearchModeToggle={onToggleSearchMode}
+                        structure={structure}
+                    />
+                </div>
             </Layout>
         );
     }
