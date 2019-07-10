@@ -9,37 +9,9 @@ class Column implements JsonSerializable {
     use HasAttributes;
 
     /**
-     * Weather that column is searchable from form
-     *
-     * @var boolean
-     */
-    protected $searchable = true;
-
-    /**
      * Weather that column is sortable or not in the table
      */
     protected $sortable = true;
-
-    /**
-     * Setting columns to searchable
-     *
-     * @param boolean $search
-     * 
-     * @return self
-     */
-    public function setSearchable($search=false){
-        $this->searchable = $search;
-        return $this;
-    }
-
-    /**
-     * Returning the weather the column is searchable or not
-     *
-     * @return boolean
-     */
-    public function isSearchable(){
-        return $this->searchable;
-    }
 
     /**
      * Setting columns to sortable in tables

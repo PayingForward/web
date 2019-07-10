@@ -12,7 +12,7 @@ import {
 import { withStyles } from "@material-ui/styles";
 import green from "@material-ui/core/colors/green";
 import red from "@material-ui/core/colors/red";
-import { CRUD_FORM_CREATE, Input as IInput, CRUD_FORM_UPDATE } from "../../../store/Admin/CRUDPage/types";
+import { CRUD_FORM_CREATE, Input as IInput, CRUD_FORM_UPDATE, CRUD_FORM_SEARCH } from "../../../store/Admin/CRUDPage/types";
 import Input from "./Input";
 
 const styler = withStyles(theme => ({
@@ -53,25 +53,44 @@ interface Props {
     title: string;
     onClose?: () => void;
     onSearchModeToggle: ()=>void;
+    onChangeInput:(name:string,value:any)=>void;
     mode?: string;
     search: boolean;
     structure: IInput[][];
+    onSubmit?:()=>void;
 }
 
 class Form extends React.Component<Props> {
+
+    constructor(props:Props){
+        super(props);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(e:React.FormEvent){
+        const {onSubmit} = this.props;
+
+        e.preventDefault();
+
+        if(onSubmit){
+            onSubmit();
+        }
+    }
+
     public renderActionButton() {
         const { mode, classes } = this.props;
 
         switch (mode) {
             case CRUD_FORM_CREATE:
                 return (
-                    <Button className={classes.green} variant="contained">
+                    <Button type="submit" className={classes.green} variant="contained">
                         Create
                     </Button>
                 );
             case CRUD_FORM_UPDATE:
                 return (
-                    <Button color="secondary" variant="contained">
+                    <Button type="submit" color="secondary" variant="contained">
                         Update
                     </Button>
                 )
@@ -91,9 +110,17 @@ class Form extends React.Component<Props> {
     }
 
     public renderRow(row:IInput[]){
+        const {values,onChangeInput,mode} = this.props;
         let length: 12|6|4|3|2;
 
-        switch (12/row.length) {
+        const filteredRow = row.filter((input:IInput)=>{
+            if(mode==CRUD_FORM_SEARCH){
+                return input.searchable;
+            }
+            return true;
+        });
+
+        switch (12/filteredRow.length) {
             case 12:
                     length=12;
                 break;
@@ -111,9 +138,9 @@ class Form extends React.Component<Props> {
                 break;
         }
 
-        return row.map((input,key)=>(
+        return filteredRow.map((input,key)=>(
             <Grid key={key} item md={length}>
-                <Input {...input}/>
+                <Input onChange={value=>onChangeInput(input.name,value)} value={values[input.name]} {...input}/>
             </Grid>
         ))
     }
@@ -137,7 +164,7 @@ class Form extends React.Component<Props> {
         return (
             <Modal open={open} onClose={onClose}>
                 <Paper className={classes.paper}>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                         <Typography color="inherit" variant="h6" align="center">
                             {this.renderMode()} {title}
                         </Typography>

@@ -13,21 +13,27 @@ const styler = withStyles(theme=>({
 interface Props extends IInput {
     classes:{
         inputWrapper:string
-    }
+    },
+    value?:any,
+    onChange?:(e:any)=>void
 }
 
 class Input extends React.Component <Props> {
     public renderInput(){
-        const {type,label} = this.props;
+        const {type,label,value,onChange} = this.props;
+
+        let formatedValue = value?value:"";
+
+        const props = {type,label,value:formatedValue,onChange};
 
         switch (type) {
             case 'text':
                 return (
-                    <TextField variant="outlined"  color="inherit" fullWidth label={label} />
+                    <TextField {...props} onChange={onChange?e=>onChange(e.target.value):undefined} variant="outlined"  color="inherit" fullWidth />
                 );
             default:
                return (
-                    <TextField variant="outlined"  color="inherit" fullWidth type={type} label={label} />
+                    <TextField {...props} onChange={onChange?e=>onChange(e.target.value):undefined} variant="outlined"  color="inherit" fullWidth />
                );
         }
     }

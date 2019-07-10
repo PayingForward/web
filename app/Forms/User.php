@@ -13,7 +13,7 @@ class User extends Form {
     {
         $this->textInput('name','u_name')->setLowerCase()->setValidationRule('required')->setLabel("Name");
         $this->textInput('email','u_email')->setValidationRule('required|email')->setLabel("Email");
-        $this->passwordInput('password','u_password')->setValidationRule('required')->setLabel("Password");
+        $this->passwordInput('password','u_password')->setValidationRule('required')->setLabel("Password")->setSearchable(false);
         $this->setStructure(
             'name',
             ['email','password']
@@ -24,6 +24,7 @@ class User extends Form {
     {
         $this->textColumn('name','u_name')->setLabel("Name");
         $this->textColumn('email','u_email')->setLabel("Email");
+        $this->textColumn('created_at','created_at')->setLabel("Created At");
     }
 
     public function formatDropdownLabel($instance, $where)

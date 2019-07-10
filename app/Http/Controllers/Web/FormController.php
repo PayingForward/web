@@ -242,7 +242,8 @@ class FormController extends Controller {
             'values'=>'array',
             'page'=>'required',
             'perPage'=>'required',
-            'sortBy'=>'required'
+            'sortBy'=>'required',
+            'sortMode'=>'required'
         ]);
 
         if($validation->fails()){
@@ -253,6 +254,11 @@ class FormController extends Controller {
         $page = $request->input('page');
         $perPage = $request->input('perPage');
         $sortBy = $request->input('sortBy');
+        $sortMode = $request->input('sortMode');
+
+        if($sortMode!="desc"&&$sortMode!="asc"){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
 
         $columns = $this->form->getColumns();
 
@@ -270,7 +276,7 @@ class FormController extends Controller {
 
         $count = $query->count();
 
-        $query->take($page);
+        $query->take($perPage);
         $query->skip(($page-1)*$perPage);
 
         $sortColumn = $this->form->getColumn($sortBy);
@@ -280,7 +286,7 @@ class FormController extends Controller {
             throw new WebApiException("Invalid values supplied.",5);
         }
 
-        $query->orderBy($sortColumn->getColumnName());
+        $query->orderBy($sortColumn->getColumnName(),$sortMode);
 
         $this->form->beforeSearch($query,$values);
 
@@ -294,6 +300,8 @@ class FormController extends Controller {
 
                 $formatedResults[$name] = $column->unserializeValue($value);
             }
+
+            $formatedResults['id'] = $model->getKey();
 
             return $formatedResults;
         });

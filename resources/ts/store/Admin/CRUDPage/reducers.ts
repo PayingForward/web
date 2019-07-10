@@ -13,7 +13,11 @@ import {
     CRUD_SELECT_TO_CREATE,
     CRUD_FORM_CREATE,
     CRUD_TOGGLE_SEARCH_MODE,
-    CRUD_CLEAR_FORM
+    CRUD_CLEAR_FORM,
+    CRUD_TABLE_SORT_DESC,
+    CRUD_TABLE_SORT,
+    CRUD_TABLE_CHANGE_PAGE,
+    CRUD_TABLE_CHANGE_PER_PAGE
 } from "./types";
 
 const initialState: CRUDPageState = {
@@ -26,7 +30,11 @@ const initialState: CRUDPageState = {
     structure: [],
     actions: [],
     form: "",
-    search:true
+    search:true,
+    page:1,
+    perPage:25,
+    sortedBy:'created_at',
+    sortedMode: CRUD_TABLE_SORT_DESC
 };
 
 export default (state = initialState, action: CRUDPageActions) => {
@@ -39,7 +47,8 @@ export default (state = initialState, action: CRUDPageActions) => {
         case CRUD_SELECT_TO_UPDATE:
             return {
                 ...state,
-                updatingId: action.id,
+                updatingId: action.result.id,
+                values:{...action.result,id:undefined},
                 mode: CRUD_FORM_UPDATE
             };
         case CRUD_SELECT_TO_SEARCH:
@@ -90,7 +99,24 @@ export default (state = initialState, action: CRUDPageActions) => {
                 ...state,
                 search:false,
                 values:{},
-                mode:undefined
+                mode:undefined,
+                updatingId:undefined
+            };
+        case CRUD_TABLE_SORT:
+            return {
+                ...state,
+                sortedBy: action.sortBy,
+                sortedMode: action.sortMode
+            };
+        case CRUD_TABLE_CHANGE_PAGE:
+            return {
+                ...state,
+                page: action.page
+            };
+        case CRUD_TABLE_CHANGE_PER_PAGE:
+            return {
+                ...state,
+                perPage: action.perPage
             };
         default:
             return state;

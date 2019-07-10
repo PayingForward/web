@@ -37,6 +37,11 @@ const theme = createMuiTheme({
 			switchBase:{
 				margin:0
 			}
+		},
+		MuiTableCell:{
+			root:{
+				padding:"0px 40px 0px 16px"
+			}
 		}
 	},
 	palette: {

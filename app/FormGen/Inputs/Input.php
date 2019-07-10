@@ -2,7 +2,6 @@
 namespace App\FormGen\Inputs;
 
 use App\FormGen\HasAttributes;
-use App\FormGen\Attribute;
 
 class Input implements \JsonSerializable{
     use HasAttributes;
@@ -82,7 +81,8 @@ class Input implements \JsonSerializable{
             'type'=>$this->type,
             'attributes'=>$this->attributes,
             'validation'=>$this->validationRule,
-            'label'=>$this->getLabel()
+            'label'=>$this->getLabel(),
+            'searchable'=>$this->isSearchable(),
         ];
     }
 }

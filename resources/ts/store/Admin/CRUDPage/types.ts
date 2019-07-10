@@ -9,6 +9,10 @@ export const CRUD_LOADED_INFO = "CRUD_LOADED_INFO";
 export const CRUD_TOGGLE_SEARCH_MODE = "CRUD_TOGGLE_SEARCH_MODE";
 export const CRUD_CLEAR_FORM = "CRUD_CLEAR_FORM";
 
+export const CRUD_TABLE_SORT = "CRUD_TABLE_SORT";
+export const CRUD_TABLE_CHANGE_PAGE = "CRUD_TABLE_CHANGE_PAGE";
+export const CRUD_TABLE_CHANGE_PER_PAGE = "CRUD_TABLE_CHANGE_PER_PAGE";
+
 export interface Attribute {
     name: string;
     value: any;
@@ -19,7 +23,8 @@ export interface Input {
     type: string;
     attributes: Attribute[];
     validation: string;
-    label:string;
+    label: string;
+    searchable: boolean;
 }
 
 export interface Inputs {
@@ -36,7 +41,7 @@ export interface Column {
     attributes: Attribute[];
     searchable: boolean;
     sortable: boolean;
-    label:string;
+    label: string;
 }
 
 export interface ResultRow {
@@ -47,6 +52,12 @@ export interface ResultRow {
 export const CRUD_FORM_UPDATE = "CRUD_FORM_UPDATE";
 export const CRUD_FORM_SEARCH = "CRUD_FORM_SEARCH";
 export const CRUD_FORM_CREATE = "CRUD_FORM_CREATE";
+
+export const CRUD_TABLE_SORT_DESC = "CRUD_TABLE_SORT_DESC";
+export const CRUD_TABLE_SORT_ASC = "CRUD_TABLE_SORT_ASC";
+export type SortModes =
+    | typeof CRUD_TABLE_SORT_DESC
+    | typeof CRUD_TABLE_SORT_ASC;
 
 export interface CRUDPageState {
     results: ResultRow[];
@@ -66,6 +77,10 @@ export interface CRUDPageState {
     actions: string[];
     form: string;
     search: boolean;
+    page: number;
+    perPage: number;
+    sortedBy: string;
+    sortedMode: SortModes;
 }
 
 export interface LoadedResults {
@@ -76,7 +91,7 @@ export interface LoadedResults {
 
 export interface SelectToUpdate {
     type: typeof CRUD_SELECT_TO_UPDATE;
-    id: number;
+    result: ResultRow;
 }
 
 export interface SelectToDelete {
@@ -120,6 +135,22 @@ export interface ClearForm {
     type: typeof CRUD_CLEAR_FORM;
 }
 
+export interface SortResults {
+    type: typeof CRUD_TABLE_SORT;
+    sortBy: string;
+    sortMode: SortModes;
+}
+
+export interface ChangePage {
+    type: typeof CRUD_TABLE_CHANGE_PAGE;
+    page: number;
+}
+
+export interface ChangePerPage {
+    type: typeof CRUD_TABLE_CHANGE_PER_PAGE;
+    perPage: number;
+}
+
 export type CRUDPageActions =
     | LoadedResults
     | SelectToDelete
@@ -130,4 +161,7 @@ export type CRUDPageActions =
     | ChangeValue
     | SelectToCreate
     | ToggleSearchMode
-    | ClearForm;
+    | ClearForm
+    | SortResults
+    | ChangePage
+    | ChangePerPage;

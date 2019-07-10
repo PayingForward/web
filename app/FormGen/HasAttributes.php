@@ -40,6 +40,13 @@ trait HasAttributes {
     protected $columnName = null;
 
     /**
+     * Weather that column is searchable from form
+     *
+     * @var boolean
+     */
+    protected $searchable = true;
+
+    /**
      * Setting an attribute to the input
      * 
      * @param string $name
@@ -114,5 +121,26 @@ trait HasAttributes {
      */
     public function getLabel(){
         return $this->label;
+    }
+
+    /**
+     * Setting columns to searchable
+     *
+     * @param boolean $search
+     * 
+     * @return self
+     */
+    public function setSearchable($search=false){
+        $this->searchable = $search;
+        return $this;
+    }
+
+    /**
+     * Returning the weather the column is searchable or not
+     *
+     * @return boolean
+     */
+    public function isSearchable(){
+        return $this->searchable;
     }
 }

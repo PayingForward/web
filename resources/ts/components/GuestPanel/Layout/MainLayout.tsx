@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Header from './Header';
+import Snacks from './Snacks';
 import { withStyles } from '@material-ui/core';
 
 const styler = withStyles(theme=>({
@@ -24,6 +25,7 @@ class MainLayout extends React.Component<Props>{
                 <div className={classes.wrapper} >
                     {children}
                 </div>
+                <Snacks/>
             </div>
         );
     }
