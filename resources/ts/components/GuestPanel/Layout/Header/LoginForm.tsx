@@ -1,6 +1,8 @@
 import * as React from "react";
 import {connect} from 'react-redux';
-import { TextField, withStyles, Button } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField"; 
+import withStyles from "@material-ui/core/styles/withStyles"; 
+import Button from "@material-ui/core/Button";
 import { AppState } from 'resources/ts/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { changeEmail, changePassword, submitLogin } from '../../../../store/LoginForm/actions';

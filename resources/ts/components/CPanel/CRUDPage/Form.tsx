@@ -1,15 +1,13 @@
 import * as React from "react";
-import {
-    Modal,
-    Typography,
-    Divider,
-    Grid,
-    Paper,
-    Toolbar,
-    Button,
-    Switch
-} from "@material-ui/core";
-import { withStyles } from "@material-ui/styles";
+import Modal from "@material-ui/core/Modal";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import Switch from "@material-ui/core/Switch";
+import withStyles from "@material-ui/styles/withStyles";
 import green from "@material-ui/core/colors/green";
 import red from "@material-ui/core/colors/red";
 import { CRUD_FORM_CREATE, Input as IInput, CRUD_FORM_UPDATE, CRUD_FORM_SEARCH } from "../../../store/Admin/CRUDPage/types";

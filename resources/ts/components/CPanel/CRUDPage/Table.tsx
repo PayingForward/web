@@ -1,15 +1,13 @@
 import * as React from "react";
 import MuiTable from "@material-ui/core/Table";
-import {
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
-    IconButton,
-    Tooltip,
-    TableFooter,
-    TablePagination
-} from "@material-ui/core";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import TableFooter from "@material-ui/core/TableFooter";
+import TablePagination from "@material-ui/core/TablePagination";
 import ArrowUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDownIcon from "@material-ui/icons/ArrowDropDown";
 import CloseIcon from "@material-ui/icons/Close";
@@ -25,7 +23,7 @@ import {
     SortModes
 } from "../../../store/Admin/CRUDPage/types";
 import Column from "./Column";
-import { withStyles } from "@material-ui/styles";
+import withStyles from "@material-ui/styles/withStyles";
 
 interface Props {
     columns: Columns;

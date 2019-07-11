@@ -7,7 +7,7 @@ import { APP_NAME } from "../../../constants/config";
 import { AppState } from "../../../rootReducer";
 import LoginForm from "./Header/LoginForm";
 import { UserInformations } from "resources/ts/store/AuthController/types";
-import { Toolbar } from "@material-ui/core";
+import Toolbar from "@material-ui/core/Toolbar";
 
 export const styler = withStyles(({ spacing }) => ({
     grow: {

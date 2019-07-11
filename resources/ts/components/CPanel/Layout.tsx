@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withStyles } from "@material-ui/styles";
+import withStyles from "@material-ui/styles/withStyles";
 import MainLayout from '../GuestPanel/Layout/MainLayout';
 import SideBar from './Layout/SideBar';
 
