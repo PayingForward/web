@@ -4,9 +4,11 @@ namespace App\FormGen;
 use App\FormGen\Inputs\Input;
 use App\FormGen\Inputs\Collection\TextInput;
 use App\FormGen\Inputs\Collection\PasswordInput;
+use App\FormGen\Inputs\Collection\AjaxDropdownInput;
 
 use App\FormGen\Columns\Column;
 use App\FormGen\Columns\Collection\TextColumn;
+use App\FormGen\Columns\Collection\AjaxDropdownColumn;
 
 use App\Models\Base;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +19,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @method TextInput textInput(string $name,string $columnName=$name)
  * @method PasswordInput passwordInput(string $name,string $columnName=$name)
  * @method TextColumn textColumn(string $name,string $columnName=$name)
+ * @method AjaxDropdownInput ajaxDropdownInput(string $name,string $columnName=$name)
+ * @method AjaxDropdownColumn ajaxDropdownColumn(string $name,string $columnName=$name)
  */
 class Form {
 
@@ -119,6 +123,7 @@ class Form {
 
             $instance->setName($name);
             $instance->setColumnName($columnName);
+            $instance->setForm($this);
 
             $this->{$type.'s'}[$name] = $instance;
 

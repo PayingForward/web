@@ -47,6 +47,13 @@ trait HasAttributes {
     protected $searchable = true;
 
     /**
+     * Parent form instance for the input or column
+     *
+     * @var Form
+     */
+    protected $form;
+
+    /**
      * Setting an attribute to the input
      * 
      * @param string $name
@@ -142,5 +149,25 @@ trait HasAttributes {
      */
     public function isSearchable(){
         return $this->searchable;
+    }
+
+    /**
+     * Setting the parent form instance
+     * 
+     * @param Form $form
+     * 
+     * @return void
+     */
+    public function setForm($form){
+        $this->form = $form;
+    }
+
+    /**
+     * Getting the parent form
+     * 
+     * @return Form
+     */
+    public function getForm(){
+        return $this->form;
     }
 }

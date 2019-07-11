@@ -298,7 +298,7 @@ class FormController extends Controller {
             foreach($columns as $name=>$column){
                 $value = $model->{$column->getColumnName()};
 
-                $formatedResults[$name] = $column->unserializeValue($value);
+                $formatedResults[$name] = $column->unserializeValue($value,$model);
             }
 
             $formatedResults['id'] = $model->getKey();

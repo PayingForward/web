@@ -17,10 +17,18 @@ interface Props extends IColumn {
 }
 
 class Column extends React.Component <Props> {
-    public renderInput(){
-        const {value} = this.props;
+    public renderColumn(){
+        const {value,type} = this.props;
 
-        return value;
+        if(!value)
+            return null;
+
+        switch (type) {
+            case "ajax_dropdown":
+                return value.label;
+            default:
+                return value;
+        }
     }
 
     public render(){
@@ -28,7 +36,7 @@ class Column extends React.Component <Props> {
 
         return (
             <div className={classes.columnWrapper}>
-                {this.renderInput()}
+                {this.renderColumn()}
             </div>
         )
     }

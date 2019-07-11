@@ -44,6 +44,11 @@ export interface Column {
     label: string;
 }
 
+export interface DropdownOption {
+    id:number,
+    label:string
+}
+
 export interface ResultRow {
     id: number;
     [x: string]: any;

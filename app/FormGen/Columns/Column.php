@@ -4,6 +4,7 @@ namespace App\FormGen\Columns;
 use App\FormGen\HasAttributes;
 use Illuminate\Database\Eloquent\Builder;
 use JsonSerializable;
+use App\Models\Base;
 
 class Column implements JsonSerializable {
     use HasAttributes;
@@ -50,10 +51,11 @@ class Column implements JsonSerializable {
      * Unserializing the values before sending to frontend
      *
      * @param mixed $value
+     * @param Base $model
      * 
      * @return mixed
      */
-    public function unserializeValue($value){
+    public function unserializeValue($value,$model){
         return $value;
     }
 
