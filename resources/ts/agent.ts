@@ -37,12 +37,31 @@ const Auth = {
 };
 
 const CRUD = {
-    info:(form:string)=> request('form/'+form+'/info'),
-    create:(form:string,values:{[x:string]:any})=>request('form/'+form+'/create',{values}),
-    update:(form:string,values:{[x:string]:any},id:number)=>request('form/'+form+'/update',{values,id}),
-    search:(form:string,values:{[x:string]:any},page:number,perPage:number,sortBy:string,sortMode:string)=>request('form/'+form+'/search',{values,page,perPage,sortBy,sortMode}),
-    delete:(form:string,id:number)=>request('form/'+form+'/delete',{id}),
-}
+    info: (form: string) => request("form/" + form + "/info"),
+    create: (form: string, values: { [x: string]: any }) =>
+        request("form/" + form + "/create", { values }),
+    update: (form: string, values: { [x: string]: any }, id: number) =>
+        request("form/" + form + "/update", { values, id }),
+    search: (
+        form: string,
+        values: { [x: string]: any },
+        page: number,
+        perPage: number,
+        sortBy: string,
+        sortMode: string
+    ) =>
+        request("form/" + form + "/search", {
+            values,
+            page,
+            perPage,
+            sortBy,
+            sortMode
+        }),
+    delete: (form: string, id: number) =>
+        request("form/" + form + "/delete", { id }),
+    dropdown: (form: string, keyword: string, where?: { [x: string]: any }) =>
+        request("form/" + form + "/dropdown", { keyword, where })
+};
 
 export default {
     Auth,

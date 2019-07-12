@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Column as IColumn} from '../../../store/Admin/CRUDPage/types';
 import { withStyles } from '@material-ui/core';
+import Avatar from './Columns/Avatar';
 
 const styler = withStyles(theme=>({
     columnWrapper:{
@@ -26,6 +27,8 @@ class Column extends React.Component <Props> {
         switch (type) {
             case "ajax_dropdown":
                 return value.label;
+            case "avatar":
+                return <Avatar {...this.props} classes={undefined} value={value} />
             default:
                 return value;
         }

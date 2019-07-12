@@ -5,10 +5,12 @@ use App\FormGen\Inputs\Input;
 use App\FormGen\Inputs\Collection\TextInput;
 use App\FormGen\Inputs\Collection\PasswordInput;
 use App\FormGen\Inputs\Collection\AjaxDropdownInput;
+use App\FormGen\Inputs\Collection\AvatarInput;
 
 use App\FormGen\Columns\Column;
 use App\FormGen\Columns\Collection\TextColumn;
 use App\FormGen\Columns\Collection\AjaxDropdownColumn;
+use App\FormGen\Columns\Collection\AvatarColumn;
 
 use App\Models\Base;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,6 +23,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @method TextColumn textColumn(string $name,string $columnName=$name)
  * @method AjaxDropdownInput ajaxDropdownInput(string $name,string $columnName=$name)
  * @method AjaxDropdownColumn ajaxDropdownColumn(string $name,string $columnName=$name)
+ * @method AvatarInput avatarInput(string $name,string $columnName=$name)
+ * @method AvatarColumn avatarColumn(string $name,string $columnName=$name)
  */
 class Form {
 

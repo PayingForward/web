@@ -39,7 +39,7 @@ CanResetPasswordContract
      * @var array
      */
     protected $fillable = [
-        'u_name', 'u_email', 'u_password','ut_id'
+        'u_name', 'u_email', 'u_password','ut_id','u_avatar'
     ];
 
     /**

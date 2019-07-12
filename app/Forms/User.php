@@ -14,15 +14,18 @@ class User extends Form {
         $this->textInput('name','u_name')->setLowerCase()->setValidationRule('required')->setLabel("Name");
         $this->textInput('email','u_email')->setValidationRule('required|email')->setLabel("Email");
         $this->passwordInput('password','u_password')->setValidationRule('required')->setLabel("Password")->setSearchable(false);
-        $this->ajaxDropdownInput('user_type','ut_id')->setValidationRule('reuired')->setLabel('User Type');
+        $this->ajaxDropdownInput('user_type','ut_id')->setValidationRule('required')->setLabel('User Type')->setLink('user_type');
+        $this->avatarInput('avatar','u_avatar')->setLabel('Avatar');
         $this->setStructure(
             ['name','user_type'],
-            ['email','password']
+            ['email','password'],
+            ['avatar']
         );
     }
 
     protected function setColumns()
     {
+        $this->avatarColumn('avatar','u_avatar')->setLabel("Avatar");
         $this->textColumn('name','u_name')->setLabel("Name");
         $this->textColumn('email','u_email')->setLabel("Email");
         $this->ajaxDropdownColumn('user_type','ut_id')->setLink('user_type')->setLabel("User Type");
