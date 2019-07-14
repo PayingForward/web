@@ -210,10 +210,19 @@ class CRUDPage extends React.Component<Props> {
 
     componentDidUpdate(prevProps: Props) {
         const { form } = this.props.match.params;
-        const { onChangeForm } = this.props;
+        const {
+            onChangeForm,
+            values,
+            page,
+            perPage,
+            sortedBy,
+            onSearch,
+            sortedMode
+        } = this.props;
 
         if (form !== prevProps.match.params.form) {
             onChangeForm(form);
+            onSearch(form, values, page, perPage, sortedBy, sortedMode);
         }
     }
 

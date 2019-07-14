@@ -16,18 +16,22 @@ import {
 import { SidebarItem, SidebarState } from "../../../store/Admin/Sidebar/types";
 import { Link, LinkProps } from "react-router-dom";
 import { ListItemIcon, Collapse, IconButton } from "@material-ui/core";
-import MapIcon from "@material-ui/icons/Map";
 import ArrowUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDownIcon from "@material-ui/icons/ArrowDropDown";
 import { SIDEBAR_WIDTH } from '../../../constants/config';
 
+import MapIcon from "@material-ui/icons/Map";
+import PersonIcon from "@material-ui/icons/Person";
+import SchoolIcon from "@material-ui/icons/School";
+
 const styler = withStyles(({ spacing }) => ({
     drawer: {
         width: SIDEBAR_WIDTH,
-        flexShrink: 0
+        flexShrink: 0,
+        paddingBottom:spacing(10)
     },
     paper: {
-        background: "#404040",
+        background: "#f0f0f0",
         paddingTop: spacing(10),
         width: SIDEBAR_WIDTH
     }
@@ -54,7 +58,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
 });
 
 const icons: { [x: string]: React.ComponentType<SvgIconProps> } = {
-    country:MapIcon
+    country:MapIcon,
+    user:PersonIcon,
+    school:SchoolIcon,
 };
 
 class SideBar extends React.Component<Props> {
@@ -155,7 +161,7 @@ class SideBar extends React.Component<Props> {
                 className={classes.drawer}
                 variant="permanent"
             >
-                <List>{this.renderItems(items)}</List>
+                <List >{this.renderItems(items)}</List>
             </Drawer>
         );
     }

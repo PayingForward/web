@@ -23,6 +23,10 @@ const theme = createMuiTheme({
 			dense:{
 				paddingBottom:4,
 				paddingTop:4,
+			},
+			root:{
+				paddingBottom:0,
+				paddingTop:0,
 			}
 		},
 		MuiInputBase:{

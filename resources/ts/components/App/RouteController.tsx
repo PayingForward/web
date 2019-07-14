@@ -11,8 +11,8 @@ export default class RouteController extends React.Component {
         return (
             <div>
                 <Router history={history}>
-                    <Route path="/admin" exact={true} component={DashBoard} />
-                    <Route path="/admin/form/:form" exact={true} component={CRUDPage}/>
+                    <Route path="/cpanel" exact={true} component={DashBoard} />
+                    <Route path="/cpanel/form/:form" exact={true} component={CRUDPage}/>
                 </Router>
             </div>
         )

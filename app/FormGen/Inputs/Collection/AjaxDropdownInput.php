@@ -29,7 +29,7 @@ class AjaxDropdownInput extends Input
 
         $this->link = $link;
 
-        return $this->link;
+        return $this;
     }
 
     /**

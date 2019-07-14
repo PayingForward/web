@@ -52,7 +52,7 @@ class AjaxDropdownColumn extends Column
 
     public function makeCondition($query, $value, $and = false)
     {
-        if (isset($value)) {
+        if (isset($value)&&\is_array($value)) {
             if ($and) {
                 $query->where($this->columnName, '=', $value['id']);
             } else {

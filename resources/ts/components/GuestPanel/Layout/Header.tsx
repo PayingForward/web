@@ -8,6 +8,8 @@ import { AppState } from "../../../rootReducer";
 import LoginForm from "./Header/LoginForm";
 import { UserInformations } from "resources/ts/store/AuthController/types";
 import Toolbar from "@material-ui/core/Toolbar";
+import { LoadingBar } from "react-redux-loading-bar";
+import red from "@material-ui/core/colors/red";
 
 export const styler = withStyles(({ spacing }) => ({
     grow: {
@@ -19,8 +21,14 @@ export const styler = withStyles(({ spacing }) => ({
     userArea: {
         width: "50vw"
     },
-    zIndex:{
-        zIndex:1900
+    zIndex: {
+        zIndex: 1900
+    },
+    loadingBar: {
+        background: red[600],
+        height: spacing(4),
+        position: "fixed",
+        zIndex: 5000
     }
 }));
 
@@ -33,7 +41,8 @@ interface Props {
         grow: string;
         wrapper: string;
         userArea: string;
-        zIndex:string
+        zIndex: string;
+        loadingBar: string;
     };
     user?: UserInformations;
 }
@@ -53,14 +62,19 @@ class Header extends React.Component<Props> {
         const { classes } = this.props;
 
         return (
-            <div className={classes.wrapper}>
-                <AppBar className={classes.zIndex}>  
-                    <Toolbar variant="dense" >
-                        <Typography variant="h6">{APP_NAME}</Typography>
-                        <div className={classes.grow} />
-                        {this.renderUserArea()}
-                    </Toolbar>
-                </AppBar>
+            <div>
+                <span>
+                    <LoadingBar className={classes.loadingBar} />
+                </span>
+                <div className={classes.wrapper}>
+                    <AppBar className={classes.zIndex}>
+                        <Toolbar variant="dense">
+                            <Typography variant="h6">{APP_NAME}</Typography>
+                            <div className={classes.grow} />
+                            {this.renderUserArea()}
+                        </Toolbar>
+                    </AppBar>
+                </div>
             </div>
         );
     }

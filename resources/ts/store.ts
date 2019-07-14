@@ -5,7 +5,9 @@ import thunk from "redux-thunk";
 import { APP_LOGGER_ON } from './constants/config';
 import rootReducer from "./rootReducer";
 
-let middleware: Middleware[] = [thunk,loadingBarMiddleware()];
+let middleware: Middleware[] = [thunk,loadingBarMiddleware({
+	promiseTypeSuffixes: ['REQUEST', 'SUCCESS', 'FAILURE'],
+  })];
 
 if(APP_LOGGER_ON){
 	middleware = [...middleware,createLogger()];
