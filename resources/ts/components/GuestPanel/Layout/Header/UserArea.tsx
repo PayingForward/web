@@ -52,6 +52,7 @@ class UserArea extends React.Component<Props,States> {
             menuRef:undefined
         });
     }
+    
 
     public render(){
         const {user,classes} = this.props;
