@@ -89653,7 +89653,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "USER_TOKEN_KEY", function() { return USER_TOKEN_KEY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SIDEBAR_WIDTH", function() { return SIDEBAR_WIDTH; });
 var APP_LOGGER_ON = true;
-var APP_URL = 'https://abandoned-seed.herokuapp.com/';
+var APP_URL = 'http://abandoned-seed.herokuapp.com/';
 var APP_NAME = 'AbandonedSeed';
 var USER_TOKEN_KEY = 'userToken';
 var SIDEBAR_WIDTH = 180;
