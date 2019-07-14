@@ -10,6 +10,7 @@ import { UserInformations } from "resources/ts/store/AuthController/types";
 import Toolbar from "@material-ui/core/Toolbar";
 import { LoadingBar } from "react-redux-loading-bar";
 import red from "@material-ui/core/colors/red";
+import { Link } from 'react-router-dom';
 
 export const styler = withStyles(({ spacing }) => ({
     grow: {
@@ -69,7 +70,9 @@ class Header extends React.Component<Props> {
                 <div className={classes.wrapper}>
                     <AppBar className={classes.zIndex}>
                         <Toolbar variant="dense">
-                            <Typography variant="h6">{APP_NAME}</Typography>
+                            <Link to="/" >
+                                <Typography variant="h6">{APP_NAME}</Typography>
+                            </Link>
                             <div className={classes.grow} />
                             {this.renderUserArea()}
                         </Toolbar>

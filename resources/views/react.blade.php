@@ -9,6 +9,7 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url('css/app.css') }}"/>
         <script defer src="/js/app.js"></script>
         <!-- Styles -->
     </head>

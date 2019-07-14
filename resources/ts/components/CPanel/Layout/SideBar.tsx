@@ -1,25 +1,30 @@
 import * as React from "react";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import withStyles from "@material-ui/styles/withStyles";
-import { SvgIconProps } from "@material-ui/core/SvgIcon";
-import { AppState } from "resources/ts/rootReducer";
 import { ThunkDispatch } from "redux-thunk";
 import { connect } from "react-redux";
+import { Link, LinkProps } from "react-router-dom";
+
 import {
     fetchSidebar,
     expandedItem,
     collapsedItem
 } from "../../../store/Admin/Sidebar/actions";
 import { SidebarItem, SidebarState } from "../../../store/Admin/Sidebar/types";
-import { Link, LinkProps } from "react-router-dom";
-import { ListItemIcon, Collapse, IconButton } from "@material-ui/core";
+import { SIDEBAR_WIDTH } from '../../../constants/config';
+import { AppState } from "../../../rootReducer";
+
+
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Collapse from "@material-ui/core/Collapse";
+import IconButton from "@material-ui/core/IconButton";
 import ArrowUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDownIcon from "@material-ui/icons/ArrowDropDown";
-import { SIDEBAR_WIDTH } from '../../../constants/config';
 
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import withStyles from "@material-ui/styles/withStyles";
+import { SvgIconProps } from "@material-ui/core/SvgIcon";
 import MapIcon from "@material-ui/icons/Map";
 import PersonIcon from "@material-ui/icons/Person";
 import SchoolIcon from "@material-ui/icons/School";
@@ -34,6 +39,9 @@ const styler = withStyles(({ spacing }) => ({
         background: "#f0f0f0",
         paddingTop: spacing(10),
         width: SIDEBAR_WIDTH
+    },
+    list:{
+        paddingBottom:spacing(15)
     }
 }));
 
@@ -41,6 +49,7 @@ interface Props extends SidebarState {
     classes: {
         drawer: string;
         paper: string;
+        list: string;
     };
     onLoad: () => void;
     onExpand: (id:string)=>void;
@@ -161,7 +170,7 @@ class SideBar extends React.Component<Props> {
                 className={classes.drawer}
                 variant="permanent"
             >
-                <List >{this.renderItems(items)}</List>
+                <List className={classes.list} >{this.renderItems(items)}</List>
             </Drawer>
         );
     }
