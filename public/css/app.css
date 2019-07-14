@@ -1,7 +1,1 @@
-a:link,
-a:visited,
-a:active {
-  text-decoration: unset;
-  color: unset;
-}
-
+a:active,a:link,a:visited{text-decoration:unset;color:unset}
