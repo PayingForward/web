@@ -4,8 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import withStyles from "@material-ui/core/styles/withStyles";
 import AsyncComponent from '../../App/AsyncComponent';
 
-const AjaxDropdown =(props:{[x:string]:any})=> (<AsyncComponent Component={React.lazy(()=>import('./Inputs/AjaxDropdown'))} {...props} />)
-const Avatar =(props:{[x:string]:any})=> (<AsyncComponent Component={React.lazy(()=>import('./Inputs/Avatar'))} {...props} />)
+const AjaxDropdown =(props:{[x:string]:any})=> (<AsyncComponent Component={React.lazy(()=>import(/* webpackChunkName: "ajax-dropdown-input" */'./Inputs/AjaxDropdown'))} {...props} />)
+const Avatar =(props:{[x:string]:any})=> (<AsyncComponent Component={React.lazy(()=>import(/* webpackChunkName: "avatar-input" */'./Inputs/Avatar'))} {...props} />)
 
 const styler = withStyles(theme => ({
     inputWrapper: {

@@ -23,5 +23,9 @@ mix.react('resources/ts/app.ts', 'public/js')
         },
         resolve: {
             extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"]
-        }
+        },
+        output: {
+            publicPath: process.env.MIX_PUBLIC_PATH || '/',
+            chunkFilename: 'js/out/[name]-'+((new Date).getTime())+'.js'
+        },
     });

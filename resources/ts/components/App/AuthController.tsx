@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 // import { Link } from "react-router-dom";
 import { AppState } from "../../rootReducer";
-import {fetchLoggedUser} from '../../store/AuthController/actions'
+import {fetchLoggedUser, loadLoggedUser} from '../../store/AuthController/actions'
 import { UserInformations, AuthControllerState } from "../../store/AuthController/types";
 import { ThunkDispatch } from "redux-thunk";
 import RouteController from "./RouteController";
@@ -16,12 +16,14 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-    onLoad:()=> dispatch(fetchLoggedUser())
+    onLoad:()=> dispatch(fetchLoggedUser()),
+    onNoUser:()=>dispatch(loadLoggedUser())
 });
 
 interface Props extends AuthControllerState {
     user:UserInformations,
-    onLoad:()=>void
+    onLoad:()=>void,
+    onNoUser:()=>void
 }
 
 class AuthController extends React.Component<Props> {
@@ -31,6 +33,8 @@ class AuthController extends React.Component<Props> {
         if(localStorage.getItem(USER_TOKEN_KEY)){
             Axios.defaults.headers.post['Authorization'] = 'Bearer '+localStorage.getItem(USER_TOKEN_KEY)
             props.onLoad();
+        } else {
+            props.onNoUser();
         }
     }
 
