@@ -21,6 +21,8 @@ use Laravel\Passport\HasApiTokens;
  * @property string $u_email
  * @property string $u_password
  * @property int $ut_id
+ * @property string $u_avatar
+ * @property Permission[] $permissions
  */
 class User extends Base implements
 AuthenticatableContract,
@@ -53,6 +55,10 @@ CanResetPasswordContract
 
     public function userType(){
         return $this->belongsTo(UserType::class,'ut_id','ut_id');
+    }
+
+    public function permissions(){
+        return $this->hasMany(Permission::class,'u_id','u_id');
     }
 
 }

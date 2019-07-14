@@ -1,6 +1,14 @@
 <?php
 namespace App\Models;
 
+/**
+ * State model
+ * 
+ * @property string $s_name
+ * @property string $s_code
+ * @property int $c_id
+ * @property Country $state
+ */
 class State extends Base {
     protected $table = "states";
 

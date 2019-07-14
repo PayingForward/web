@@ -5,3 +5,5 @@ export const APP_URL = 'http://127.0.0.1:8000/';
 export const APP_NAME = 'AbandonedSeed';
 
 export const USER_TOKEN_KEY = 'userToken';
+
+export const SIDEBAR_WIDTH = 180;

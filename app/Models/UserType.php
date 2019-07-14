@@ -7,6 +7,7 @@ namespace App\Models;
  * 
  * @property string $ut_name
  * @property string $ut_code
+ * @property Permission[] $permissions
  */
 class UserType extends Base
 {
@@ -17,4 +18,8 @@ class UserType extends Base
     protected $primaryKey = 'ut_id';
 
     protected $table = 'user_types';
+
+    public function permissions(){
+        return $this->hasMany(Permission::class,'ut_id','ut_id');
+    }
 }

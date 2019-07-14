@@ -1,6 +1,14 @@
 <?php
 namespace App\Models;
 
+/**
+ * Town model
+ * 
+ * @property string $t_name
+ * @property string $t_code
+ * @property int $a_id
+ * @property Area $area
+ */
 class Town extends Base {
     protected $table="towns";
 

@@ -9,6 +9,8 @@ Route::group(['prefix'=>'user'],function(){
 
 Route::group(['middleware'=>'auth:api'],function(){
 
+    Route::post('/sidebar','PermissionController@sidebar');
+
     Route::group(['prefix'=>'form/{form}'],function(){
         require_once('form.php');
     });

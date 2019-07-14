@@ -11,7 +11,12 @@ const theme = createMuiTheme({
 		MuiList:{
 			root:{
 				paddingBottom:4,
-				paddingTop:4,
+				paddingTop:4
+			}
+		},
+		MuiListItemIcon:{
+			root:{
+				minWidth:32
 			}
 		},
 		MuiListItem:{

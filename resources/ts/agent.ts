@@ -63,7 +63,12 @@ const CRUD = {
         request("form/" + form + "/dropdown", { keyword, where })
 };
 
+const Permissions = {
+    permitedItems:()=>request('sidebar')
+}
+
 export default {
     Auth,
-    CRUD
+    CRUD,
+    Permissions
 };

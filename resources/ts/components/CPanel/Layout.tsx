@@ -2,10 +2,11 @@ import * as React from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import MainLayout from '../GuestPanel/Layout/MainLayout';
 import SideBar from './Layout/SideBar';
+import { SIDEBAR_WIDTH } from '../../constants/config';
 
 const styler = withStyles(() => ({
     wrapper: {
-        paddingLeft:150
+        paddingLeft:SIDEBAR_WIDTH
     }
 }));
 

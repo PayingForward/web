@@ -1,6 +1,14 @@
 <?php
 namespace App\Models;
 
+/**
+ * Area model
+ * 
+ * @property string $a_name
+ * @property string $a_code
+ * @property int $r_id
+ * @property Region $region
+ */
 class Area extends Base {
     protected $table="areas";
 
