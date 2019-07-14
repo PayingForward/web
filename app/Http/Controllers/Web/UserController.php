@@ -49,7 +49,8 @@ class UserController extends Controller {
             'token'=>$token,
             'type'=>$user->userType->ut_code,
             'name'=>$user->u_name,
-            'id'=>$user->getKey()
+            'id'=>$user->getKey(),
+            'avatar'=>$user->u_avatar
         ]);
     }
 

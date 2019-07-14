@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 // import { Link } from "react-router-dom";
 import { AppState } from "../../rootReducer";
 import {fetchLoggedUser} from '../../store/AuthController/actions'
-import { UserInformations } from "../../store/AuthController/types";
+import { UserInformations, AuthControllerState } from "../../store/AuthController/types";
 import { ThunkDispatch } from "redux-thunk";
 import RouteController from "./RouteController";
 import GuestRouteController from './GuestRouteController';
 import Axios from 'axios';
 import { USER_TOKEN_KEY } from '../../constants/config';
+import LoadingPage from './LoadingPage';
 
 const mapStateToProps = (state: AppState) => ({
     ...state.authController
@@ -18,7 +19,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     onLoad:()=> dispatch(fetchLoggedUser())
 });
 
-interface Props {
+interface Props extends AuthControllerState {
     user:UserInformations,
     onLoad:()=>void
 }
@@ -34,7 +35,13 @@ class AuthController extends React.Component<Props> {
     }
 
     public render() {
-        const {user} = this.props;
+        const {user,loading} = this.props;
+
+        if(loading){
+           return (
+               <LoadingPage/>
+           )
+        }
 
         if(!user){
             return (

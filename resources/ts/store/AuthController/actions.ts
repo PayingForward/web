@@ -11,7 +11,7 @@ import { showLoading, hideLoading } from "react-redux-loading-bar";
 import agent from "../../agent";
 import { USER_TOKEN_KEY } from "../../constants/config";
 
-export const loadLoggedUser = (user: UserInformations): LoggedUserLoaded => ({
+export const loadLoggedUser = (user?: UserInformations): LoggedUserLoaded => ({
     type: LOGGED_USER_LOADED,
     user
 });
@@ -28,13 +28,14 @@ export const fetchLoggedUser = (): ThunkAction<
 > => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch(showLoading());
 
-    agent.Auth.getUser().then(({ success, type, name, id }) => {
+    agent.Auth.getUser().then(({ success, type, name, id,avatar }) => {
         dispatch(hideLoading());
         if (success) {
-            dispatch(loadLoggedUser({ name, type, id }));
+            dispatch(loadLoggedUser({ name, type, id,avatar }));
         } else {
             localStorage.removeItem(USER_TOKEN_KEY);
             dispatch(clearLoggedUser());
+            dispatch(loadLoggedUser())
         }
     });
 };

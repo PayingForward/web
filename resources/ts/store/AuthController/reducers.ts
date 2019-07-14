@@ -17,7 +17,8 @@ export default (
         case LOGGED_USER_LOADED:
             return {
                 ...state,
-                user: action.user
+                user: action.user,
+                loading:false
             };
         case CLEAR_LOGGED_USER:
             return {

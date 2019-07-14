@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Header from './Header';
 import Snacks from './Snacks';
-import { withStyles } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styler = withStyles(theme=>({
     wrapper:{

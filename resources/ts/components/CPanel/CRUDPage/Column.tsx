@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Column as IColumn} from '../../../store/Admin/CRUDPage/types';
-import { withStyles } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from './Columns/Avatar';
 
 const styler = withStyles(theme=>({

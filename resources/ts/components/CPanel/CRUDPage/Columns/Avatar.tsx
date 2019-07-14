@@ -2,7 +2,7 @@ import * as React from 'react';
 import MuiAvatar from '@material-ui/core/Avatar';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {Column} from '../../../../store/Admin/CRUDPage/types';
-import { APP_URL } from '../../../../constants/config';
+import { avatar } from '../../../../helpers';
 
 interface Props extends Column{
     value:string,
@@ -26,7 +26,7 @@ class Avatar extends React.Component<Props>{
         }
         
         return (
-            <MuiAvatar src={APP_URL+'storage/images/uploads/32/'+value+'.jpg'} className={classes.root} />
+            <MuiAvatar src={avatar(32,value)} className={classes.root} />
         )
     }
 }

@@ -2,7 +2,9 @@ import * as React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router, Route } from 'react-router';
 import DashBoard from '../CPanel/DashBoard';
-import CRUDPage from '../CPanel/CRUDPage';
+import AsyncComponent from './AsyncComponent';
+
+const CRUDPage =()=> (<AsyncComponent page Component={React.lazy(()=>import('../CPanel/CRUDPage'))} />)
 
 const history = createBrowserHistory();
 

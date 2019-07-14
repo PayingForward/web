@@ -5,11 +5,12 @@ export interface UserInformations {
     name: string;
     type: string;
     id: number;
+    avatar:string;
 }
 
 export interface LoggedUserLoaded {
     type: typeof LOGGED_USER_LOADED;
-    user: UserInformations;
+    user?: UserInformations;
 }
 
 export interface LoggedUserClear {

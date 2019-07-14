@@ -1,16 +1,18 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { LoadingBar } from "react-redux-loading-bar";
+
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/styles/withStyles";
-import { APP_NAME } from "../../../constants/config";
-import { AppState } from "../../../rootReducer";
-import LoginForm from "./Header/LoginForm";
-import { UserInformations } from "resources/ts/store/AuthController/types";
 import Toolbar from "@material-ui/core/Toolbar";
-import { LoadingBar } from "react-redux-loading-bar";
 import red from "@material-ui/core/colors/red";
-import { Link } from 'react-router-dom';
+
+import LoginForm from "./Header/LoginForm";
+import UserArea from "./Header/UserArea";
+import { APP_NAME } from "../../../constants/config";
+import { UserInformations } from "../../../store/AuthController/types";
+import { AppState } from "../../../rootReducer";
 
 export const styler = withStyles(({ spacing }) => ({
     grow: {
@@ -53,7 +55,7 @@ class Header extends React.Component<Props> {
         const { user } = this.props;
 
         if (user) {
-            return null;
+            return <UserArea />;
         }
 
         return <LoginForm />;
@@ -70,9 +72,9 @@ class Header extends React.Component<Props> {
                 <div className={classes.wrapper}>
                     <AppBar className={classes.zIndex}>
                         <Toolbar variant="dense">
-                            <Link to="/" >
+                            <a href="/" >
                                 <Typography variant="h6">{APP_NAME}</Typography>
-                            </Link>
+                            </a>
                             <div className={classes.grow} />
                             {this.renderUserArea()}
                         </Toolbar>

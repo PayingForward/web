@@ -2,7 +2,7 @@ import * as React from 'react';
 import AvatarUploader from 'react-avatar-edit';
 import { Input } from '../../../../store/Admin/CRUDPage/types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { APP_URL } from '../../../../constants/config';
+import { avatar } from '../../../../helpers';
 
 const styler = withStyles(()=>({
     root:{
@@ -30,7 +30,7 @@ class Avatar extends React.Component<Props,States>{
         super(props);
 
         this.state = {
-            value:props.value?APP_URL+'storage/images/uploads/full/'+props.value+'.jpg':undefined
+            value:avatar('full',props.value)
         };
     }
 
@@ -39,7 +39,7 @@ class Avatar extends React.Component<Props,States>{
         const {value} = this.state;
 
         if(!classes) return null;
-
+        
         return (
             <div className={classes.root}>
                 <AvatarUploader
@@ -47,7 +47,7 @@ class Avatar extends React.Component<Props,States>{
                     height={120}
                     label={label}
                     onCrop={onChange}
-                    src={value}
+                    src={value?value:undefined}
                 />
             </div>
         )

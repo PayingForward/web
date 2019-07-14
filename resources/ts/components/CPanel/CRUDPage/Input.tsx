@@ -1,9 +1,11 @@
 import * as React from "react";
 import { Input as IInput } from "../../../store/Admin/CRUDPage/types";
-import AjaxDropdown from "./Inputs/AjaxDropdown";
-import Avatar from "./Inputs/Avatar";
 import TextField from "@material-ui/core/TextField";
 import withStyles from "@material-ui/core/styles/withStyles";
+import AsyncComponent from '../../App/AsyncComponent';
+
+const AjaxDropdown =(props:{[x:string]:any})=> (<AsyncComponent Component={React.lazy(()=>import('./Inputs/AjaxDropdown'))} {...props} />)
+const Avatar =(props:{[x:string]:any})=> (<AsyncComponent Component={React.lazy(()=>import('./Inputs/Avatar'))} {...props} />)
 
 const styler = withStyles(theme => ({
     inputWrapper: {
