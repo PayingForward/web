@@ -9,14 +9,12 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/styles/withStyles";
 import { APP_URL } from "../../../constants/config";
-import {
-    Divider,
-    Chip,
-    Avatar,
-    Toolbar,
-    Button,
-    TextField
-} from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import Chip from "@material-ui/core/Chip";
+import Avatar from "@material-ui/core/Avatar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 
 const mapStateToProps = (state: AppState) => ({

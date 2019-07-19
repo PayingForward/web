@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Router,Route } from "react-router";
 import { createBrowserHistory } from 'history';
-import HomePage from '../GuestPanel/HomePage/HomePage';
+import AsyncComponent from './AsyncComponent';
+
+const HomePage =()=> (<AsyncComponent page Component={React.lazy(()=>import(/* webpackChunkName: "home-page" */'../GuestPanel/HomePage/HomePage'))} />)
 
 const history = createBrowserHistory();
 
