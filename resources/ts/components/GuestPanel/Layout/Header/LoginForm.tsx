@@ -98,7 +98,7 @@ class LoginForm extends React.Component<Props> {
                             onChange={this.handlePasswordChange}
                         />
                     </div>
-                    <Button type="submit" className={classes.margin} variant="contained" color="primary" >
+                    <Button type="submit" className={classes.margin} variant="contained" color="secondary" >
                         Login
                     </Button>
                 </form>

@@ -2,3 +2,24 @@ a:link, a:visited, a:active {
     text-decoration: unset;
     color:unset;
 }
+
+body{
+    margin:0;
+    padding:0;
+}
+
+@font-face{
+    font-family:'Tommys First Alphabet';
+    src:url(/fonts/tommys.woff) format('woff'),
+        url(/fonts/tommys.ttf) format('truetype')
+}
+
+@keyframes bounce {
+    0%   { transform: translateX(0) scale(1,1)    translateY(0); }
+    10%  { transform: translateX(0) scale(1.1,.9) translateY(0); }
+    30%  { transform: translateX(0) scale(.9,1.1) translateY(-50px); }
+    50%  { transform: translateX(-50px) scale(1,1)    translateY(0); }
+    57%  { transform: translateX(0) scale(1,1)    translateY(-7px); }
+    64%  { transform: translateX(-7px) scale(1,1)    translateY(0); }
+    100% { transform: translateX(0) scale(1,1)    translateY(0); }
+}

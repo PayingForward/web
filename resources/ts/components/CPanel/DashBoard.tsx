@@ -6,7 +6,8 @@ class DashBoard extends React.Component{
     public render(){
         return (
             <Layout>
-                <div>Welcome to {APP_NAME}</div>
+                <div>{APP_NAME} Dashboard</div>
+                
             </Layout>
         )
     }

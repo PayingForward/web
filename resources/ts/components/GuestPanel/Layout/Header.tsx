@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/styles/withStyles";
 import Toolbar from "@material-ui/core/Toolbar";
-import red from "@material-ui/core/colors/red";
+// import red from "@material-ui/core/colors/red";
 
 import LoginForm from "./Header/LoginForm";
 import UserArea from "./Header/UserArea";
@@ -28,10 +28,13 @@ export const styler = withStyles(({ spacing }) => ({
         zIndex: 1900
     },
     loadingBar: {
-        background: red[600],
-        height: spacing(4),
-        position: "fixed",
-        zIndex: 5000
+        width:'100vw',
+        height:'100vh',
+        position:'fixed',
+        top:0,
+        left:0,
+        background:'red',
+        zIndex:5000
     }
 }));
 
@@ -66,9 +69,7 @@ class Header extends React.Component<Props> {
 
         return (
             <div>
-                <span>
-                    <LoadingBar className={classes.loadingBar} />
-                </span>
+                <LoadingBar className={classes.loadingBar} />
                 <div className={classes.wrapper}>
                     <AppBar className={classes.zIndex}>
                         <Toolbar variant="dense">

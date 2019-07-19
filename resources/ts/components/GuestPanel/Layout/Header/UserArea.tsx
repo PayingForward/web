@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ArrowDownIcon from "@material-ui/icons/ArrowDropDown";
+import { USER_TOKEN_KEY, APP_URL } from '../../../../constants/config';
 
 const mapStateToProps = (state:AppState)=>({
     ...state.authController
@@ -39,6 +40,7 @@ class UserArea extends React.Component<Props,States> {
 
         this.handleCloseMenu = this.handleCloseMenu.bind(this);
         this.handleOpenMenu = this.handleOpenMenu.bind(this);
+        this.handleLogOutClick = this.handleLogOutClick.bind(this);
     }
 
     handleOpenMenu(e:React.MouseEvent<HTMLButtonElement>){
@@ -53,6 +55,13 @@ class UserArea extends React.Component<Props,States> {
         });
     }
     
+    handleLogOutClick(){
+        localStorage.removeItem(USER_TOKEN_KEY);
+
+        if(typeof APP_URL !=='undefined'){
+            window.location.href = APP_URL;
+        }
+    }
 
     public render(){
         const {user,classes} = this.props;
@@ -85,7 +94,7 @@ class UserArea extends React.Component<Props,States> {
                         </ListItem>
                     </MenuList>
                     <MenuList>
-                        <ListItem button divider>
+                        <ListItem onClick={this.handleLogOutClick} button divider>
                             Log out
                         </ListItem>
                     </MenuList>

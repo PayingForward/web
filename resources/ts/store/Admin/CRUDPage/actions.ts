@@ -154,6 +154,7 @@ export const createRecord = (
 ) => {
     dispatch(showLoading());
     agent.CRUD.create(form, values).then(({ success, message }) => {
+        dispatch(hideLoading());
         if (success) {
             if (message) {
                 dispatch(successSnack(message));
@@ -181,6 +182,7 @@ export const updateRecord = (
 ) => {
     dispatch(showLoading());
     agent.CRUD.update(form, values, id).then(({ success, message }) => {
+        dispatch(hideLoading());
         if (success) {
             if (message) {
                 dispatch(successSnack(message));
@@ -207,6 +209,7 @@ export const deleteRecord = (
 ) => {
     dispatch(showLoading());
     agent.CRUD.delete(form, id).then(({ success, message }) => {
+        dispatch(hideLoading());
         if (success) {
             if (message) {
                 dispatch(successSnack(message));
