@@ -61,4 +61,27 @@ CanResetPasswordContract
         return $this->hasMany(Permission::class,'u_id','u_id');
     }
 
+    public function getRollName(){
+
+        $type = "donor";
+
+        switch ($this->ut_id) {
+            case config('usertypes.admin'):
+                $type="admin";
+                break;
+            case config('usertypes.teacher') :
+                $type="teacher";
+                break;
+            case config('usertypes.children') :
+                $type="orphan";
+                break;
+            default:
+                $type="donor";
+                break;
+        }
+
+        return $type;
+
+    }
+
 }

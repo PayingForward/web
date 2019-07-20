@@ -9,6 +9,7 @@ use App\Exceptions\WebApiException;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller {
     /**
@@ -65,27 +66,41 @@ class UserController extends Controller {
         /** @var User $user */
         $user = Auth::user();
 
-        $type = "donor";
+        return success_response([
+            'type'=>$user->getRollName(),
+            'name'=>$user->u_name,
+            'id'=>$user->u_id,
+            'avatar'=>$user->u_avatar
+        ]);
+    }
 
-        switch ($user->ut_id) {
-            case 1:
-                $type="admin";
-                break;
-            case 2 :
-                $type="teacher";
-                break;
-            case 3 :
-                $type="orphan";
-                break;
-            default:
-                $type="donor";
-                break;
+    public function getRandomChildrens(Request $request){
+        $validation = Validator::make($request->all(),[
+            'count'=>'numeric'
+        ]);
+
+        if($validation->fails()){
+            throw new WebApiException("Invalid values supplied.",5);
         }
 
-        return success_response([
-            'type'=>$type,
-            'name'=>$user->u_name,
-            'id'=>$user->u_id
-        ]);
+        $count = $request->input('count',2);
+        $except = $request->input('except',[]);
+
+        $childrens = User::whereNotIn('u_id',$except)
+            ->where('ut_id',config('usertypes.children'))
+            ->orderBy(DB::raw('RAND()'))
+            ->take($count)
+            ->get();
+
+        $childrens->transform(function(User $user){
+            return [
+                'type'=>$user->getRollName(),
+                'name'=>$user->u_name,
+                'id'=>$user->u_id,
+                'avatar'=>$user->u_avatar
+            ];
+        });
+
+        return \success_response(['childs'=>$childrens]);
     }
 }

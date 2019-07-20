@@ -67,8 +67,14 @@ const Permissions = {
     permitedItems:()=>request('sidebar')
 }
 
+const HomePage = {
+    randomChilds:(cnt?:number,except?:number[])=>
+        request('user/rand',{count:cnt,except})
+}
+
 export default {
     Auth,
     CRUD,
-    Permissions
+    Permissions,
+    HomePage
 };

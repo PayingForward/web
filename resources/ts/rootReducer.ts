@@ -5,6 +5,7 @@ import snackController from "./store/SnackController/reducers";
 import loginForm from "./store/LoginForm/reducers";
 import CRUDPage from "./store/Admin/CRUDPage/reducers";
 import sidebar from "./store/Admin/Sidebar/reducers";
+import homePage from "./store/HomePage/reducers";
 
 const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     snackController,
     loginForm,
     CRUDPage,
-    sidebar
+    sidebar,
+    homePage
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

@@ -1,26 +1,37 @@
 import * as React from "react";
-import MainLayout from "../Layout/MainLayout";
-import { AppState } from "../../../rootReducer";
+import { Link } from "react-router-dom";
+import Slider, { Settings } from 'react-slick';
 import { ThunkDispatch } from "redux-thunk";
 import { connect } from "react-redux";
-import { AuthControllerState } from "../../../store/AuthController/types";
+
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/styles/withStyles";
-import { APP_URL } from "../../../constants/config";
 import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
+import SendIcon from "@material-ui/icons/Send";
+// import TextField from "@material-ui/core/TextField";
+
+import { fetchRandomChilds, selectChild } from '../../../store/HomePage/actions';
+import { HomePageStates } from '../../../store/HomePage/types';
+import { avatar } from '../../../helpers';
+import MainLayout from "../Layout/MainLayout";
+import IconTextField from "../Layout/IconTextField"
+import { AppState } from "../../../rootReducer";
+import { APP_URL } from "../../../constants/config";
+import { UserInformations } from '../../../store/AuthController/types';
 
 const mapStateToProps = (state: AppState) => ({
-    ...state.authController
+    ...state.homePage
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({});
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+    onLoad:(count?:number,except?:number[])=>dispatch(fetchRandomChilds(count,except)),
+    onSelectChild:(child:UserInformations)=>dispatch(selectChild(child))
+});
 
 const styler = withStyles(theme => ({
     sectionOne: {
@@ -28,7 +39,6 @@ const styler = withStyles(theme => ({
             "linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)),url(" +
             APP_URL +
             "images/wall.jpg)",
-        height: 900,
         backgroundSize: "cover",
         backgroundPosition: "center",
         textAlign: "center",
@@ -71,17 +81,36 @@ const styler = withStyles(theme => ({
         textAlign: "left"
     },
     amountInput:{
-        color:"#fff",
-        width:"50%",
         margin:"auto",
         marginTop:theme.spacing(4)
     },
     button:{
         color:theme.palette.primary.main
+    },
+    slide:{
+        textAlign:"center",
+        margin:"auto"
+    },
+    slideAvatar:{
+        width:100,
+        height:100,
+        margin:"auto"
+    },
+    sliderBlock:{
+        marginTop:theme.spacing(20)
     }
 }));
 
-interface Props extends AuthControllerState {
+const sliderSettings:Settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay:true
+};
+
+interface Props extends HomePageStates {
     classes: {
         sectionOne: string;
         childishFont: string;
@@ -91,31 +120,26 @@ interface Props extends AuthControllerState {
         expressDonate: string;
         expressBlock: string;
         amountInput:string;
-        button:string
+        button:string;
+        slide:string;
+        slideAvatar:string;
+        sliderBlock:string
     };
+    onLoad:(count?:number,except?:number[])=>void,
+    onSelectChild:(child:UserInformations)=>void
 }
 
 class HomePage extends React.Component<Props> {
-    renderUserArea() {
-        const { user } = this.props;
 
-        if (user) {
-            return null;
-        } else {
-            return (
-                <Grid container>
-                    <Grid item md={6}>
-                        <Typography variant="h5" align="center">
-                            Thousand of childs waiting for your help.
-                        </Typography>
-                        <Typography variant="caption">
-                            We are here to help them. But we want your support
-                            too.
-                        </Typography>
-                    </Grid>
-                    <Grid item md={6} />
-                </Grid>
-            );
+    componentDidMount(){
+        this.props.onLoad(7,[]);
+    }
+
+    handleChildDonateClick(child:UserInformations){
+        const {onSelectChild} = this.props;
+
+        return ()=>{
+            onSelectChild(child);
         }
     }
 
@@ -147,8 +171,43 @@ class HomePage extends React.Component<Props> {
         });
     }
 
+    public renderSliderItems(){
+        const {sliderChilds,classes} = this.props;
+
+        return sliderChilds.map((child,key)=>(
+            <div className={classes.slide} key={key} >
+                <Avatar src={avatar(200,child.avatar)} className={classes.slideAvatar} />
+                <Divider/>
+                <Typography color="textPrimary" align="center" variant="h6">{child.name}</Typography>
+               
+                <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={this.handleChildDonateClick(child)}
+                >
+                    Donate
+                </Button>
+            </div>
+        ))
+    }
+
+    public renderSelectedChild(){
+        const {selectedChild,classes} = this.props;
+
+        if(!selectedChild)
+            return null;
+
+        return (
+            <div className={classes.slide}>
+                <Avatar src={avatar(200,selectedChild.avatar)} className={classes.slideAvatar} />
+                <Divider/>
+                <Typography color="textPrimary" align="center" variant="h6">{selectedChild.name}</Typography>
+            </div>
+        )
+    }
+
     public render() {
-        const { classes } = this.props;
+        const { classes,selectedChild } = this.props;
 
         return (
             <MainLayout>
@@ -251,7 +310,7 @@ class HomePage extends React.Component<Props> {
                         <Grid item md={9}>
                             <div className={classes.expressBlock}>
                                 <Typography variant="h4" align="center" color="textSecondary">
-                                    Are you want to help them?
+                                    Are you want to help {selectedChild?"him":"them"}?
                                 </Typography>
                                 <Divider/>
                                 <Typography variant="caption" color="inherit">
@@ -267,19 +326,29 @@ class HomePage extends React.Component<Props> {
                                     non viverra quam. Morbi molestie
                                 </Typography>
                                 <br/>
-                                <TextField
-                                    label="Donate"
-                                    fullWidth
+                                <IconTextField
+                                    leftIcon={
+                                        <img height="16" src="/icons/bitcoin.svg"/>
+                                    }
+                                    rightIcon={
+                                        <SendIcon />
+                                    }
+                                    label="USD"
                                     type="number"
-                                    variant="outlined"
                                     className={classes.amountInput}
                                 />
                             </div>
                         </Grid>
+                        {this.renderSelectedChild()}
+                    </Grid>
+                    <Grid container className={classes.sliderBlock} >
+                        <Grid item md={12}>
+                            <Slider {...sliderSettings} >
+                                   {this.renderSliderItems()}
+                            </Slider>
+                        </Grid>
                     </Grid>
                 </div>
-
-                <div>{this.renderUserArea()}</div>
             </MainLayout>
         );
     }

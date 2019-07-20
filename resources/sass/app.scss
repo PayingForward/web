@@ -6,6 +6,7 @@ a:link, a:visited, a:active {
 body{
     margin:0;
     padding:0;
+    overflow-x: hidden;
 }
 
 @font-face{
@@ -23,3 +24,6 @@ body{
     64%  { transform: translateX(-7px) scale(1,1)    translateY(0); }
     100% { transform: translateX(0) scale(1,1)    translateY(0); }
 }
+
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
