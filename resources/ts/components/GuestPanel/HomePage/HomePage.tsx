@@ -1,5 +1,4 @@
 import * as React from "react";
-import classNames from "classnames";
 import MainLayout from "../Layout/MainLayout";
 import { AppState } from "../../../rootReducer";
 import { ThunkDispatch } from "redux-thunk";
@@ -40,26 +39,15 @@ const styler = withStyles(theme => ({
         fontSize: "6em",
         fontWeight: 600,
         display: "inline-block",
-        textShadow: "0 0 1px #fff",
+        textShadow: "0 0 1px "+theme.palette.text.secondary,
         animationName: "bounce",
         animationTimingFunction: "ease",
         animationIterationCount: "infinite",
-        transformOrigin: "bottom"
-    },
-    pinkFont: {
-        color: "#f3d1dc"
-    },
-    blueFont: {
-        color: "#5396ae"
-    },
-    greenFont: {
-        color: "#c1cd97"
-    },
-    brownFont: {
-        color: "#b16e4b"
+        transformOrigin: "bottom",
+        color:theme.palette.text.primary
     },
     textBoxSquare: {
-        background: "rgba(0,0,0,0.3)",
+        background: "rgba(0,0,0,0.5)",
         textAlign: "left",
         color: "#fff",
         padding: theme.spacing(10),
@@ -75,15 +63,21 @@ const styler = withStyles(theme => ({
         marginTop: theme.spacing(30)
     },
     expressBlock: {
-        background: '#393C6D',
-        color: "#fff",
+        background: theme.palette.primary.light,
+        color: theme.palette.text.secondary,
         borderTopRightRadius: theme.spacing(2),
         borderBottomRightRadius: theme.spacing(2),
         padding: theme.spacing(4),
         textAlign: "left"
     },
     amountInput:{
-        color:"#fff"
+        color:"#fff",
+        width:"50%",
+        margin:"auto",
+        marginTop:theme.spacing(4)
+    },
+    button:{
+        color:theme.palette.primary.main
     }
 }));
 
@@ -91,16 +85,13 @@ interface Props extends AuthControllerState {
     classes: {
         sectionOne: string;
         childishFont: string;
-        pinkFont: string;
-        blueFont: string;
-        greenFont: string;
-        brownFont: string;
         textBoxSquare: string;
         chip: string;
         grow: string;
         expressDonate: string;
         expressBlock: string;
-        amountInput:string
+        amountInput:string;
+        button:string
     };
 }
 
@@ -131,13 +122,11 @@ class HomePage extends React.Component<Props> {
     public renderHelp(chars: string[]) {
         const { classes } = this.props,
             sizes: ("h2" | "h3" | "h4")[] = ["h2", "h3", "h4"],
-            colors = ["pink", "blue", "green", "brown"],
             durations = ["5s", "6s", "7s", "8s", "9s"],
             delays = ["3s", "4s", "5s", "6s", "7s"];
 
         return chars.map((char, key: number) => {
             const size = sizes[Math.floor(Math.random() * sizes.length)],
-                color = colors[Math.floor(Math.random() * colors.length)],
                 duration =
                     durations[Math.floor(Math.random() * durations.length)],
                 delay = delays[Math.floor(Math.random() * delays.length)];
@@ -149,10 +138,7 @@ class HomePage extends React.Component<Props> {
                         animationDuration: duration,
                         animationDelay: delay
                     }}
-                    className={classNames(
-                        classes.childishFont,
-                        classes[color + "Font"]
-                    )}
+                    className={classes.childishFont}
                     variant={size}
                 >
                     {char}
@@ -183,7 +169,7 @@ class HomePage extends React.Component<Props> {
                     </Grid>
                     <Divider />
                     <Grid justify="flex-end" container>
-                        <Grid item md={7}>
+                        <Grid item md={7} xs={12}>
                             <div className={classes.textBoxSquare}>
                                 <Typography
                                     color="inherit"
@@ -212,8 +198,8 @@ class HomePage extends React.Component<Props> {
                                     <Button
                                         component={Link}
                                         to="/search"
-                                        variant="contained"
-                                        color="secondary"
+                                        variant="outlined"
+                                        className={classes.button}
                                     >
                                         Getting Started
                                     </Button>
@@ -264,6 +250,10 @@ class HomePage extends React.Component<Props> {
                     <Grid container className={classes.expressDonate}>
                         <Grid item md={9}>
                             <div className={classes.expressBlock}>
+                                <Typography variant="h4" align="center" color="textSecondary">
+                                    Are you want to help them?
+                                </Typography>
+                                <Divider/>
                                 <Typography variant="caption" color="inherit">
                                     Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit. Nam feugiat ex vitae dui
@@ -276,7 +266,7 @@ class HomePage extends React.Component<Props> {
                                     Praesent molestie at nulla ac aliquet. Nunc
                                     non viverra quam. Morbi molestie
                                 </Typography>
-
+                                <br/>
                                 <TextField
                                     label="Donate"
                                     fullWidth

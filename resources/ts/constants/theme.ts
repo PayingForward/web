@@ -32,6 +32,9 @@ const theme = createMuiTheme({
 		MuiInputBase:{
 			formControl:{
 				height:30
+			},
+			input:{
+				color:"#000"
 			}
 		},
 		MuiInputLabel:{
@@ -55,12 +58,12 @@ const theme = createMuiTheme({
 	},
 	palette: {
 		primary: {
-			dark: "#332448",
-			light: "#936ace",
-			main: "#542f88"
+			dark: "#404040",
+			light: "#f0f0f0",
+			main: "#222"
 		},
 		text: {
-			primary: "#0f0f0f",
+			primary: "#fff",
 			secondary: "#000000"
 		}
 	},

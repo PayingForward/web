@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ArrowDownIcon from "@material-ui/icons/ArrowDropDown";
+import Typography from '@material-ui/core/Typography';
 import { USER_TOKEN_KEY, APP_URL } from '../../../../constants/config';
 
 const mapStateToProps = (state:AppState)=>({
@@ -80,22 +81,22 @@ class UserArea extends React.Component<Props,States> {
                 <Menu variant="selectedMenu" classes={{paper:classes.menu}} onClose={this.handleCloseMenu} anchorEl={menuRef} open={!!menuRef}>
                     <MenuList>
                         <ListItem button divider>
-                            Profile
+                            <Typography color="textSecondary">Profile</Typography>
                         </ListItem>
                     </MenuList>
                     <MenuList>
                         <ListItem button divider>
-                            Settings
+                            <Typography color="textSecondary">Settings</Typography>
                         </ListItem>
                     </MenuList>
                     <MenuList>
                         <ListItem button divider>
-                            Dashboard
+                            <Typography color="textSecondary">Dashboard</Typography>
                         </ListItem>
                     </MenuList>
                     <MenuList>
                         <ListItem onClick={this.handleLogOutClick} button divider>
-                            Log out
+                            <Typography color="textSecondary">Log Out</Typography>
                         </ListItem>
                     </MenuList>
                 </Menu>

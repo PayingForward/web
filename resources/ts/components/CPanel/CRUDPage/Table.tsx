@@ -14,6 +14,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
 import SortIcon from "@material-ui/icons/Sort";
 import red from "@material-ui/core/colors/red";
+import withStyles from "@material-ui/styles/withStyles";
+import Typography from '@material-ui/core/Typography';
 import {
     Columns,
     ResultRow,
@@ -23,7 +25,6 @@ import {
     SortModes
 } from "../../../store/Admin/CRUDPage/types";
 import Column from "./Column";
-import withStyles from "@material-ui/styles/withStyles";
 
 interface Props {
     columns: Columns;
@@ -182,7 +183,9 @@ class Table extends React.Component<Props> {
         return (
             <TableRow key={key}>
                 <TableCell variant="body">
-                    {(page - 1) * perPage + key + 1}
+                    <Typography color="textSecondary" >
+                        {(page - 1) * perPage + key + 1}
+                    </Typography>
                 </TableCell>
                 {this.renderResultCells(result)}
                 {this.renderResultActions(result)}

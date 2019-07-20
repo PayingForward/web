@@ -29,14 +29,14 @@ import MapIcon from "@material-ui/icons/Map";
 import PersonIcon from "@material-ui/icons/Person";
 import SchoolIcon from "@material-ui/icons/School";
 
-const styler = withStyles(({ spacing }) => ({
+const styler = withStyles(({ spacing,palette }) => ({
     drawer: {
         width: SIDEBAR_WIDTH,
         flexShrink: 0,
         paddingBottom:spacing(10)
     },
     paper: {
-        background: "#f0f0f0",
+        background: palette.primary.main,
         paddingTop: spacing(10),
         width: SIDEBAR_WIDTH
     },
@@ -116,13 +116,13 @@ class SideBar extends React.Component<Props> {
         if(expanded.includes(id)){
             return (
                 <IconButton onClick={e=>onCollapse(id)} >
-                    <ArrowUpIcon/>
+                    <ArrowUpIcon color="secondary" />
                 </IconButton>
             )
         } else {
             return (
                 <IconButton onClick={e=>onExpand(id)} >
-                    <ArrowDownIcon/>
+                    <ArrowDownIcon color="secondary"/>
                 </IconButton>
             )
         }
