@@ -16,6 +16,9 @@ const styler = withStyles((theme) => ({
     },
     form:{
         display:'inline-flex'
+    },
+    white:{
+        color:theme.palette.text.primary
     }
 }));
 
@@ -24,6 +27,7 @@ interface Props {
         textField: string,
         margin: string,
         form: string,
+        white:string
     },
     email:string,
     onChangeEmail:(email:string)=>void,
@@ -85,6 +89,8 @@ class LoginForm extends React.Component<Props> {
                             label="Email"
                             onChange={this.handleEmailChange}
                             value={email}
+                            inputProps={{className:classes.white}}
+                            InputLabelProps={{className:classes.white}}
                         />
                     </div>
                     <div className={classes.margin}>
@@ -96,6 +102,8 @@ class LoginForm extends React.Component<Props> {
                             label="Password"
                             value={password}
                             onChange={this.handlePasswordChange}
+                            inputProps={{className:classes.white}}
+                            InputLabelProps={{className:classes.white}}
                         />
                     </div>
                     <Button type="submit" className={classes.margin} variant="contained" color="secondary" >
