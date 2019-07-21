@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import Slider, { Settings } from 'react-slick';
+import Slider, { Settings } from "react-slick";
 import { ThunkDispatch } from "redux-thunk";
 import { connect } from "react-redux";
 
@@ -13,24 +13,31 @@ import Avatar from "@material-ui/core/Avatar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import SendIcon from "@material-ui/icons/Send";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 // import TextField from "@material-ui/core/TextField";
 
-import { fetchRandomChilds, selectChild } from '../../../store/HomePage/actions';
-import { HomePageStates } from '../../../store/HomePage/types';
-import { avatar } from '../../../helpers';
+import {
+    fetchRandomChilds,
+    selectChild
+} from "../../../store/HomePage/actions";
+import { HomePageStates } from "../../../store/HomePage/types";
+import { avatar } from "../../../helpers";
 import MainLayout from "../Layout/MainLayout";
-import IconTextField from "../Layout/IconTextField"
+import IconTextField from "../Layout/IconTextField";
 import { AppState } from "../../../rootReducer";
 import { APP_URL } from "../../../constants/config";
-import { UserInformations } from '../../../store/AuthController/types';
+import { UserInformations } from "../../../store/AuthController/types";
 
 const mapStateToProps = (state: AppState) => ({
     ...state.homePage
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-    onLoad:(count?:number,except?:number[])=>dispatch(fetchRandomChilds(count,except)),
-    onSelectChild:(child:UserInformations)=>dispatch(selectChild(child))
+    onLoad: (count?: number, except?: number[]) =>
+        dispatch(fetchRandomChilds(count, except)),
+    onSelectChild: (child: UserInformations) => dispatch(selectChild(child))
 });
 
 const styler = withStyles(theme => ({
@@ -49,12 +56,12 @@ const styler = withStyles(theme => ({
         fontSize: "6em",
         fontWeight: 600,
         display: "inline-block",
-        textShadow: "0 0 1px "+theme.palette.text.secondary,
+        textShadow: "0 0 1px " + theme.palette.text.secondary,
         animationName: "bounce",
         animationTimingFunction: "ease",
         animationIterationCount: "infinite",
         transformOrigin: "bottom",
-        color:theme.palette.text.primary
+        color: theme.palette.text.primary
     },
     textBoxSquare: {
         background: "rgba(0,0,0,0.5)",
@@ -80,34 +87,38 @@ const styler = withStyles(theme => ({
         padding: theme.spacing(4),
         textAlign: "left"
     },
-    amountInput:{
-        margin:"auto",
-        marginTop:theme.spacing(4)
+    amountInput: {
+        margin: "auto",
+        marginTop: theme.spacing(4)
     },
-    button:{
-        color:theme.palette.primary.main
+    button: {
+        color: theme.palette.primary.main
     },
-    slide:{
-        textAlign:"center",
-        margin:"auto"
+    slide: {
+        textAlign: "center",
+        margin: "auto"
     },
-    slideAvatar:{
-        width:100,
-        height:100,
-        margin:"auto"
+    slideAvatar: {
+        width: 100,
+        height: 100,
+        margin: "auto"
     },
-    sliderBlock:{
-        marginTop:theme.spacing(20)
+    sliderBlock: {
+        marginTop: theme.spacing(20),
+        paddingBottom: theme.spacing(10)
+    },
+    footer: {
+        background: theme.palette.primary.main
     }
 }));
 
-const sliderSettings:Settings = {
+const sliderSettings: Settings = {
     dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    autoplay:true
+    autoplay: true
 };
 
 interface Props extends HomePageStates {
@@ -119,28 +130,28 @@ interface Props extends HomePageStates {
         grow: string;
         expressDonate: string;
         expressBlock: string;
-        amountInput:string;
-        button:string;
-        slide:string;
-        slideAvatar:string;
-        sliderBlock:string
+        amountInput: string;
+        button: string;
+        slide: string;
+        slideAvatar: string;
+        sliderBlock: string;
+        footer: string;
     };
-    onLoad:(count?:number,except?:number[])=>void,
-    onSelectChild:(child:UserInformations)=>void
+    onLoad: (count?: number, except?: number[]) => void;
+    onSelectChild: (child: UserInformations) => void;
 }
 
 class HomePage extends React.Component<Props> {
-
-    componentDidMount(){
-        this.props.onLoad(7,[]);
+    componentDidMount() {
+        this.props.onLoad(7, []);
     }
 
-    handleChildDonateClick(child:UserInformations){
-        const {onSelectChild} = this.props;
+    handleChildDonateClick(child: UserInformations) {
+        const { onSelectChild } = this.props;
 
-        return ()=>{
+        return () => {
             onSelectChild(child);
-        }
+        };
     }
 
     public renderHelp(chars: string[]) {
@@ -171,15 +182,20 @@ class HomePage extends React.Component<Props> {
         });
     }
 
-    public renderSliderItems(){
-        const {sliderChilds,classes} = this.props;
+    public renderSliderItems() {
+        const { sliderChilds, classes } = this.props;
 
-        return sliderChilds.map((child,key)=>(
-            <div className={classes.slide} key={key} >
-                <Avatar src={avatar(200,child.avatar)} className={classes.slideAvatar} />
-                <Divider/>
-                <Typography color="textPrimary" align="center" variant="h6">{child.name}</Typography>
-               
+        return sliderChilds.map((child, key) => (
+            <div className={classes.slide} key={key}>
+                <Avatar
+                    src={avatar(200, child.avatar)}
+                    className={classes.slideAvatar}
+                />
+                <Divider />
+                <Typography color="textPrimary" align="center" variant="h6">
+                    {child.name}
+                </Typography>
+
                 <Button
                     variant="outlined"
                     color="inherit"
@@ -188,26 +204,30 @@ class HomePage extends React.Component<Props> {
                     Donate
                 </Button>
             </div>
-        ))
+        ));
     }
 
-    public renderSelectedChild(){
-        const {selectedChild,classes} = this.props;
+    public renderSelectedChild() {
+        const { selectedChild, classes } = this.props;
 
-        if(!selectedChild)
-            return null;
+        if (!selectedChild) return null;
 
         return (
             <div className={classes.slide}>
-                <Avatar src={avatar(200,selectedChild.avatar)} className={classes.slideAvatar} />
-                <Divider/>
-                <Typography color="textPrimary" align="center" variant="h6">{selectedChild.name}</Typography>
+                <Avatar
+                    src={avatar(200, selectedChild.avatar)}
+                    className={classes.slideAvatar}
+                />
+                <Divider />
+                <Typography color="textPrimary" align="center" variant="h6">
+                    {selectedChild.name}
+                </Typography>
             </div>
-        )
+        );
     }
 
     public render() {
-        const { classes,selectedChild } = this.props;
+        const { classes, selectedChild } = this.props;
 
         return (
             <MainLayout>
@@ -309,10 +329,18 @@ class HomePage extends React.Component<Props> {
                     <Grid container className={classes.expressDonate}>
                         <Grid item md={9}>
                             <div className={classes.expressBlock}>
-                                <Typography variant="h4" align="center" color="textSecondary">
-                                    Are you want to help {selectedChild?"him":"them"}?
+                                <Typography
+                                    variant="h4"
+                                    align="center"
+                                    color="textSecondary"
+                                >
+                                    Do you want to help{" "}
+                                    {selectedChild
+                                        ? selectedChild.name
+                                        : "them"}
+                                    ?
                                 </Typography>
-                                <Divider/>
+                                <Divider />
                                 <Typography variant="caption" color="inherit">
                                     Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit. Nam feugiat ex vitae dui
@@ -325,14 +353,15 @@ class HomePage extends React.Component<Props> {
                                     Praesent molestie at nulla ac aliquet. Nunc
                                     non viverra quam. Morbi molestie
                                 </Typography>
-                                <br/>
+                                <br />
                                 <IconTextField
                                     leftIcon={
-                                        <img height="16" src="/icons/bitcoin.svg"/>
+                                        <img
+                                            height="16"
+                                            src="/icons/bitcoin.svg"
+                                        />
                                     }
-                                    rightIcon={
-                                        <SendIcon />
-                                    }
+                                    rightIcon={<SendIcon />}
                                     label="USD"
                                     type="number"
                                     className={classes.amountInput}
@@ -341,14 +370,83 @@ class HomePage extends React.Component<Props> {
                         </Grid>
                         {this.renderSelectedChild()}
                     </Grid>
-                    <Grid container className={classes.sliderBlock} >
+                    <Grid container className={classes.sliderBlock}>
                         <Grid item md={12}>
-                            <Slider {...sliderSettings} >
-                                   {this.renderSliderItems()}
+                            <Slider {...sliderSettings}>
+                                {this.renderSliderItems()}
                             </Slider>
                         </Grid>
                     </Grid>
                 </div>
+                <Grid className={classes.footer} container>
+                    <Grid md={4} item>
+                        <List>
+                            <ListItem>
+                                <ListItemText>
+                                    <Typography color="textPrimary">
+                                        What we do
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText>
+                                    <Typography color="textPrimary">
+                                        Search and Donate
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText>
+                                    <Typography color="textPrimary">
+                                        About
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText>
+                                    <Typography color="textPrimary">
+                                        Help and support
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                        </List>
+                    </Grid>
+                    <Grid md={4} item>
+                        <List>
+                            <ListItem>
+                                <ListItemText>
+                                    <Typography
+                                        variant="h6"
+                                        color="textPrimary"
+                                    >
+                                        Contact Us
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText>
+                                    <Typography color="textPrimary">
+                                        Facebook
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText>
+                                    <Typography color="textPrimary">
+                                        Twitter
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText>
+                                    <Typography color="textPrimary">
+                                        Linkedin
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                        </List>
+                    </Grid>
+                </Grid>
             </MainLayout>
         );
     }
