@@ -6,6 +6,7 @@ import loginForm from "./store/LoginForm/reducers";
 import CRUDPage from "./store/Admin/CRUDPage/reducers";
 import sidebar from "./store/Admin/Sidebar/reducers";
 import homePage from "./store/HomePage/reducers";
+import searchPage from './store/SearchPage/reducers';
 
 const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     loginForm,
     CRUDPage,
     sidebar,
-    homePage
+    homePage,
+    searchPage
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

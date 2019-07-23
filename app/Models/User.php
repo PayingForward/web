@@ -23,6 +23,7 @@ use Laravel\Passport\HasApiTokens;
  * @property int $ut_id
  * @property string $u_avatar
  * @property Permission[] $permissions
+ * @property Children $children
  */
 class User extends Base implements
 AuthenticatableContract,
@@ -59,6 +60,10 @@ CanResetPasswordContract
 
     public function permissions(){
         return $this->hasMany(Permission::class,'u_id','u_id');
+    }
+
+    public function children(){
+        return $this->hasOne(Children::class,'u_id','u_id');
     }
 
     public function getRollName(){

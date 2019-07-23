@@ -64,17 +64,29 @@ const CRUD = {
 };
 
 const Permissions = {
-    permitedItems:()=>request('sidebar')
-}
+    permitedItems: () => request("sidebar")
+};
 
 const HomePage = {
-    randomChilds:(cnt?:number,except?:number[])=>
-        request('user/rand',{count:cnt,except})
-}
+    randomChilds: (cnt?: number, except?: number[]) =>
+        request("user/rand", { count: cnt, except })
+};
+
+const SearchPage = {
+    searchResults: (
+        keyword: string,
+        options: {
+            [x: string]: Array<string|number>;
+        }
+    ) => request("search", { keyword, options }),
+    searchOptions: (keyword: string, optionId: string) =>
+        request("search/" + optionId, { keyword })
+};
 
 export default {
     Auth,
     CRUD,
     Permissions,
-    HomePage
+    HomePage,
+    SearchPage
 };

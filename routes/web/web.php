@@ -9,6 +9,16 @@ Route::group(['prefix'=>'user'],function(){
     Route::post('rand','UserController@getRandomChildrens');
 });
 
+Route::group(['prefix'=>'search'],function(){
+
+    Route::post('/','SearchController@searchResults');
+
+    Route::post('/age_range','SearchController@searchAgeRange');
+    Route::post('/school','SearchController@searchSchool');
+    Route::post('/town','SearchController@searchTowns');
+
+});
+
 Route::group(['middleware'=>'auth:api'],function(){
 
     Route::post('/sidebar','PermissionController@sidebar');

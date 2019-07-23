@@ -44,6 +44,11 @@ return [
                     "link" => "/cpanel/form/user_type",
                 ],
                 [
+                    'title'=>"Children",
+                    'id'=>'children',
+                    'link'=>'/cpanel/form/children'
+                ],
+                [
                     "title" => "User",
                     "id" => "user",
                     "link" => "/cpanel/form/user",

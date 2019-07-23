@@ -4,6 +4,7 @@ export const SEARCH_PAGE_OPTION_KEYWORD_CHANGE =
     "SEARCH_PAGE_OPTION_KEYWORD_CHANGE";
 export const SEARCH_PAGE_LOADED_OPTIONS = "SEARCH_PAGE_LOADED_OPTIONS";
 export const SEARCH_PAGE_LOADED_RESULTS = "SEARCH_PAGE_LOADED_RESULTS";
+export const SEARCH_PAGE_LOADED = 'SEARCH_PAGE_LOADED';
 
 export interface Option {
     id: string | number;
@@ -31,6 +32,7 @@ export interface SearchPageState {
     };
     results: UserCompleteInfo[];
     resultsCount: number | string;
+    loading:boolean
 }
 
 export interface ChangeKeyword {
@@ -62,9 +64,14 @@ export interface LoadedResults {
     resultsCount: number | string;
 }
 
+export interface Loaded {
+    type: typeof SEARCH_PAGE_LOADED
+}
+
 export type SearchPageActions =
     | ChangeKeyword
     | ChangeOption
     | OptionKeywordChange
     | LoadedOptions
-    | LoadedResults;
+    | LoadedResults
+    | Loaded;
