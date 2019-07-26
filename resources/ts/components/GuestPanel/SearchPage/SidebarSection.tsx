@@ -36,6 +36,8 @@ interface Props {
         margin: string;
     };
     onSearch?: (keyword: string) => void;
+    selected?:(string | number)[];
+    onChange?:(id:string|number)=>void
 }
 
 interface States {
@@ -62,8 +64,21 @@ class SidebarSection extends React.Component<Props,States> {
         }
     }
 
+    handleCheckOption(opt:Option){
+        const {onChange} = this.props;
+
+        if(onChange){
+            return (e:React.ChangeEvent<HTMLElement>)=>{
+                
+                onChange(opt.id);
+            }
+        }
+
+        return undefined;
+    }
+
     renderOptions() {
-        const { options } = this.props;
+        const { options,selected } = this.props;
 
         if (!options.length) {
             return (
@@ -73,14 +88,14 @@ class SidebarSection extends React.Component<Props,States> {
             );
         }
 
-        return options.map((option: Option) => (
-            <ListItem dense divider>
+        return options.map((option: Option,key:number) => (
+            <ListItem key={key} dense divider>
                 <ListItemText
                     primary={option.label}
                     primaryTypographyProps={{ color: "textPrimary" }}
                 />
                 <ListItemSecondaryAction>
-                    <Checkbox />
+                    <Checkbox checked={selected?selected.includes(option.id):undefined} onChange={this.handleCheckOption(option)} />
                 </ListItemSecondaryAction>
             </ListItem>
         ));

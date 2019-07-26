@@ -32,6 +32,7 @@ export default (state=initialState,action:SearchPageActions):SearchPageState=>{
             return {
                 ...state,
                 selectedOptions:{
+                    ...state.selectedOptions,
                     [action.optionId]:filtered
                 }
             };
@@ -39,6 +40,7 @@ export default (state=initialState,action:SearchPageActions):SearchPageState=>{
             return {
                 ...state,
                 loadedOptions:{
+                    ...state.loadedOptions,
                     [action.optionId]:action.options
                 }
             };
@@ -46,6 +48,7 @@ export default (state=initialState,action:SearchPageActions):SearchPageState=>{
             return {
                 ...state,
                 keywords:{
+                    ...state.keywords,
                     [action.optionId]:action.keyword
                 }
             };

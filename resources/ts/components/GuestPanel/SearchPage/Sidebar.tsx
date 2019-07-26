@@ -3,6 +3,7 @@ import Drawer from '@material-ui/core/Drawer';
 import withStyles from '@material-ui/core/styles/withStyles';
 import SidebarSection from "./SidebarSection";
 import { SIDEBAR_WIDTH } from '../../../constants/config';
+import { Option } from '../../../store/SearchPage/types';
 
 const styler = withStyles((theme)=>({
     drawer:{
@@ -19,52 +20,44 @@ interface Props {
     classes:{
         drawer:string;
         paper:string;
+    },
+    options:{
+        [x: string]: Option[];
+    },
+    selected:{
+        [x: string]: (string | number)[]
+    },
+    onSearch:{
+        [x:string]:(keyword:string)=>void
+    },
+    onChange:{
+        [x:string]:(id:string|number)=>void
     }
 }
 
 class Sidebar extends React.Component<Props> {
     public render(){
-        const {classes} = this.props;
+        const {classes,options,onSearch,onChange} = this.props;
+
         return (
             <Drawer classes={{paper:classes.paper}} className={classes.drawer} anchor="left" variant="permanent" open={true}>
                 <SidebarSection
                     title="Age Range"
-                    options={[
-                        {
-                            label:"4-5 Years",
-                            id:1
-                        },
-                        {
-                            label:"5-10 Years",
-                            id:2
-                        }
-                    ]}
+                    options={options.age_range?options.age_range:[]}
+                    onSearch={onSearch.age_range}
+                    onChange={onChange.age_range}
                 />
                 <SidebarSection
-                    title="Class"
-                    options={[
-                        {
-                            label:"Grade 3",
-                            id:1
-                        },
-                        {
-                            label:"Grade 4",
-                            id:2
-                        }
-                    ]}
+                    title="School"
+                    options={options.school?options.school:[]}
+                    onSearch={onSearch.school}
+                    onChange={onChange.school}
                 />
                 <SidebarSection
                     title="Town"
-                    options={[
-                        {
-                            label:"Colombia",
-                            id:1
-                        },
-                        {
-                            label:"New York",
-                            id:2
-                        }
-                    ]}
+                    options={options.town?options.town:[]}
+                    onSearch={onSearch.town}
+                    onChange={onChange.town}
                 />
             </Drawer>
         );
