@@ -20,6 +20,8 @@ import {
     changeKeyword
 } from "../../../store/SearchPage/actions";
 import { SearchPageState } from "../../../store/SearchPage/types";
+import UserCard from "./UserCard";
+import { CircularProgress, Typography } from '@material-ui/core';
 
 const styler = withStyles(theme => ({
     wrapper: {
@@ -29,6 +31,10 @@ const styler = withStyles(theme => ({
         margin: "auto",
         marginTop: theme.spacing(8),
         marginBottom: theme.spacing(8)
+    },
+    textCenter:{
+        textAlign:'center',
+        padding:theme.spacing(4)
     }
 }));
 
@@ -36,11 +42,20 @@ interface Props extends SearchPageState {
     classes: {
         wrapper: string;
         center: string;
+        textCenter: string
     };
     onLoad: () => void;
     onSearchOption: (keyword: string, optionId: string) => void;
-    onCheckOption: (id: string | number, optionId: string) => void;
+    onCheckOption: (ids: (string | number)[], optionId: string) => void;
     onChangeKeyword: (keyword?: string | number) => void;
+    onFetchResults: (
+        keyword: string,
+        options: { [x: string]: (string | number)[] },
+        page?: number,
+        perPage?: number,
+        sortBy?: string,
+        sortMode?: string
+    ) => void;
 }
 
 const mapStateToProps = (state: AppState) => ({
@@ -56,11 +71,21 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     },
     onSearchOption: (keyword: string, optionId: string) =>
         dispatch(fetchOptions(keyword, optionId)),
-    onCheckOption: (id: string | number, optionId: string) =>
-        dispatch(changeOption(optionId, id)),
+    onCheckOption: (ids: (string | number)[], optionId: string) =>
+        dispatch(changeOption(optionId, ids)),
     onChangeKeyword: (keyword?: string | number) =>
         dispatch(changeKeyword(keyword ? keyword.toString() : "")),
-    // onFetchResults:(keyword?:string)
+    onFetchResults: (
+        keyword: string,
+        options: { [x: string]: (string | number)[] },
+        page?: number,
+        perPage?: number,
+        sortBy?: string,
+        sortMode?: string
+    ) =>
+        dispatch(
+            fetchResults(keyword, options, page, perPage, sortBy, sortMode)
+        )
 });
 
 class SearchPage extends React.Component<Props> {
@@ -98,28 +123,85 @@ class SearchPage extends React.Component<Props> {
         onSearchOption(keyword, "school");
     }
 
+    afterCheck(id: string | number, type: string) {
+        const { selectedOptions, onFetchResults, searchKeyword } = this.props;
+
+        const options = selectedOptions[type]?selectedOptions[type]:[];
+
+        let modedOptions: (string | number)[] = options.filter(
+            selectedId => selectedId != id
+        );
+
+        if (modedOptions.length ==options.length) {
+            modedOptions.push(id);
+        }
+
+        onFetchResults(searchKeyword, {
+            ...selectedOptions,
+            [type]: modedOptions
+        });
+
+        return modedOptions;
+    }
+
     handleCheckAgeRange(id: string | number) {
         const { onCheckOption } = this.props;
 
-        onCheckOption(id, "age_range");
+        const selectedIds = this.afterCheck(id, "age_range");
+
+        onCheckOption(selectedIds, "age_range");
     }
 
     handleCheckTown(id: string | number) {
         const { onCheckOption } = this.props;
 
-        onCheckOption(id, "town");
+        const selectedIds = this.afterCheck(id, "town");
+
+        onCheckOption(selectedIds, "town");
     }
 
     handleCheckSchool(id: string | number) {
         const { onCheckOption } = this.props;
 
-        onCheckOption(id, "school");
+        const selectedIds = this.afterCheck(id, "school");
+
+        onCheckOption(selectedIds, "school");
     }
 
     handleChangeKeyword(value: string | number) {
-        const { onChangeKeyword } = this.props;
+        const { onChangeKeyword, onFetchResults, selectedOptions } = this.props;
 
         onChangeKeyword(value);
+
+        onFetchResults(value.toString(), selectedOptions);
+    }
+
+    renderUsers() {
+        const { results } = this.props;
+
+        return results.map((user, key) => <UserCard key={key} {...user} />);
+    }
+
+    renderInfo(){
+        const {loading,results,classes} = this.props;
+
+        if(!loading) {
+            if(!results.length){
+                return (
+                    <Grid className={classes.textCenter} item md={12}>
+                        <Typography align="center" color="textSecondary" variant="h5">No results found..</Typography>
+                    </Grid>
+                )
+            }
+
+            return null;
+        }
+
+        return (
+            <Grid className={classes.textCenter} item md={12}>
+                <CircularProgress />
+            </Grid>
+        )
     }
 
     public render() {
@@ -140,7 +222,11 @@ class SearchPage extends React.Component<Props> {
                         age_range: this.handleChangeAgeRange,
                         town: this.handleChangeTown
                     }}
-                    onChange={{}}
+                    onChange={{
+                        school: this.handleCheckSchool,
+                        age_range: this.handleCheckAgeRange,
+                        town: this.handleCheckTown
+                    }}
                 />
                 <div className={classes.wrapper}>
                     <Grid container>
@@ -155,6 +241,8 @@ class SearchPage extends React.Component<Props> {
                             />
                             <Divider />
                         </Grid>
+                        {this.renderInfo()}
+                        {this.renderUsers()}
                     </Grid>
                 </div>
             </MainLayout>

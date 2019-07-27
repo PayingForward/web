@@ -25,15 +25,11 @@ export default (state=initialState,action:SearchPageActions):SearchPageState=>{
                 resultsCount:action.resultsCount
             };
         case SEARCH_PAGE_CHANGE_OPTION:
-            let filtered = state.selectedOptions[action.optionId].filter(i=>i!=action.id);
-            if(filtered.length!=state.selectedOptions[action.optionId].length){
-                filtered.push(action.id);
-            }
             return {
                 ...state,
                 selectedOptions:{
                     ...state.selectedOptions,
-                    [action.optionId]:filtered
+                    [action.optionId]:action.ids
                 }
             };
         case SEARCH_PAGE_LOADED_OPTIONS:

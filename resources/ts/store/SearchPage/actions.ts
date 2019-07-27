@@ -36,11 +36,11 @@ export const changeKeyword = (keyword: string): ChangeKeyword => ({
 
 export const changeOption = (
     optionId: string,
-    id: string | number
+    ids: (string | number)[]
 ): ChangeOption => ({
     type: SEARCH_PAGE_CHANGE_OPTION,
     optionId,
-    id
+    ids
 });
 
 export const changeOptionKeyword = (
@@ -69,11 +69,15 @@ export const fetchResults = (
     keyword: string,
     options: {
         [x: string]: (string | number)[];
-    }
+    },
+    page?:number,
+    perPage?:number,
+    sortBy?:string,
+    sortMode?:string
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => async (
     dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
-    agent.SearchPage.searchResults(keyword, options).then(
+    agent.SearchPage.searchResults(keyword, options,page,perPage,sortBy,sortMode).then(
         ({ success, message, results, count }) => {
             dispatch(loaded());
 

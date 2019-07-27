@@ -1,10 +1,12 @@
+import { DropdownOption } from "../Admin/CRUDPage/types";
+
 export const SEARCH_PAGE_KEYWORD_CHANGE = "SEARCH_PAGE_KEYWORD_CHANGE";
 export const SEARCH_PAGE_CHANGE_OPTION = "SEARCH_PAGE_CHANGE_OPTION";
 export const SEARCH_PAGE_OPTION_KEYWORD_CHANGE =
     "SEARCH_PAGE_OPTION_KEYWORD_CHANGE";
 export const SEARCH_PAGE_LOADED_OPTIONS = "SEARCH_PAGE_LOADED_OPTIONS";
 export const SEARCH_PAGE_LOADED_RESULTS = "SEARCH_PAGE_LOADED_RESULTS";
-export const SEARCH_PAGE_LOADED = 'SEARCH_PAGE_LOADED';
+export const SEARCH_PAGE_LOADED = "SEARCH_PAGE_LOADED";
 
 export interface Option {
     id: string | number;
@@ -14,9 +16,11 @@ export interface Option {
 export interface UserCompleteInfo {
     name: string;
     code: string;
-    class: string;
+    schoolClass: DropdownOption;
     id: string | number;
     avatar: string;
+    school: DropdownOption;
+    town: DropdownOption;
 }
 
 export interface SearchPageState {
@@ -32,7 +36,7 @@ export interface SearchPageState {
     };
     results: UserCompleteInfo[];
     resultsCount: number | string;
-    loading:boolean
+    loading: boolean;
 }
 
 export interface ChangeKeyword {
@@ -42,7 +46,7 @@ export interface ChangeKeyword {
 
 export interface ChangeOption {
     type: typeof SEARCH_PAGE_CHANGE_OPTION;
-    id: string | number;
+    ids: (string | number)[];
     optionId: string;
 }
 
@@ -65,7 +69,7 @@ export interface LoadedResults {
 }
 
 export interface Loaded {
-    type: typeof SEARCH_PAGE_LOADED
+    type: typeof SEARCH_PAGE_LOADED;
 }
 
 export type SearchPageActions =

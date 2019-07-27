@@ -77,8 +77,12 @@ const SearchPage = {
         keyword: string,
         options: {
             [x: string]: Array<string|number>;
-        }
-    ) => request("search", { keyword, options }),
+        },
+        page?:number,
+        perPage?:number,
+        sortBy?:string,
+        sortMode?:string
+    ) => request("search", { keyword, options,page,perPage,sortBy,sortMode }),
     searchOptions: (keyword: string, optionId: string) =>
         request("search/" + optionId, { keyword })
 };

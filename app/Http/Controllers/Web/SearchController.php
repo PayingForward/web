@@ -40,6 +40,7 @@ class SearchController extends Controller {
                 $query->orWhere('sc.sc_name','LIKE',"%$keyword%");
                 $query->orWhere('t.t_name','LIKE',"%$keyword%");
                 $query->orWhere('s.scl_name','LIKE',"%$keyword%");
+                $query->orWhere('u.u_name','LIKE',"%$keyword%");
             })
             ->where('u.ut_id',config('usertypes.children'))
             ->whereNull('u.deleted_at')
@@ -47,6 +48,30 @@ class SearchController extends Controller {
             ->whereNull('sc.deleted_at')
             ->whereNull('t.deleted_at')
             ->whereNull('s.deleted_at');
+
+        // Filtering by checked options
+        $towns = $request->input('options.town');
+        if(is_array($towns)&&count($towns)){
+            $query->whereIn('t.t_id',$towns);
+        }
+
+        $schools = $request->input('options.school');
+        if(is_array($schools)&&count($schools)){
+            $query->whereIn('s.scl_id',$schools);
+        }
+
+        $age_ranges = $request->input('options.age_range');
+        if(is_array($age_ranges)&&count($age_ranges)){
+            $query->where(function(Builder $query)use($age_ranges){
+                $j = 0;
+                for($i=10;$i<=25;$i+=5){
+                    if(in_array($j,$age_ranges)){
+                        $query->orWhereBetween(DB::raw('TIMESTAMPDIFF(YEAR,c.chld_dob,CURDATE())'),[$i-5,$i]);
+                    }
+                    $j++;
+                }
+            });
+        }
 
         $count = $query->count();
 
@@ -68,9 +93,7 @@ class SearchController extends Controller {
                 break;
         }
 
-
         $results = $query->get();
-
 
         $results->transform(function($row){
             return [
@@ -78,7 +101,7 @@ class SearchController extends Controller {
                     'id'=>$row->scl_id,
                     'label'=>$row->scl_name
                 ],
-                'class'=>[
+                'schoolClass'=>[
                     'id'=>$row->sc_id,
                     'label'=>$row->sc_name,
                 ],
@@ -88,7 +111,8 @@ class SearchController extends Controller {
                 ],
                 'name'=>$row->u_name,
                 'id'=>$row->u_id,
-                'dob'=>$row->chld_dob
+                'dob'=>$row->chld_dob,
+                'avatar'=>$row->u_avatar
             ];
         });
 
