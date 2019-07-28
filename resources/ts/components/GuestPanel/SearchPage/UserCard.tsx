@@ -7,8 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
 
 import { UserCompleteInfo } from "../../../store/SearchPage/types";
-import { avatar as avatarGenerator } from "../../../helpers";
+import { avatar as avatarGenerator, nameToURL } from "../../../helpers";
 import { Button } from '@material-ui/core';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 const styler = withStyles(theme => ({
     paper: {
@@ -30,16 +31,29 @@ const styler = withStyles(theme => ({
     }
 }));
 
-interface Props extends UserCompleteInfo {
+type Props =  UserCompleteInfo & {
     classes?: {
         paper: string;
         avatar: string;
         marginTop: string;
         secondaryText:string;
     };
-}
+} & RouteComponentProps<{}>;
 
 class UserCard extends React.Component<Props> {
+
+    constructor(props:Props){
+        super(props);
+
+        this.handleDonateClick = this.handleDonateClick.bind(this);
+    }
+
+    handleDonateClick(){
+        const {id,name,history} = this.props;
+
+        history.push('/donate/'+id+'/'+nameToURL(name));
+    }
+
     render() {
         const { classes, avatar, name, school,schoolClass,town } = this.props;
 
@@ -77,7 +91,7 @@ class UserCard extends React.Component<Props> {
                     <Typography color="textSecondary" display="inline">{town.label}</Typography>
                 </div>
                 <Divider/>
-                <Button className={classes.marginTop} color="primary" variant="outlined" >
+                <Button onClick={this.handleDonateClick} className={classes.marginTop} color="primary" variant="outlined" >
                     Donate
                 </Button>
             </Paper>
@@ -85,4 +99,4 @@ class UserCard extends React.Component<Props> {
     }
 }
 
-export default styler(UserCard);
+export default withRouter(styler(UserCard));

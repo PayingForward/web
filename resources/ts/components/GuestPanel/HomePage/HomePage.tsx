@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import Slider, { Settings } from "react-slick";
 import { ThunkDispatch } from "redux-thunk";
 import { connect } from "react-redux";
@@ -20,10 +20,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import {
     fetchRandomChilds,
-    selectChild
+    selectChild,
+    changeValue
 } from "../../../store/HomePage/actions";
 import { HomePageStates } from "../../../store/HomePage/types";
-import { avatar } from "../../../helpers";
+import { avatar, nameToURL } from "../../../helpers";
 import MainLayout from "../Layout/MainLayout";
 import IconTextField from "../Layout/IconTextField";
 import { AppState } from "../../../rootReducer";
@@ -37,7 +38,8 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     onLoad: (count?: number, except?: number[]) =>
         dispatch(fetchRandomChilds(count, except)),
-    onSelectChild: (child: UserInformations) => dispatch(selectChild(child))
+    onSelectChild: (child: UserInformations) => dispatch(selectChild(child)),
+    onChangeValue: (value:number)=>dispatch(changeValue(value))
 });
 
 const styler = withStyles(theme => ({
@@ -121,7 +123,7 @@ const sliderSettings: Settings = {
     autoplay: true
 };
 
-interface Props extends HomePageStates {
+type Props =  HomePageStates & {
     classes: {
         sectionOne: string;
         childishFont: string;
@@ -139,9 +141,16 @@ interface Props extends HomePageStates {
     };
     onLoad: (count?: number, except?: number[]) => void;
     onSelectChild: (child: UserInformations) => void;
-}
+    onChangeValue: (value:number)=>void;
+}& RouteComponentProps<{}>
 
 class HomePage extends React.Component<Props> {
+    constructor(props:Props){
+        super(props);
+
+        this.handleDonateClick = this.handleDonateClick.bind(this);
+    }
+
     componentDidMount() {
         this.props.onLoad(7, []);
     }
@@ -152,6 +161,22 @@ class HomePage extends React.Component<Props> {
         return () => {
             onSelectChild(child);
         };
+    }
+
+    handleDonateClick(){
+        const {value,selectedChild,history} = this.props;
+
+        let link = "/donate/";
+
+        if(selectedChild){
+            link+= selectedChild.id+'/'+nameToURL(selectedChild.name);
+        }
+
+        if(value){
+            link+= '?amount='+value;
+        }
+
+        history.push(link);
     }
 
     public renderHelp(chars: string[]) {
@@ -227,7 +252,7 @@ class HomePage extends React.Component<Props> {
     }
 
     public render() {
-        const { classes, selectedChild } = this.props;
+        const { classes, selectedChild,value,onChangeValue } = this.props;
 
         return (
             <MainLayout>
@@ -365,6 +390,9 @@ class HomePage extends React.Component<Props> {
                                     label="USD"
                                     type="number"
                                     className={classes.amountInput}
+                                    onChange={onChangeValue}
+                                    value={value}
+                                    onSubmit={this.handleDonateClick}
                                 />
                             </div>
                         </Grid>
@@ -455,4 +483,4 @@ class HomePage extends React.Component<Props> {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(styler(HomePage));
+)( withRouter(styler(HomePage)));

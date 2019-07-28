@@ -21,7 +21,7 @@ import {
 } from "../../../store/SearchPage/actions";
 import { SearchPageState } from "../../../store/SearchPage/types";
 import UserCard from "./UserCard";
-import { CircularProgress, Typography } from '@material-ui/core';
+import { CircularProgress, Typography } from "@material-ui/core";
 
 const styler = withStyles(theme => ({
     wrapper: {
@@ -32,9 +32,9 @@ const styler = withStyles(theme => ({
         marginTop: theme.spacing(8),
         marginBottom: theme.spacing(8)
     },
-    textCenter:{
-        textAlign:'center',
-        padding:theme.spacing(4)
+    textCenter: {
+        textAlign: "center",
+        padding: theme.spacing(4)
     }
 }));
 
@@ -42,7 +42,7 @@ interface Props extends SearchPageState {
     classes: {
         wrapper: string;
         center: string;
-        textCenter: string
+        textCenter: string;
     };
     onLoad: () => void;
     onSearchOption: (keyword: string, optionId: string) => void;
@@ -126,13 +126,13 @@ class SearchPage extends React.Component<Props> {
     afterCheck(id: string | number, type: string) {
         const { selectedOptions, onFetchResults, searchKeyword } = this.props;
 
-        const options = selectedOptions[type]?selectedOptions[type]:[];
+        const options = selectedOptions[type] ? selectedOptions[type] : [];
 
         let modedOptions: (string | number)[] = options.filter(
             selectedId => selectedId != id
         );
 
-        if (modedOptions.length ==options.length) {
+        if (modedOptions.length == options.length) {
             modedOptions.push(id);
         }
 
@@ -182,16 +182,22 @@ class SearchPage extends React.Component<Props> {
         return results.map((user, key) => <UserCard key={key} {...user} />);
     }
 
-    renderInfo(){
-        const {loading,results,classes} = this.props;
+    renderInfo() {
+        const { loading, results, classes } = this.props;
 
-        if(!loading) {
-            if(!results.length){
+        if (!loading) {
+            if (!results.length) {
                 return (
                     <Grid className={classes.textCenter} item md={12}>
-                        <Typography align="center" color="textSecondary" variant="h5">No results found..</Typography>
+                        <Typography
+                            align="center"
+                            color="textSecondary"
+                            variant="h5"
+                        >
+                            No results found..
+                        </Typography>
                     </Grid>
-                )
+                );
             }
 
             return null;
@@ -201,7 +207,7 @@ class SearchPage extends React.Component<Props> {
             <Grid className={classes.textCenter} item md={12}>
                 <CircularProgress />
             </Grid>
-        )
+        );
     }
 
     public render() {

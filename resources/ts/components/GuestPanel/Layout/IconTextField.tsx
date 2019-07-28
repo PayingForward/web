@@ -28,65 +28,75 @@ const styler = withStyles(theme => ({
 }));
 
 interface Props {
-    classes:{
-        root:string;
-        input:string;
-        iconButton:string;
-        divider:string;
-    },
-    leftIcon:React.ReactNode;
-    rightIcon:React.ReactNode;
-    label:string;
-    value?:string|null|number;
-    onChange?:(text?:string|number)=>void,
-    type?:string,
-    className?:string
+    classes: {
+        root: string;
+        input: string;
+        iconButton: string;
+        divider: string;
+    };
+    leftIcon: React.ReactNode;
+    rightIcon: React.ReactNode;
+    label: string;
+    value?: string | null | number;
+    onChange?: (text?: string | number) => void;
+    type?: string;
+    className?: string;
+    onSubmit?: () => void;
 }
 
 class IconTextField extends React.Component<Props> {
-
-
-    constructor(props:Props){
+    constructor(props: Props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(e:React.ChangeEvent<HTMLInputElement>){
-        const {onChange} = this.props;
+    handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const { onChange } = this.props;
 
-        if(typeof onChange!='undefined'){
+        if (typeof onChange != "undefined") {
             onChange(e.target.value);
         }
     }
 
     public render() {
-        const {classes,label,leftIcon,rightIcon,value,type,className} = this.props;
+        const {
+            classes,
+            label,
+            leftIcon,
+            rightIcon,
+            value,
+            type,
+            className,
+            onSubmit
+        } = this.props;
 
         return (
-            <Paper className={ classNames(classes.root,className)}>
-                <IconButton className={classes.iconButton}>
-                    {leftIcon}
-                </IconButton>
-                <InputBase
-                    className={classes.input}
-                    placeholder={label}
-                    inputProps={{ "aria-label": label }}
-                    value={value}
-                    onChange={this.handleChange}
-                    type={type}
-                />
-                <Divider className={classes.divider} />
-                <IconButton
-                    color="primary"
-                    className={classes.iconButton}
-                >
-                    {rightIcon}
-                </IconButton>
-            </Paper>
+            <form onSubmit={onSubmit}>
+                <Paper className={classNames(classes.root, className)}>
+                    <IconButton className={classes.iconButton}>
+                        {leftIcon}
+                    </IconButton>
+                    <InputBase
+                        className={classes.input}
+                        placeholder={label}
+                        inputProps={{ "aria-label": label }}
+                        value={value}
+                        onChange={this.handleChange}
+                        type={type}
+                    />
+                    <Divider className={classes.divider} />
+                    <IconButton
+                        color="primary"
+                        className={classes.iconButton}
+                        type="submit"
+                    >
+                        {rightIcon}
+                    </IconButton>
+                </Paper>
+            </form>
         );
     }
 }
-
 
 export default styler(IconTextField);
