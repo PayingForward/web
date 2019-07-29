@@ -87,10 +87,16 @@ const SearchPage = {
         request("search/" + optionId, { keyword })
 };
 
+const DonationPage = {
+    fetchInfo:(childId:number)=>request('donate/info',{childId}),
+    submit:(amount:string|number,childId?:number)=>request('donate/submit',{childId,amount})
+}
+
 export default {
     Auth,
     CRUD,
     Permissions,
     HomePage,
-    SearchPage
+    SearchPage,
+    DonationPage
 };
