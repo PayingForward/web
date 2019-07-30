@@ -5,9 +5,8 @@ export const success = ():Success=>({
     type:DONATE_PAGE_SUCCESS
 });
 
-export const loadedInfo =(donator:UserInformations,child:UserInformations):LoadedInfo=>({
+export const loadedInfo =(child:UserInformations):LoadedInfo=>({
     type: DONATE_PAGE_LOADED_INFO,
-    donator,
     child
 });
 
