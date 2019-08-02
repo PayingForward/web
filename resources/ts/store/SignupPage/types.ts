@@ -1,8 +1,10 @@
 export const SIGNUP_PAGE_CHANGE_EMAIL = "SIGNUP_PAGE_CHANGE_EMAIL";
 export const SIGNUP_PAGE_CHANGE_PASSWORD = "SIGNUP_PAGE_CHANGE_PASSWORD";
+export const SIGNUP_PAGE_CHANGE_PASSWORD_CONFIRMATION = 'SIGNUP_PAGE_CHANGE_PASSWORD_CONFIRMATION';
 export const SIGNUP_PAGE_CHANGE_NAME = "SIGNUP_PAGE_CHANGE_NAME";
 export const SIGNUP_PAGE_ERROR_EMAIL = "SIGNUP_PAGE_ERROR_EMAIL";
 export const SIGNUP_PAGE_ERROR_PASSWORD = "SIGNUP_PAGE_ERROR_PASSWORD";
+export const SIGNUP_PAGE_ERROR_PASSWORD_CONFIRMATION = 'SIGNUP_PAGE_ERROR_PASSWORD_CONFIRMATION';
 export const SIGNUP_PAGE_ERROR_NAME = "SIGNUP_PAGE_ERROR_NAME";
 export const SIGNUP_PAGE_CHANGE_STATUS = "SIGNUP_PAGE_CHANGE_STATUS";
 
@@ -19,8 +21,10 @@ export interface SignupPageState {
     status?: SignupPageStatus;
     emailError?: string;
     passwordError?: string;
+    passwordConfirmationError?:string;
     email: string;
     password: string;
+    passwordConfirmation:string;
     name:string;
     nameError?:string
 }
@@ -57,7 +61,17 @@ export interface ChangeName {
 
 export interface ErrorName {
     type: typeof SIGNUP_PAGE_ERROR_NAME,
-    error:string
+    error?:string
+}
+
+export interface ChangePasswordConfirmation {
+    type: typeof SIGNUP_PAGE_CHANGE_PASSWORD_CONFIRMATION,
+    password:string
+}
+
+export interface ErrorPasswordConfirmation {
+    type: typeof SIGNUP_PAGE_ERROR_PASSWORD_CONFIRMATION,
+    error?:string
 }
 
 export type SignupPageActions =
@@ -67,4 +81,6 @@ export type SignupPageActions =
     | ErrorEmail
     | ErrorPassword
     | ChangeName
-    | ErrorName;
+    | ErrorName
+    | ChangePasswordConfirmation
+    | ErrorPasswordConfirmation;
