@@ -11,6 +11,8 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail as InterfaceMustVerifyEmail;
+use App\Notifications\VerifyEmail;
 
 /**
  * User modal
@@ -19,7 +21,7 @@ use Laravel\Passport\HasApiTokens;
  * @property int $u_id
  * @property string $u_name
  * @property string $u_email
- * @property string $u_password
+ * @property string $u_passwordhenticatable;
  * @property int $ut_id
  * @property string $u_avatar
  * @property Permission[] $permissions
@@ -28,7 +30,8 @@ use Laravel\Passport\HasApiTokens;
 class User extends Base implements
 AuthenticatableContract,
 AuthorizableContract,
-CanResetPasswordContract
+CanResetPasswordContract,
+InterfaceMustVerifyEmail
 {
     use Notifiable,Authenticatable, Authorizable, CanResetPassword, MustVerifyEmail,HasApiTokens;
 
@@ -42,7 +45,11 @@ CanResetPasswordContract
      * @var array
      */
     protected $fillable = [
-        'u_name', 'u_email', 'u_password','ut_id','u_avatar'
+        'u_name', 'u_email', 'u_password','ut_id','u_avatar','email_verified_at','u_social_token'
+    ];
+
+    protected $dates = [
+        'deleted_at', 'created_at', 'updated_at','email_verified_at'
     ];
 
     /**
@@ -51,7 +58,7 @@ CanResetPasswordContract
      * @var array
      */
     protected $hidden = [
-        'u_password'
+        'u_password','u_social_token'
     ];
 
     public function userType(){
@@ -87,6 +94,24 @@ CanResetPasswordContract
 
         return $type;
 
+    }
+
+    public function getEmailAttribute() {
+        return $this->attributes['u_email'];
+    }
+    
+    public function setEmailAttribute($value) {
+        $this->attributes['u_email'] = $value;
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail); // my notification
     }
 
 }

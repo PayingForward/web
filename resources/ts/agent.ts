@@ -33,7 +33,9 @@ const request = (
 const Auth = {
     getUser: () => request("user/info"),
     login: (email: string, password: string) =>
-        request("user/login", { email, password })
+        request("user/login", { email, password }),
+    signup: (name:string,email:string,password:string,passwordConfirmation:string) =>
+        request('user/signup',{name,email,password,passwordConfirmation})
 };
 
 const CRUD = {

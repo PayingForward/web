@@ -21,6 +21,10 @@ import {
 } from "./types";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
+import agent from '../../agent';
+import { showLoading } from 'react-redux-loading-bar';
+import { successSnack, errorSnack } from '../SnackController/actions';
+import { APP_URL } from '../../constants/config';
 
 export const changePassword = (password: string): ChangePassword => ({
     type: SIGNUP_PAGE_CHANGE_PASSWORD,
@@ -169,3 +173,32 @@ export const validatePasswordConfirmation = (
         );
     }
 };
+
+export const submit = (
+    name:string,
+    email:string,
+    password:string,
+    passwordConfirmation:string
+): ThunkAction<Promise<void>, {}, {}, AnyAction> => async (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>
+) => {
+
+    dispatch(showLoading());
+
+    agent.Auth.signup(name,email,password,passwordConfirmation).then(({success,message})=>{
+        if(message){
+            if(success){
+                dispatch(successSnack(message));
+                window.setTimeout(()=>{
+                    if(APP_URL)
+                        window.location.href = APP_URL;
+                    else
+                        window.location.reload();
+                },1000)
+            } else {
+                dispatch(errorSnack(message));
+            }
+        }
+    })
+
+ }

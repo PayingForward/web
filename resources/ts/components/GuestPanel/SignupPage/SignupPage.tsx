@@ -20,7 +20,8 @@ import {
     validateName,
     validateEmail,
     validatePassword,
-    validatePasswordConfirmation
+    validatePasswordConfirmation,
+    submit
 } from "../../../store/SignupPage/actions";
 
 const styler = withStyles(theme => ({
@@ -67,7 +68,13 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     onPasswordConfirmationChange: (
         passwordConfirmation: string,
         password: string
-    ) => dispatch(validatePasswordConfirmation(passwordConfirmation, password))
+    ) => dispatch(validatePasswordConfirmation(passwordConfirmation, password)),
+    onSubmit: (
+        name: string,
+        email: string,
+        password: string,
+        passwordConfirmation: string
+    ) => dispatch(submit(name, email, password, passwordConfirmation))
 });
 
 interface Props extends SignupPageState {
@@ -84,6 +91,12 @@ interface Props extends SignupPageState {
     onEmailChange: (x: string) => void;
     onPasswordChange: (x: string) => void;
     onPasswordConfirmationChange: (x: string, y: string) => void;
+    onSubmit: (
+        name: string,
+        email: string,
+        password: string,
+        passwordConfirmation: string
+    ) => void;
 }
 
 class SignupPage extends React.Component<Props> {
@@ -96,6 +109,7 @@ class SignupPage extends React.Component<Props> {
         this.handleChangePasswordConfirmation = this.handleChangePasswordConfirmation.bind(
             this
         );
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChangeEmail(e: React.ChangeEvent<HTMLInputElement>) {
@@ -113,6 +127,19 @@ class SignupPage extends React.Component<Props> {
     handleChangePasswordConfirmation(e: React.ChangeEvent<HTMLInputElement>) {
         const { onPasswordConfirmationChange, password } = this.props;
         onPasswordConfirmationChange(e.target.value, password);
+    }
+
+    handleSubmit(e:React.FormEvent) {
+        e.preventDefault();
+        const {
+            name,
+            email,
+            password,
+            passwordConfirmation,
+            onSubmit
+        } = this.props;
+
+        onSubmit(name, email, password, passwordConfirmation);
     }
 
     render() {
@@ -160,72 +187,92 @@ class SignupPage extends React.Component<Props> {
                         </div>
                     </Grid>
                     <Grid item md={6}>
-                        <Paper className={classes.paper}>
-                            <Typography
-                                color="textSecondary"
-                                align="center"
-                                variant="h5"
-                            >
-                                Signup
-                            </Typography>
-                            <Divider className={classes.divider} />
-                            <TextField
-                                className={classes.textField}
-                                fullWidth
-                                label="Name"
-                                value={name}
-                                helperText={nameError}
-                                error={!!nameError}
-                                onChange={this.handleChangeName}
-                            />
-                            <TextField
-                                className={classes.textField}
-                                fullWidth
-                                label="Email"
-                                value={email}
-                                helperText={emailError}
-                                error={!!emailError}
-                                onChange={this.handleChangeEmail}
-                            />
-                            <TextField
-                                className={classes.textField}
-                                fullWidth
-                                type="password"
-                                label="Password"
-                                value={password}
-                                helperText={passwordError}
-                                error={!!passwordError}
-                                onChange={this.handleChangePassword}
-                            />
-                            <TextField
-                                className={classes.textField}
-                                fullWidth
-                                type="password"
-                                label="Confirm Password"
-                                value={passwordConfirmation}
-                                helperText={passwordConfirmationError}
-                                error={!!passwordConfirmationError}
-                                onChange={this.handleChangePasswordConfirmation}
-                            />
-                            <Toolbar variant="dense">
-                                <IconButton>
-                                    <Avatar
-                                        src="/images/social/fb.png"
-                                        alt="Facebook Logo"
-                                    />
-                                </IconButton>
-                                <IconButton>
-                                    <Avatar
-                                        src="/images/social/gmail.png"
-                                        alt="Gmail Logo Background Brown"
-                                    />
-                                </IconButton>
-                                <div className={classes.grow} />
-                                <Button color="secondary" variant="contained">
+                        <form onSubmit={this.handleSubmit}>
+                            <Paper className={classes.paper}>
+                                <Typography
+                                    color="textSecondary"
+                                    align="center"
+                                    variant="h5"
+                                >
                                     Signup
-                                </Button>
-                            </Toolbar>
-                        </Paper>
+                                </Typography>
+                                <Divider className={classes.divider} />
+                                <TextField
+                                    className={classes.textField}
+                                    fullWidth
+                                    label="Name"
+                                    value={name}
+                                    helperText={nameError}
+                                    error={!!nameError}
+                                    onChange={this.handleChangeName}
+                                />
+                                <TextField
+                                    className={classes.textField}
+                                    fullWidth
+                                    label="Email"
+                                    value={email}
+                                    helperText={emailError}
+                                    error={!!emailError}
+                                    onChange={this.handleChangeEmail}
+                                />
+                                <TextField
+                                    className={classes.textField}
+                                    fullWidth
+                                    type="password"
+                                    label="Password"
+                                    value={password}
+                                    helperText={passwordError}
+                                    error={!!passwordError}
+                                    onChange={this.handleChangePassword}
+                                />
+                                <TextField
+                                    className={classes.textField}
+                                    fullWidth
+                                    type="password"
+                                    label="Confirm Password"
+                                    value={passwordConfirmation}
+                                    helperText={passwordConfirmationError}
+                                    error={!!passwordConfirmationError}
+                                    onChange={
+                                        this.handleChangePasswordConfirmation
+                                    }
+                                />
+                                <Toolbar variant="dense">
+                                    <IconButton>
+                                        <Avatar
+                                            src="/images/social/fb.png"
+                                            alt="Facebook Logo"
+                                        />
+                                    </IconButton>
+                                    <IconButton>
+                                        <Avatar
+                                            src="/images/social/gmail.png"
+                                            alt="Gmail Logo Background Brown"
+                                        />
+                                    </IconButton>
+                                    <div className={classes.grow} />
+                                    <Button
+                                        disabled={
+                                            !!(
+                                                nameError ||
+                                                emailError ||
+                                                passwordError ||
+                                                passwordConfirmationError ||
+                                                !name.length ||
+                                                !email.length ||
+                                                !password.length ||
+                                                !passwordConfirmation.length
+                                            )
+                                        }
+                                        color="secondary"
+                                        variant="contained"
+                                        type="submit"
+                                    >
+                                        Signup
+                                    </Button>
+                                </Toolbar>
+                            </Paper>
+                        </form>
                     </Grid>
                 </Grid>
             </Layout>

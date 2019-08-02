@@ -3,6 +3,7 @@
 Route::group(['prefix'=>'user'],function(){
 
     Route::post('login','UserController@login');
+    Route::post('signup','UserController@signup');
 
     Route::post('info','UserController@info')->middleware('auth:api');
 
@@ -19,7 +20,7 @@ Route::group(['prefix'=>'search'],function(){
 
 });
 
-Route::group(['middleware'=>'auth:api'],function(){
+Route::group(['middleware'=>['auth:api','verified']],function(){
 
     Route::post('/sidebar','PermissionController@sidebar');
 

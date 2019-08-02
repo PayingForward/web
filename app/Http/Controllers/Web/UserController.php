@@ -103,4 +103,41 @@ class UserController extends Controller {
 
         return \success_response(['childs'=>$childrens]);
     }
+
+
+    public function signup(Request $request){
+        $validation = Validator::make($request->all(),[
+            'name'=>'required|min:4',
+            'email'=>'required|email',
+            'password'=>'required|min:4',
+            'passwordConfirmation'=>'required|min:4'
+        ]);
+
+        if($validation->fails()){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        if($request->input('password')!=$request->input('password')){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        $usersByEmail = User::where('u_email',$request->input('email'))->count();
+
+        if($usersByEmail){
+            throw new WebApiException("Email has already taken! Please use a different one!");
+        }
+
+        /** @var User $user */
+        $user = User::create([
+            'u_name'=>$request->input('name'),
+            'u_email'=>$request->input('email'),
+            'u_password'=> Hash::make($request->input('password'))
+        ]);
+
+        $user->sendEmailVerificationNotification();
+
+        return \success_response([
+            'message'=>"We have sent a confirmation email to '".$request->input('email')."'. Please click the link in this email and confirm your email address"
+        ]);
+    }
 }

@@ -36,3 +36,7 @@
     When a database transaction occured or some database exception occured.
 
     - app/Http/Controllers/Web/FormController.php
+
+7. Email has already taken.
+
+    When entered email has registered with a different email address.
