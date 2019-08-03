@@ -28,6 +28,7 @@ use Illuminate\Support\Carbon;
  * @property Permission[] $permissions
  * @property Children $children
  * @property Carbon $email_verified_at
+ * @property string $u_token
  */
 class User extends Base implements
 AuthenticatableContract,
@@ -47,7 +48,7 @@ InterfaceMustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'u_name', 'u_email', 'u_password','ut_id','u_avatar','email_verified_at','u_social_token','u_email_token'
+        'u_name', 'u_email', 'u_password','ut_id','u_avatar','email_verified_at','u_social_token','u_token'
     ];
 
     protected $dates = [

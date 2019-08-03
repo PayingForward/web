@@ -138,6 +138,10 @@ class UserController extends Controller {
             'ut_id'=>config('usertypes.donor')
         ]);
 
+        $user->u_token = strtolower(base64_encode($user->getKey().time().'abandonedseed'));
+
+        $user->save();
+
         $user->sendEmailVerificationNotification();
 
         return \success_response([
