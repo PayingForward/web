@@ -40,3 +40,7 @@
 7. Email has already taken.
 
     When entered email has registered with a different email address.
+
+8. Please verify your email address.
+
+    When a user is trying to logged in with a not verified email.

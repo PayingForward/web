@@ -18,11 +18,7 @@
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-
-
-Route::get('email/verify', 'VerificationController@show')->name('verification.notice');
-Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
-Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
+Route::get('/email/verify','Web\VerificationApiController@verify')->name('verificationapi.verify');
 
 Route::view('/{path?}', 'react')
      ->where('path', '.*')

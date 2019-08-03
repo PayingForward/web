@@ -12,7 +12,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail as InterfaceMustVerifyEmail;
-use App\Notifications\VerifyEmail;
+use App\Notifications\VerifyApiEmail;
+use Illuminate\Support\Carbon;
 
 /**
  * User modal
@@ -26,6 +27,7 @@ use App\Notifications\VerifyEmail;
  * @property string $u_avatar
  * @property Permission[] $permissions
  * @property Children $children
+ * @property Carbon $email_verified_at
  */
 class User extends Base implements
 AuthenticatableContract,
@@ -45,7 +47,7 @@ InterfaceMustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'u_name', 'u_email', 'u_password','ut_id','u_avatar','email_verified_at','u_social_token'
+        'u_name', 'u_email', 'u_password','ut_id','u_avatar','email_verified_at','u_social_token','u_email_token'
     ];
 
     protected $dates = [
@@ -111,7 +113,7 @@ InterfaceMustVerifyEmail
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmail); // my notification
+        $this->notify(new VerifyApiEmail); // my notification
     }
 
 }

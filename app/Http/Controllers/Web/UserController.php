@@ -43,6 +43,10 @@ class UserController extends Controller {
             throw new WebApiException("Your account has an error.",4);
         }
 
+        if(!$user->email_verified_at){
+            throw new WebApiException("Please verify your email address.",8);
+        }
+
         $token = $user->createToken('Web Token', [\strtolower($user->userType->ut_code)])->accessToken;
 
         return \success_response([
@@ -104,7 +108,6 @@ class UserController extends Controller {
         return \success_response(['childs'=>$childrens]);
     }
 
-
     public function signup(Request $request){
         $validation = Validator::make($request->all(),[
             'name'=>'required|min:4',
@@ -131,7 +134,8 @@ class UserController extends Controller {
         $user = User::create([
             'u_name'=>$request->input('name'),
             'u_email'=>$request->input('email'),
-            'u_password'=> Hash::make($request->input('password'))
+            'u_password'=> Hash::make($request->input('password')),
+            'ut_id'=>config('usertypes.donor')
         ]);
 
         $user->sendEmailVerificationNotification();

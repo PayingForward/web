@@ -57,6 +57,7 @@ const CRUDPage = () => (
         )}
     />
 );
+
 const DonatePage = () => (
     <AsyncComponent
         page
@@ -112,13 +113,15 @@ class AuthController extends React.Component<Props> {
         if (!user) return null;
 
         return [
-            <Route path="/cpanel" exact={true} component={DashBoard} />,
+            <Route key={0} path="/cpanel" exact={true} component={DashBoard} />,
             <Route
+                key={1}
                 path="/cpanel/form/:form"
                 exact={true}
                 component={CRUDPage}
             />,
             <Route
+                key={2}
                 path="/donate/:id?/:name?"
                 exact={true}
                 component={DonatePage}

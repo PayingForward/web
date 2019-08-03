@@ -28,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::tokensCan([
             'admin' => 'All',
+            'dnr'=>'donations'
         ]);
     }
 }

@@ -5,6 +5,7 @@ Route::group(['prefix'=>'user'],function(){
     Route::post('login','UserController@login');
     Route::post('signup','UserController@signup');
 
+
     Route::post('info','UserController@info')->middleware('auth:api');
 
     Route::post('rand','UserController@getRandomChildrens');
