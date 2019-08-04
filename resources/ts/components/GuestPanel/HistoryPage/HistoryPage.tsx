@@ -2,7 +2,20 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { Grid, Paper, Typography, Divider, Toolbar, TextField, Select, MenuItem, TablePagination, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@material-ui/core';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Toolbar from "@material-ui/core/Toolbar";
+import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import TablePagination from "@material-ui/core/TablePagination";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
 import withStyles from '@material-ui/styles/withStyles';
 
 import { HistoryPageState } from '../../../store/HistoryPage/types';

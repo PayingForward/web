@@ -411,16 +411,20 @@ class HomePage extends React.Component<Props> {
                         <List>
                             <ListItem>
                                 <ListItemText>
-                                    <Typography color="textPrimary">
-                                        What we do
-                                    </Typography>
+                                    <Link to="/donate/history" >
+                                        <Typography color="textPrimary">
+                                            Our Hearts
+                                        </Typography>
+                                    </Link>
                                 </ListItemText>
                             </ListItem>
                             <ListItem>
                                 <ListItemText>
-                                    <Typography color="textPrimary">
-                                        Search and Donate
-                                    </Typography>
+                                    <Link to="/search" >
+                                        <Typography color="textPrimary">
+                                            Search And Donate
+                                        </Typography>
+                                    </Link>
                                 </ListItemText>
                             </ListItem>
                             <ListItem>

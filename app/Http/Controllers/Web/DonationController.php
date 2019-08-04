@@ -157,6 +157,7 @@ class DonationController extends Controller {
             $message .= "<br>".$box->amount_paid()." ".$box->coin_label()."  received<br>";
 
             $donation->d_amount = $request->input('amount');
+            $donation->d_payed_at = date('Y-m-d H:i:s');
             $donation->save();
         }  
         else {
@@ -166,8 +167,7 @@ class DonationController extends Controller {
 
             $donation->d_mode = $modes[0];
 
-            $donation->d_played_at = date('Y-m-d H:i:s');
-            $donation->d_privacy = $request->input('annonymous');
+            $donation->d_privacy = $request->input('annonymous')?$request->input('annonymous'):0;
 
             if($request->input('child')){
                 $donation->chld_u_id = $request->input('child');
