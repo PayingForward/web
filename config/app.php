@@ -229,6 +229,11 @@ return [
         'Image' => Intervention\Image\Facades\Image::class
     ],
 
-    'cyptobox_private_keys'=>array('25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE'),
+    'gourl_keys'=>[
+        'bitcoin'=>[
+            'private'=>'25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE',
+            'public'=>'25654AAo79c3Bitcoin77BTCPUBqwIefT1j9fqqMwUtMI0huVL'
+        ]
+    ]
 
 ];

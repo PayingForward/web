@@ -14,11 +14,13 @@ export interface DonationPageState {
     loading: boolean;
     success?: boolean;
     mode:number;
-    anonymous:boolean
+    anonymous:boolean;
+    donationId:string;
 }
 
 export interface LoadedInfo {
     type: typeof DONATE_PAGE_LOADED_INFO;
+    donationId:string;
     child?: UserCompleteInfo;
 }
 

@@ -47,7 +47,7 @@ const mapStateToProps = (state:AppState)=>({
 });
 
 const mapDispatchToProps = (dispatch:ThunkDispatch<{},{},any>)=>({
-    onChangeChild:(childId:number|string)=>dispatch(fetchInfo(childId)),
+    onChangeChild:(childId?:number|string)=>dispatch(fetchInfo(childId)),
     onClearChild:()=>dispatch(clearChild()),
     onChangeAmount:(amount?:number|string)=>dispatch(changeAmount(amount)),
     onError:(message:string)=>dispatch(errorSnack(message)),
@@ -68,7 +68,7 @@ interface Props extends DonationPageState {
             id?:string|number
         }
     },
-    onChangeChild:(childId:number|string)=>void,
+    onChangeChild:(childId?:number|string)=>void,
     onClearChild:()=>void,
     onChangeAmount:(amount?:number|string)=>void,
     onChangeMode:(mode:number)=>void,
@@ -89,9 +89,7 @@ class DonatePage extends React.Component<Props&RouteComponentProps> {
     componentDidMount(){
         const {match,onChangeChild,location,onChangeAmount} = this.props;
 
-        if(match.params.id){
-            onChangeChild(match.params.id);
-        }
+        onChangeChild(match.params.id);
 
         const parameters:{amount?:number|string} = parse(location.search);
 
@@ -102,11 +100,7 @@ class DonatePage extends React.Component<Props&RouteComponentProps> {
         const currentChild = this.props.match.params.id;
         const prevChild = prevProps.match.params.id;
         if(currentChild!=prevChild){
-            if(currentChild){
-                this.props.onChangeChild(currentChild);
-            } else {
-                this.props.onClearChild();
-            }
+            this.props.onChangeChild(currentChild);
         }
     }
 
@@ -152,7 +146,7 @@ class DonatePage extends React.Component<Props&RouteComponentProps> {
             <React.Fragment>
                 <Avatar className={classes.avatar}  src={avatar(64,child.avatar)} />
                 <Typography color="textSecondary" >{description}</Typography>
-                <input type="hidden" name="mode" value={0}/>
+                <input type="hidden" name="mode[0]" value={1}/>
                 <input type="hidden" name="child" value={child.id}/>
                 <Typography color="textSecondary" variant="h6">Do you like to help {child.name}? </Typography>
             </React.Fragment>
@@ -198,13 +192,13 @@ class DonatePage extends React.Component<Props&RouteComponentProps> {
 
 
     render(){
-        const {classes,amount,anonymous} = this.props;
+        const {classes,amount,anonymous,donationId} = this.props;
 
         return (
             <MainLayout >
                 <Grid justify="center" container>
                     <Grid item md={8}>
-                        <form onSubmit={this.handleSubmit} action="/donate/box" >
+                        <form onSubmit={this.handleSubmit} method="POST" action={"/donate/box?donation="+donationId} >
                             <Paper className={classes.paper} >
                                 <Typography color="textSecondary" align="center" variant="h6">Donate</Typography>
                                 <Divider className={classes.divider} />

@@ -25,9 +25,10 @@ export const success = (): Success => ({
     type: DONATE_PAGE_SUCCESS
 });
 
-export const loadedInfo = (child: UserCompleteInfo): LoadedInfo => ({
+export const loadedInfo = (donationId:string,child?: UserCompleteInfo): LoadedInfo => ({
     type: DONATE_PAGE_LOADED_INFO,
-    child
+    child,
+    donationId
 });
 
 export const changeChild = (child: UserCompleteInfo): ChangeChild => ({
@@ -45,18 +46,18 @@ export const changeAmount = (amount?: number | string): ChangeAmount => ({
 });
 
 export const fetchInfo = (
-    childId: number | string
+    childId?: number | string
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => async (
     dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
     dispatch(showLoading());
 
     agent.DonationPage.fetchInfo(childId).then(
-        ({ success, message, children }) => {
+        ({ success, message, children,donationId }) => {
             dispatch(hideLoading());
 
             if (success) {
-                dispatch(loadedInfo(children));
+                dispatch(loadedInfo(donationId,children?children:undefined));
             } else if (message) {
                 dispatch(errorSnack(message));
             }

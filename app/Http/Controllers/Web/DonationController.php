@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Exceptions\WebApiException;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Donation;
 
 class DonationController extends Controller {
     public function getInfo(Request $request){
@@ -14,72 +16,110 @@ class DonationController extends Controller {
             'childId'=>'required|numeric'
         ]);
 
-        if($validation->fails()){
-            throw new WebApiException("Invalid values supplied.",5);
-        }
+        $children = null;
 
-        $user = User::with(['children','children.schoolClass','children.schoolClass.school','children.town'])
-            ->where('ut_id',config('usertypes.children'))
-            ->where('u_id',$request->input('childId'))
-            ->first();
+        $loggedUser = Auth::user();
 
-        if(!$user||!$user->children){
-            throw new WebApiException("Invalid values supplied.",5);
-        }
+        $donationId = strtolower( base64_encode($loggedUser->u_id.time()));
 
-        $town = null;
-        $school = null;
-        $schoolClass = null;
+        $donationId = \preg_replace('/([^a-zA-Z0-9]+)/','',$donationId);
 
-        if($user->children->town){
-            $town = [
-                'id'=>$user->children->town->getKey(),
-                'label'=>$user->children->town->t_name
-            ];
-        }
+        Donation::create([
+            'd_no'=>$donationId,
+            'u_id'=>$loggedUser->getKey()
+        ]);
 
-        if($user->children->schoolClass){
-            $schoolClass = [
-                'id'=>$user->children->schoolClass->getKey(),
-                'label'=>$user->children->schoolClass->sc_name
-            ];
+        if(!$validation->fails()){
+            $user = User::with(['children','children.schoolClass','children.schoolClass.school','children.town'])
+                ->where('ut_id',config('usertypes.children'))
+                ->where('u_id',$request->input('childId'))
+                ->first();
 
-            if($user->children->schoolClass->school){
-                $school = [
-                    'id'=>$user->children->schoolClass->school->getKey(),
-                    'label'=>$user->children->schoolClass->school->scl_name
+            if(!$user||!$user->children){
+                throw new WebApiException("Invalid values supplied.",5);
+            }
+
+            $town = null;
+            $school = null;
+            $schoolClass = null;
+
+            if($user->children->town){
+                $town = [
+                    'id'=>$user->children->town->getKey(),
+                    'label'=>$user->children->town->t_name
                 ];
             }
-        }
 
-        return success_response([
-            'children'=>[
+            if($user->children->schoolClass){
+                $schoolClass = [
+                    'id'=>$user->children->schoolClass->getKey(),
+                    'label'=>$user->children->schoolClass->sc_name
+                ];
+
+                if($user->children->schoolClass->school){
+                    $school = [
+                        'id'=>$user->children->schoolClass->school->getKey(),
+                        'label'=>$user->children->schoolClass->school->scl_name
+                    ];
+                }
+            }
+
+            $children = [
                 'id'=>$user->getKey(),
                 'name'=>$user->u_name,
                 'avatar'=>$user->u_avatar,
                 'town'=>$town,
                 'schoolClass'=>$schoolClass,
                 'school'=>$school
-            ]
+            ];
+        }
+
+        return success_response([
+            'children'=>$children,
+            'donationId'=>$donationId
         ]);
     }
 
-    public function renderPaymentBox(){
+    public function renderPaymentBox(Request $request){
+        $validation = Validator($request->all(),[
+            'amount'=>'required',
+            'donation'=>'required',
+            'mode'=>'required'
+        ]);
+
+        if($validation->fails()){
+            abort(422);
+        }
+
         $classPath =  __DIR__.'/../../../../bootstrap/Payment-Gateway/lib/cryptobox.class.php';
 
         require_once( $classPath);
 
-        $orderID    =  "your_product1_or_signuppage1_etc";
-        $userID     = "1";
+        $modes = array_keys($request->input('mode'));
+
+        if(empty($modes)){
+            abort(422);
+        }
+
+        /** @var Donation $donation */
+        $donation = Donation::where('d_no',$request->input('donation'))->first();
+        
+        if(!$donation){
+            abort(422);
+        }
+
+        $orderID    =  $request->input('donation');
+        $userID     = $donation->u_id;
         $def_language   = "en"; // default payment box language; en - English, es - Spanish, fr - French, etc
+        
 
         // Remove all the characters from the string other than a..Z0..9_-@. 
         $orderID = preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $orderID);
         $userID = preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $userID);
 
         $options = array( 
-            "public_key"  => "25654AAo79c3Bitcoin77BTCPUBqwIefT1j9fqqMwUtMI0huVL",         // place your public key from gourl.io
-            "private_key" => "25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE",         // place your private key from gourl.io
+            "public_key"  => config('app.gourl_keys.bitcoin.public'),         // place your public key from gourl.io
+            "private_key" => config('app.gourl_keys.bitcoin.private'),         // place your private key from gourl.io
             "webdev_key"  => "",        // optional, gourl affiliate program key
             "orderID"     => $orderID,   // few your users can have the same orderID but combination 'orderID'+'userID' should be unique
             "userID"      => $userID,   // optional; place your registered user id here (user1, user2, etc)
@@ -87,7 +127,7 @@ class DonationController extends Controller {
                     // when userID value is empty - system will autogenerate unique identifier for every user and save it in cookies 
             "userFormat"  => "COOKIE",   // save your user identifier userID in cookies. Available: COOKIE, SESSION, IPADDRESS, MANUAL
             "amount"      => 0,         // amount in cryptocurrency or in USD below
-            "amountUSD"   => 2,         // price is 2 USD; it will convert to cryptocoins amount, using Live Exchange Rates
+            "amountUSD"   => $request->input('amount'),         // price is 2 USD; it will convert to cryptocoins amount, using Live Exchange Rates
                                         // For convert fiat currencies Euro/GBP/etc. to USD, use function convert_currency_live()
             "period"      => "24 HOUR",  // payment valid period, after 1 day user need to pay again
             "iframeID"    => "",         // optional; when iframeID value is empty - system will autogenerate iframe html payment box id
@@ -105,53 +145,28 @@ class DonationController extends Controller {
         $languages_list = display_language_box($def_language);
 
         // Log
-        $message = "";
+        $message = null;
         
         // A. Process Received Payment
-        if ($box->is_paid()) 
+        if ($box->is_paid() &&!$box->is_processed()) 
         {
-            $message .= "A. User will see this message during 24 hours after payment has been made!";
+            $message = "A. User will see this message during 24 hours after payment has been made!";
             
             $message .= "<br>".$box->amount_paid()." ".$box->coin_label()."  received<br>";
-            
-            // Your code here to handle a successful cryptocoin payment/captcha verification
-            // For example, give user 24 hour access to your member pages
-            // ...
-        
-            // Please use IPN (instant payment notification) function cryptobox_new_payment() for update db records, etc
-            // Function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") called every time 
-            // when a new payment from any user is received.
-            // IPN description: https://gourl.io/api-php.html#ipn 
+
+            $donation->d_mode = $modes[0];
+            $donation->d_amount = $request->input('amount');
+            $donation->d_played_at = date('Y-m-d H:i:s');
+
+            if($request->input('child')){
+                $donation->chld_u_id = $request->input('child');
+            }
+
+            $donation->save();
         }  
-        else $message .= "The payment has not been made yet";
-
-        
-        // B. Optional - One-time Process Received Payment
-        if ($box->is_paid() && !$box->is_processed()) 
-        {
-            $message .= "B. User will see this message one time after payment has been made!";  
-        
-            // Your code here - user see successful payment result
-            // ...
-
-            // Also you can use $box->is_confirmed() - return true if payment confirmed 
-            // Average transaction confirmation time - 10-20min for 6 confirmations  
-            
-            // Set Payment Status to Processed
-            $box->set_status_processed(); 
-            
-            // Optional, cryptobox_reset() will delete cookies/sessions with userID and 
-            // new cryptobox with new payment amount will be show after page reload.
-            // Cryptobox will recognize user as a new one with new generated userID
-            // $box->cryptobox_reset(); 
-
-
-            // ...
-            // Also you can use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
-            // for send confirmation email, update database, update user membership, etc.
-            // You need to modify file - cryptobox.newpayment.php, read more - https://gourl.io/api-php.html#ipn
-            // ...
-
+        else {
+            $message .= null;
+            $box->set_status_processed();
         }
 
         return view('cryptobox',[

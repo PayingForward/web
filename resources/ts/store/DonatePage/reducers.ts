@@ -3,7 +3,8 @@ import { DonationPageState, DonatePageActions, DONATE_PAGE_CHANGE_AMOUNT, DONATE
 const initialState:DonationPageState = {
     loading:true,
     mode:0,
-    anonymous:false
+    anonymous:false,
+    donationId:""
 };
 
 export default (state=initialState,action:DonatePageActions):DonationPageState=>{
@@ -26,7 +27,8 @@ export default (state=initialState,action:DonatePageActions):DonationPageState=>
                 loading:false,
                 child:action.child,
                 mode:0,
-                anonymous:false
+                anonymous:false,
+                donationId:action.donationId
             };
         case DONATE_PAGE_SUCCESS:
             return {

@@ -136,7 +136,11 @@ class UserController extends Controller {
 
         if($usersByEmail){
             throw new WebApiException("Email has already taken! Please use a different one!");
-        }
+        } // $childrens = $childrens->filter(function($child){
+            //     return !!$child;
+            // })->values(); // $childrens = $childrens->filter(function($child){
+        //     return !!$child;
+        // })->values();
 
         /** @var User $user */
         $user = User::create([

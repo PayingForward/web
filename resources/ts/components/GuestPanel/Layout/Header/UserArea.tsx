@@ -79,7 +79,7 @@ class UserArea extends React.Component<Props,States> {
                     <ArrowDownIcon color="inherit"/>
                 </IconButton>
                 <Menu variant="selectedMenu" classes={{paper:classes.menu}} onClose={this.handleCloseMenu} anchorEl={menuRef} open={!!menuRef}>
-                    <MenuList>
+                    {/* <MenuList>
                         <ListItem button divider>
                             <Typography color="textSecondary">Profile</Typography>
                         </ListItem>
@@ -93,7 +93,7 @@ class UserArea extends React.Component<Props,States> {
                         <ListItem button divider>
                             <Typography color="textSecondary">Dashboard</Typography>
                         </ListItem>
-                    </MenuList>
+                    </MenuList> */}
                     <MenuList>
                         <ListItem onClick={this.handleLogOutClick} button divider>
                             <Typography color="textSecondary">Log Out</Typography>
