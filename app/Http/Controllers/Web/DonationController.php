@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\WebApiException;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class DonationController extends Controller {
     public function getInfo(Request $request){
@@ -18,17 +18,48 @@ class DonationController extends Controller {
             throw new WebApiException("Invalid values supplied.",5);
         }
 
-        $children = User::with('children')->find($request->input('childId'));
+        $user = User::with(['children','children.schoolClass','children.schoolClass.school','children.town'])
+            ->where('ut_id',config('usertypes.children'))
+            ->where('u_id',$request->input('childId'))
+            ->first();
 
-        if(!$children){
+        if(!$user||!$user->children){
             throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        $town = null;
+        $school = null;
+        $schoolClass = null;
+
+        if($user->children->town){
+            $town = [
+                'id'=>$user->children->town->getKey(),
+                'label'=>$user->children->town->t_name
+            ];
+        }
+
+        if($user->children->schoolClass){
+            $schoolClass = [
+                'id'=>$user->children->schoolClass->getKey(),
+                'label'=>$user->children->schoolClass->sc_name
+            ];
+
+            if($user->children->schoolClass->school){
+                $school = [
+                    'id'=>$user->children->schoolClass->school->getKey(),
+                    'label'=>$user->children->schoolClass->school->scl_name
+                ];
+            }
         }
 
         return success_response([
             'children'=>[
-                'id'=>$children->getKey(),
-                'name'=>$children->u_name,
-                'avatar'=>$children->u_avatar
+                'id'=>$user->getKey(),
+                'name'=>$user->u_name,
+                'avatar'=>$user->u_avatar,
+                'town'=>$town,
+                'schoolClass'=>$schoolClass,
+                'school'=>$school
             ]
         ]);
     }

@@ -25,6 +25,10 @@ Route::group(['middleware'=>['auth:api','verified']],function(){
 
     Route::post('/sidebar','PermissionController@sidebar');
 
+    Route::group(['prefix'=>'donate'],function(){
+        Route::post('/info','DonationController@getInfo');
+    });
+
     Route::group(['prefix'=>'form/{form}'],function(){
         require_once('form.php');
     });

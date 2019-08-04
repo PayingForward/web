@@ -391,7 +391,7 @@ class HomePage extends React.Component<Props> {
                                     type="number"
                                     className={classes.amountInput}
                                     onChange={onChangeValue}
-                                    value={value}
+                                    value={value?value:""}
                                     onSubmit={this.handleDonateClick}
                                 />
                             </div>

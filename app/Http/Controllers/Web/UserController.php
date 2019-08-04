@@ -91,12 +91,16 @@ class UserController extends Controller {
         $except = $request->input('except',[]);
 
         $childrens = User::whereNotIn('u_id',$except)
+            // ->with('children')
             ->where('ut_id',config('usertypes.children'))
             ->orderBy(DB::raw('RAND()'))
             ->take($count)
             ->get();
 
         $childrens->transform(function(User $user){
+            // if(!$user->children)
+            //     return null;
+
             return [
                 'type'=>$user->getRollName(),
                 'name'=>$user->u_name,
@@ -104,6 +108,10 @@ class UserController extends Controller {
                 'avatar'=>$user->u_avatar
             ];
         });
+
+        // $childrens = $childrens->filter(function($child){
+        //     return !!$child;
+        // })->values();
 
         return \success_response(['childs'=>$childrens]);
     }

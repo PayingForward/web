@@ -7,6 +7,8 @@ import withStyles from "@material-ui/styles/withStyles";
 import PersonIcon from "@material-ui/icons/Person";
 import SearchIcon from "@material-ui/icons/Search";
 import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { SIDEBAR_WIDTH } from "../../../constants/config";
 import MainLayout from "../Layout/MainLayout";
@@ -21,7 +23,6 @@ import {
 } from "../../../store/SearchPage/actions";
 import { SearchPageState } from "../../../store/SearchPage/types";
 import UserCard from "./UserCard";
-import { CircularProgress, Typography } from "@material-ui/core";
 
 const styler = withStyles(theme => ({
     wrapper: {

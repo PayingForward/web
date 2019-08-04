@@ -2,6 +2,16 @@
 
 namespace App\Models;
 
+/**
+ * School model
+ * 
+ * @property int $scl_id
+ * @property string $scl_name
+ * @property string $scl_code
+ * @property int $t_id
+ * @property int $u_id
+ * @property string $scl_logo
+ */
 class School extends Base {
     protected $table = "schools";
 

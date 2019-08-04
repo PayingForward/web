@@ -1,6 +1,17 @@
 <?php
 namespace App\Models;
 
+/**
+ * Model school class
+ * 
+ * @property int $sc_id
+ * @property string $sc_name
+ * @property string $sc_code
+ * @property int $scl_id
+ * @property int $u_id
+ * @property School $school
+ * @property User $user
+ */
 class SchoolClass extends Base {
     protected $table = "school_classes";
 

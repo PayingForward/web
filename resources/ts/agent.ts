@@ -90,7 +90,7 @@ const SearchPage = {
 };
 
 const DonationPage = {
-    fetchInfo:(childId:number)=>request('donate/info',{childId}),
+    fetchInfo:(childId:number|string)=>request('donate/info',{childId}),
     submit:(amount:string|number,childId?:number)=>request('donate/submit',{childId,amount})
 }
 

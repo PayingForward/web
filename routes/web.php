@@ -19,7 +19,7 @@
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/email/verify','Web\VerificationApiController@verify')->name('verificationapi.verify');
-Route::get('/payment/render','Web\DonationController@renderPaymentBox');
+Route::get('/donate/box','Web\DonationController@renderPaymentBox');
 
 Route::view('/{path?}', 'react')
      ->where('path', '.*')

@@ -8,6 +8,7 @@ import sidebar from "./store/Admin/Sidebar/reducers";
 import homePage from "./store/HomePage/reducers";
 import searchPage from './store/SearchPage/reducers';
 import signupPage from './store/SignupPage/reducers';
+import donatePage from './store/DonatePage/reducers';
 
 const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     sidebar,
     homePage,
     searchPage,
-    signupPage
+    signupPage,
+    donatePage
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
