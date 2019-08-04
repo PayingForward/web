@@ -3,7 +3,7 @@ export const CLEAR_LOGGED_USER = "CLEAR_LOGGED_USER";
 
 export interface UserInformations {
     name: string;
-    type: string;
+    type?: string;
     id: number;
     avatar:string;
 }

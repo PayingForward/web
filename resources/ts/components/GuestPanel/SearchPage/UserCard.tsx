@@ -5,10 +5,10 @@ import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 import { UserCompleteInfo } from "../../../store/SearchPage/types";
 import { avatar as avatarGenerator, nameToURL } from "../../../helpers";
-import { Button } from '@material-ui/core';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 const styler = withStyles(theme => ({

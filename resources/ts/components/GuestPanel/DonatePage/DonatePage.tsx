@@ -10,13 +10,21 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import Checkbox from "@material-ui/core/Checkbox";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel"; 
 
 import MainLayout from '../Layout/MainLayout';
 import { AppState } from '../../../rootReducer';
 import { fetchInfo, clearChild, changeAmount, changeMode, changePrivacy } from '../../../store/DonatePage/actions';
 import { DonationPageState } from '../../../store/DonatePage/types';
 import { avatar } from '../../../helpers';
-import { List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox, Toolbar, Button, TextField, FormControlLabel } from '@material-ui/core';
 import { errorSnack } from '../../../store/SnackController/actions';
 
 const styler = withStyles(theme=>({
@@ -220,7 +228,7 @@ class DonatePage extends React.Component<Props&RouteComponentProps> {
                                         <Divider/>
                                         <FormControlLabel
                                             control={
-                                                <Checkbox onChange={this.handleChangePrivacy} checked={anonymous} name="annonymous" />
+                                                <Checkbox value="1" onChange={this.handleChangePrivacy} checked={anonymous} name="annonymous" />
                                             }
                                             label="Make my donation annonymously"
                                             classes={{

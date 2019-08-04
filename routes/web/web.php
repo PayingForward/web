@@ -27,6 +27,7 @@ Route::group(['middleware'=>['auth:api','verified']],function(){
 
     Route::group(['prefix'=>'donate'],function(){
         Route::post('/info','DonationController@getInfo');
+        Route::post('/search','DonationController@history');
     });
 
     Route::group(['prefix'=>'form/{form}'],function(){

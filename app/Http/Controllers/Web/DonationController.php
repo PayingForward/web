@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Donation;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Query\Builder;
 
 class DonationController extends Controller {
     public function getInfo(Request $request){
@@ -154,25 +156,109 @@ class DonationController extends Controller {
             
             $message .= "<br>".$box->amount_paid()." ".$box->coin_label()."  received<br>";
 
-            $donation->d_mode = $modes[0];
             $donation->d_amount = $request->input('amount');
+            $donation->save();
+        }  
+        else {
+            $message .= null;
+            $box->set_status_processed();
+
+
+            $donation->d_mode = $modes[0];
+
             $donation->d_played_at = date('Y-m-d H:i:s');
+            $donation->d_privacy = $request->input('annonymous');
 
             if($request->input('child')){
                 $donation->chld_u_id = $request->input('child');
             }
 
             $donation->save();
-        }  
-        else {
-            $message .= null;
-            $box->set_status_processed();
         }
 
         return view('cryptobox',[
             'languages_list'=>$languages_list,
             'payment_box'=>$payment_box,
             'message'=>$message,
+        ]);
+    }
+
+    public function history(Request $request){
+        $validation = Validator::make($request->all(),[
+            'page'=>'required|numeric',
+            'perPage'=>'required|numeric',
+            'sortBy'=>'required',
+            'sortMode'=>'required|in:desc,asc'
+        ]);
+
+        if($validation->fails()){
+            throw new WebApiException($validation->errors()->first());
+            throw new WebApiException("Some validations failed. Please try again.");
+        }
+
+        $keyword = $request->input('keyword');
+        $sortBy = 'd.d_payed_at';
+        $sortMode = $request->input('sortMode');
+        $page = $request->input('page');
+        $perPage = $request->input('perPage');
+
+        $donationsQuery = DB::table('donations AS d')
+            ->select([
+                'd.d_amount',
+                'd.d_payed_at',
+                'd.d_mode',
+                'u.u_id',
+                'u.u_name',
+                'u.u_avatar',
+                'c.u_id AS chld_id',
+                'c.u_name AS chld_name',
+                'c.u_avatar AS chld_avatar',
+                'd.d_payed_at'])
+            ->join('users AS u','u.u_id','d.u_id')
+            ->leftJoin('users AS c','c.u_id','d.chld_u_id')
+            ->whereNotNull('d.d_payed_at')
+            ->where(function(Builder $query)use($keyword){
+                $query->orWhere('u.u_name','LIKE',"%$keyword%");
+                $query->orWhere('c.u_name','LIKE',"%$keyword%");
+            });
+
+        $count = $donationsQuery->count();
+
+        $donations = $donationsQuery
+            ->orderBy($sortBy,$sortMode)
+            ->take($perPage)
+            ->skip($perPage*($page-1))
+            ->get();
+
+        $donations->transform(function($donation){
+
+            $child = null;
+
+            if($donation->chld_id){
+                $child = [
+                    'id'=>$donation->chld_id,
+                    'name'=>$donation->chld_name,
+                    'avatar'=>$donation->chld_avatar
+                ];
+            }
+
+            return [
+                'user'=>[
+                    'id'=>$donation->u_id,
+                    'name'=>$donation->u_name,
+                    'avatar'=>$donation->u_avatar
+                ],
+                'child'=>$child,
+                'amount'=>$donation->d_amount,
+                'mode'=>$donation->d_mode,
+                'dateTime'=>$donation->d_payed_at
+            ];
+        });
+
+
+        return \success_response([
+            'donations'=>$donations,
+            'count'=>$count,
         ]);
     }
 }

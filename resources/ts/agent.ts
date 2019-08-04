@@ -91,7 +91,9 @@ const SearchPage = {
 
 const DonationPage = {
     fetchInfo:(childId?:number|string)=>request('donate/info',{childId}),
-    submit:(amount:string|number,childId?:number)=>request('donate/submit',{childId,amount})
+    submit:(amount:string|number,childId?:number)=>request('donate/submit',{childId,amount}),
+    search:(keyword:string,sortBy:string,sortMode:string,page:number|string,perPage:number|string)=>
+        request('donate/search',{keyword,sortBy,sortMode,page,perPage})
 }
 
 export default {

@@ -69,6 +69,17 @@ const DonatePage = () => (
     />
 );
 
+const HistoryPage = () => (
+    <AsyncComponent
+        page
+        Component={React.lazy(() =>
+            import(
+                /* webpackChunkName: "history-page" */ "../GuestPanel/HistoryPage/HistoryPage"
+            )
+        )}
+    />
+);
+
 const mapStateToProps = (state: AppState) => ({
     ...state.authController
 });
@@ -122,6 +133,12 @@ class AuthController extends React.Component<Props> {
             />,
             <Route
                 key={2}
+                path="/donate/history"
+                exact={true}
+                component={HistoryPage}
+            />,
+            <Route
+                key={3}
                 path="/donate/:id?/:name?"
                 exact={true}
                 component={DonatePage}

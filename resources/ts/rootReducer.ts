@@ -9,6 +9,7 @@ import homePage from "./store/HomePage/reducers";
 import searchPage from './store/SearchPage/reducers';
 import signupPage from './store/SignupPage/reducers';
 import donatePage from './store/DonatePage/reducers';
+import historyPage from './store/HistoryPage/reducers';
 
 const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     homePage,
     searchPage,
     signupPage,
-    donatePage
+    donatePage,
+    historyPage
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
