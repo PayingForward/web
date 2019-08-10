@@ -10,27 +10,27 @@ return [
                 [
                     "title" => "Countries",
                     "id" => "country",
-                    "link" => "/cpanel/form/country",
+                    "link" => "/admin/form/country",
                 ],
                 [
                     "title" => "State",
                     "id" => "state",
-                    "link" => "/cpanel/form/state",
+                    "link" => "/admin/form/state",
                 ],
                 [
                     "title" => "Region",
                     "id" => 'region',
-                    "link" => "/cpanel/form/region",
+                    "link" => "/admin/form/region",
                 ],
                 [
                     "title" => "Area",
                     "id" => "area",
-                    "link" => "/cpanel/form/area",
+                    "link" => "/admin/form/area",
                 ],
                 [
                     "title" => "Town",
                     "id" => "town",
-                    "link" => "/cpanel/form/town",
+                    "link" => "/admin/form/town",
                 ],
             ],
         ],
@@ -41,17 +41,17 @@ return [
                 [
                     "title" => "User Type",
                     "id" => "user_type",
-                    "link" => "/cpanel/form/user_type",
+                    "link" => "/admin/form/user_type",
                 ],
                 [
                     'title'=>"Children",
                     'id'=>'children',
-                    'link'=>'/cpanel/form/children'
+                    'link'=>'/admin/form/children'
                 ],
                 [
                     "title" => "User",
                     "id" => "user",
-                    "link" => "/cpanel/form/user",
+                    "link" => "/admin/form/user",
                 ],
             ],
         ],
@@ -62,12 +62,12 @@ return [
                 [
                     "title" => "School",
                     "id" => "school",
-                    "link" => "/cpanel/form/school",
+                    "link" => "/admin/form/school",
                 ],
                 [
                     "title" => "Classes",
                     "id" => "school_class",
-                    "link" => "/cpanel/form/school_class",
+                    "link" => "/admin/form/school_class",
                 ]
             ],
         ],
