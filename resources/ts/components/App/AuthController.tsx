@@ -124,19 +124,22 @@ class AuthController extends React.Component<Props> {
         if (!user) return null;
 
         return [
-            user.type=='admin'?<Route key={0} path="/cpanel" exact={true} component={DashBoard} />:null,
-            <Route
-                key={1}
-                path="/cpanel/form/:form"
-                exact={true}
-                component={CRUDPage}
-            />,
-            <Route
-                key={2}
-                path="/donate/history"
-                exact={true}
-                component={HistoryPage}
-            />,
+            user.type == "admin" ? (
+                <Route
+                    key={0}
+                    path="/admin"
+                    exact={true}
+                    component={DashBoard}
+                />
+            ) : null,
+            user.type == "admin" ? (
+                <Route
+                    key={1}
+                    path="/admin/form/:form"
+                    exact={true}
+                    component={CRUDPage}
+                />
+            ) : null,
             <Route
                 key={3}
                 path="/donate/:id?/:name?"
@@ -162,6 +165,12 @@ class AuthController extends React.Component<Props> {
                             path="/search"
                             exact={true}
                             component={SearchPage}
+                        />
+                        <Route
+                            key={2}
+                            path="/donate/history"
+                            exact={true}
+                            component={HistoryPage}
                         />
                         {this.renderGuestRoutes()}
                         {this.renderAuthRoutes()}
