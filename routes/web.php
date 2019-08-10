@@ -21,6 +21,9 @@
 Route::get('/email/verify','Web\VerificationApiController@verify')->name('verificationapi.verify');
 Route::post('/donate/box','Web\DonationController@renderPaymentBox');
 
+Route::get('/user/social/{provider}/login','Web\SocialController@redirect')->where('provider','facebook|google|twitter');
+Route::get('/user/social/{provider}/callback','Web\SocialController@callback')->where('provider','facebook|google|twitter');
+
 Route::view('/{path?}', 'react')
      ->where('path', '.*')
      ->name('react');

@@ -192,7 +192,6 @@ class DonationController extends Controller {
         ]);
 
         if($validation->fails()){
-            throw new WebApiException($validation->errors()->first());
             throw new WebApiException("Some validations failed. Please try again.");
         }
 

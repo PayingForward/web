@@ -23,6 +23,7 @@ import {
     validatePasswordConfirmation,
     submit
 } from "../../../store/SignupPage/actions";
+import { APP_URL } from '../../../constants/config';
 
 const styler = withStyles(theme => ({
     wall: {
@@ -238,13 +239,17 @@ class SignupPage extends React.Component<Props> {
                                     }
                                 />
                                 <Toolbar variant="dense">
-                                    <IconButton>
+                                    <IconButton
+                                        href={APP_URL+'user/social/facebook/login'}
+                                    >
                                         <Avatar
                                             src="/images/social/fb.png"
                                             alt="Facebook Logo"
                                         />
                                     </IconButton>
-                                    <IconButton>
+                                    <IconButton
+                                        href={APP_URL+'user/social/google/login'}
+                                    >
                                         <Avatar
                                             src="/images/social/gmail.png"
                                             alt="Gmail Logo Background Brown"

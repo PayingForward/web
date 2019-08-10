@@ -35,7 +35,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
+        'model' => App\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'webhook' => [
@@ -43,5 +43,14 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
-
+    'facebook'=>[
+        'client_id'=>env('FACEBOOK_LOGIN_API_ID',''),
+        'client_secret'=>env('FACEBOOK_LOGIN_API_SECRET',''),
+        'redirect'=>env('FACEBOOK_LOGIN_API_REDIRECT','')
+    ],
+    'google'=>[
+        'client_id'=>env('GOOGLE_LOGIN_API_ID',''),
+        'client_secret'=>env('GOOGLE_LOGIN_API_SECRET',''),
+        'redirect'=>env('GOOGLE_LOGIN_API_REDIRECT','')
+    ]
 ];

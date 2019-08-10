@@ -29,6 +29,10 @@ use Illuminate\Support\Carbon;
  * @property Children $children
  * @property Carbon $email_verified_at
  * @property string $u_token
+ * 
+ * @property int $u_social_provider
+ * @property string $u_social_token
+ * @property string|int $u_social_id 0=Normal,1=Facebook, 2= Google, 3= Twitter, 4=Linkedin
  */
 class User extends Base implements
 AuthenticatableContract,
@@ -48,7 +52,7 @@ InterfaceMustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'u_name', 'u_email', 'u_password','ut_id','u_avatar','email_verified_at','u_social_token','u_token'
+        'u_name', 'u_email', 'u_password','ut_id','u_avatar','email_verified_at','u_social_token','u_social_provider','u_social_id','u_token'
     ];
 
     protected $dates = [
@@ -115,6 +119,27 @@ InterfaceMustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyApiEmail); // my notification
+    }
+
+    /**
+     * Converting provider name to integer
+     *
+     * @param string $provider
+     * @return int
+     */
+    public static function providerId(string $provider){
+        switch ($provider) {
+            case 'facebook':
+                return 1;
+            case 'google':
+                return 2;
+            case 'twitter':
+                return 3;
+            case 'linkedin':
+                return 2;
+            default:
+                return 0;
+        }
     }
 
 }
