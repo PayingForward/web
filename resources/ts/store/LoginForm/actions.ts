@@ -44,7 +44,7 @@ export const submitLogin = (
             }
             dispatch(clearInputs());
             localStorage.setItem(USER_TOKEN_KEY, token);
-            window.location.href=APP_URL+type.toLowerCase();
+            window.location.href=APP_URL?APP_URL:"/";
         } else {
             if(message){
                 dispatch(errorSnack(message));

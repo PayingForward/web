@@ -124,7 +124,7 @@ class AuthController extends React.Component<Props> {
         if (!user) return null;
 
         return [
-            <Route key={0} path="/cpanel" exact={true} component={DashBoard} />,
+            user.type=='admin'?<Route key={0} path="/cpanel" exact={true} component={DashBoard} />:null,
             <Route
                 key={1}
                 path="/cpanel/form/:form"
