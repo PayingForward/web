@@ -1,11 +1,13 @@
 import * as React from 'react';
+import classNames from 'classnames';
+import withStyles from '@material-ui/core/styles/withStyles';
+
 import Header from './Header';
 import Snacks from './Snacks';
-import withStyles from '@material-ui/core/styles/withStyles';
 
 const styler = withStyles(theme=>({
     wrapper:{
-        paddingTop:theme.spacing(4)
+        paddingTop:24
     }
 }))
 
@@ -13,19 +15,18 @@ interface Props {
     children:JSX.Element[] | JSX.Element|string,
     classes:{
         wrapper:string
-    }
+    },
+    className?:string
 }
 
 class MainLayout extends React.Component<Props>{
     public render(){
-        const {children,classes} = this.props;
+        const {children,classes,className} = this.props;
         return (
-            <div>
+            <div className={classNames(classes.wrapper,className)}>
                 <Header />
-                <div className={classes.wrapper} >
-                    {children}
-                </div>
                 <Snacks/>
+                {children}
             </div>
         );
     }

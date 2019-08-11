@@ -18,6 +18,15 @@ import DashBoard from "../CPanel/DashBoard";
 import { USER_TOKEN_KEY } from "../../constants/config";
 import LoadingPage from "./LoadingPage";
 
+const HomePage = () => (
+    <AsyncComponent
+        page
+        Component={React.lazy(() =>
+            import(/* webpackChunkName: "home-page" */ "../GuestPanel/HomePage/HomePage")
+        )}
+    />
+);
+
 const CRUDPage = () => (
     <AsyncComponent
         page
@@ -94,6 +103,7 @@ class AuthController extends React.Component<Props> {
             <React.Fragment>
                 <Router history={history}>
                     <Switch>
+                        <Route path='/' exact={true} component={HomePage}/>
                         {this.renderAuthRoutes()}
                     </Switch>
                 </Router>
