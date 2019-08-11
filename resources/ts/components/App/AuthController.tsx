@@ -18,37 +18,6 @@ import DashBoard from "../CPanel/DashBoard";
 import { USER_TOKEN_KEY } from "../../constants/config";
 import LoadingPage from "./LoadingPage";
 
-const HomePage = () => (
-    <AsyncComponent
-        page
-        Component={React.lazy(() =>
-            import(
-                /* webpackChunkName: "home-page" */ "../GuestPanel/HomePage/HomePage"
-            )
-        )}
-    />
-);
-const SearchPage = () => (
-    <AsyncComponent
-        page
-        Component={React.lazy(() =>
-            import(
-                /* webpackChunkName: "search-page" */ "../GuestPanel/SearchPage/SearchPage"
-            )
-        )}
-    />
-);
-const SignupPage = () => (
-    <AsyncComponent
-        page
-        Component={React.lazy(() =>
-            import(
-                /* webpackChunkName: "signup-page" */ "../GuestPanel/SignupPage/SignupPage"
-            )
-        )}
-    />
-);
-
 const CRUDPage = () => (
     <AsyncComponent
         page
@@ -58,27 +27,6 @@ const CRUDPage = () => (
     />
 );
 
-const DonatePage = () => (
-    <AsyncComponent
-        page
-        Component={React.lazy(() =>
-            import(
-                /* webpackChunkName: "donate-page" */ "../GuestPanel/DonatePage/DonatePage"
-            )
-        )}
-    />
-);
-
-const HistoryPage = () => (
-    <AsyncComponent
-        page
-        Component={React.lazy(() =>
-            import(
-                /* webpackChunkName: "history-page" */ "../GuestPanel/HistoryPage/HistoryPage"
-            )
-        )}
-    />
-);
 
 const mapStateToProps = (state: AppState) => ({
     ...state.authController
@@ -110,14 +58,6 @@ class AuthController extends React.Component<Props> {
         }
     }
 
-    renderGuestRoutes() {
-        const { user } = this.props;
-
-        if (user) return null;
-
-        return [<Route path="*" key={0} exact={true} component={SignupPage} />];
-    }
-
     renderAuthRoutes() {
         const { user } = this.props;
 
@@ -139,13 +79,7 @@ class AuthController extends React.Component<Props> {
                     exact={true}
                     component={CRUDPage}
                 />
-            ) : null,
-            <Route
-                key={3}
-                path="/donate/:id?/:name?"
-                exact={true}
-                component={DonatePage}
-            />
+            ) : null
         ];
     }
 
@@ -160,19 +94,6 @@ class AuthController extends React.Component<Props> {
             <React.Fragment>
                 <Router history={history}>
                     <Switch>
-                        <Route path="/" exact={true} component={HomePage} />
-                        <Route
-                            path="/search"
-                            exact={true}
-                            component={SearchPage}
-                        />
-                        <Route
-                            key={2}
-                            path="/donate/history"
-                            exact={true}
-                            component={HistoryPage}
-                        />
-                        {this.renderGuestRoutes()}
                         {this.renderAuthRoutes()}
                     </Switch>
                 </Router>

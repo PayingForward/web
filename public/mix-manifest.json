@@ -1,22 +1,10 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/out/ajax-dropdown-input-1565440803417.js": "/js/out/ajax-dropdown-input-1565440803417.js",
-    "/js/out/avatar-input-1565440803417.js": "/js/out/avatar-input-1565440803417.js",
-    "/js/out/crud-page-1565440803417.js": "/js/out/crud-page-1565440803417.js",
-    "/js/out/donate-page-1565440803417.js": "/js/out/donate-page-1565440803417.js",
-    "/js/out/history-page-1565440803417.js": "/js/out/history-page-1565440803417.js",
-    "/js/out/home-page-1565440803417.js": "/js/out/home-page-1565440803417.js",
-    "/js/out/search-page-1565440803417.js": "/js/out/search-page-1565440803417.js",
-    "/js/out/signup-page-1565440803417.js": "/js/out/signup-page-1565440803417.js",
-    "/js/out/vendors~ajax-dropdown-input-1565440803417.js": "/js/out/vendors~ajax-dropdown-input-1565440803417.js",
-    "/js/out/vendors~ajax-dropdown-input~home-page-1565440803417.js": "/js/out/vendors~ajax-dropdown-input~home-page-1565440803417.js",
-    "/js/out/vendors~avatar-input-1565440803417.js": "/js/out/vendors~avatar-input-1565440803417.js",
-    "/js/out/vendors~crud-page-1565440803417.js": "/js/out/vendors~crud-page-1565440803417.js",
-    "/js/out/vendors~crud-page~donate-page~history-page~home-page~search-page~signup-page-1565440803417.js": "/js/out/vendors~crud-page~donate-page~history-page~home-page~search-page~signup-page-1565440803417.js",
-    "/js/out/vendors~crud-page~history-page-1565440803417.js": "/js/out/vendors~crud-page~history-page-1565440803417.js",
-    "/js/out/vendors~donate-page-1565440803417.js": "/js/out/vendors~donate-page-1565440803417.js",
-    "/js/out/vendors~donate-page~search-page-1565440803417.js": "/js/out/vendors~donate-page~search-page-1565440803417.js",
-    "/js/out/vendors~home-page-1565440803417.js": "/js/out/vendors~home-page-1565440803417.js",
-    "/js/out/vendors~search-page-1565440803417.js": "/js/out/vendors~search-page-1565440803417.js"
+    "/js/out/ajax-dropdown-input-1565498471549.js": "/js/out/ajax-dropdown-input-1565498471549.js",
+    "/js/out/avatar-input-1565498471549.js": "/js/out/avatar-input-1565498471549.js",
+    "/js/out/crud-page-1565498471549.js": "/js/out/crud-page-1565498471549.js",
+    "/js/out/vendors~ajax-dropdown-input-1565498471549.js": "/js/out/vendors~ajax-dropdown-input-1565498471549.js",
+    "/js/out/vendors~avatar-input-1565498471549.js": "/js/out/vendors~avatar-input-1565498471549.js",
+    "/js/out/vendors~crud-page-1565498471549.js": "/js/out/vendors~crud-page-1565498471549.js"
 }
