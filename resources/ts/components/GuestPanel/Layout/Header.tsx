@@ -11,7 +11,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import LoginForm from "./Header/LoginForm";
 import UserArea from "./Header/UserArea";
 import { APP_NAME } from "../../../constants/config";
-import { UserInformations } from "../../../store/AuthController/types";
+import { UserInformations } from "../../../store/mainTypes";
 import { AppState } from "../../../rootReducer";
 
 export const styler = withStyles(({ spacing }) => ({

@@ -29,7 +29,7 @@ interface Props extends AuthControllerState {
 
 const styler = withStyles(({spacing})=>({
     menu:{
-        marginTop:spacing(9)
+        marginTop:spacing(12)
     }
 }))
 

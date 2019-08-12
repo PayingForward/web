@@ -15,7 +15,8 @@ import { MultiValueProps } from "react-select/src/components/MultiValue";
 import { OptionProps } from "react-select/src/components/Option";
 import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
-import { Input, DropdownOption } from "../../../../store/Admin/CRUDPage/types";
+import { Input } from "../../../../store/Admin/CRUDPage/types";
+import {ResultObject} from '../../../../store/mainTypes';
 import agent from "../../../../agent";
 
 const styler = withStyles((theme: Theme) => ({
@@ -65,7 +66,7 @@ const styler = withStyles((theme: Theme) => ({
     }
 }));
 
-function NoOptionsMessage(props: NoticeProps<DropdownOption>) {
+function NoOptionsMessage(props: NoticeProps<ResultObject>) {
     return (
         <Typography
             color="textSecondary"
@@ -84,7 +85,7 @@ function inputComponent({ inputRef, ...props }: InputComponentProps) {
     return <div ref={inputRef} {...props} />;
 }
 
-function Control(props: ControlProps<DropdownOption>) {
+function Control(props: ControlProps<ResultObject>) {
     const {
         children,
         innerProps,
@@ -110,7 +111,7 @@ function Control(props: ControlProps<DropdownOption>) {
     );
 }
 
-function Option(props: OptionProps<DropdownOption>) {
+function Option(props: OptionProps<ResultObject>) {
     return (
         <MenuItem
             ref={props.innerRef}
@@ -126,7 +127,7 @@ function Option(props: OptionProps<DropdownOption>) {
     );
 }
 
-function Placeholder(props: PlaceholderProps<DropdownOption>) {
+function Placeholder(props: PlaceholderProps<ResultObject>) {
     return (
         <Typography
             color="textSecondary"
@@ -138,7 +139,7 @@ function Placeholder(props: PlaceholderProps<DropdownOption>) {
     );
 }
 
-function SingleValue(props: SingleValueProps<DropdownOption>) {
+function SingleValue(props: SingleValueProps<ResultObject>) {
     return (
         <Typography
             className={props.selectProps.classes.singleValue}
@@ -149,7 +150,7 @@ function SingleValue(props: SingleValueProps<DropdownOption>) {
     );
 }
 
-function ValueContainer(props: ValueContainerProps<DropdownOption>) {
+function ValueContainer(props: ValueContainerProps<ResultObject>) {
     return (
         <div className={props.selectProps.classes.valueContainer}>
             {props.children}
@@ -157,7 +158,8 @@ function ValueContainer(props: ValueContainerProps<DropdownOption>) {
     );
 }
 
-function MultiValue(props: MultiValueProps<DropdownOption>) {
+
+function MultiValue(props: MultiValueProps<ResultObject>) {
     return (
         <Chip
             tabIndex={-1}
@@ -171,7 +173,7 @@ function MultiValue(props: MultiValueProps<DropdownOption>) {
     );
 }
 
-function Menu(props: MenuProps<DropdownOption>) {
+function Menu(props: MenuProps<ResultObject>) {
     return (
         <Paper
             square
@@ -195,8 +197,8 @@ const components = {
 };
 
 interface Props extends Input {
-    value?: DropdownOption;
-    onChange?: (opt: DropdownOption) => void;
+    value?: ResultObject;
+    onChange?: (opt: ResultObject) => void;
     where?: { [x: string]: any };
     link?: string;
     classes?: {
@@ -222,7 +224,7 @@ class AjaxDropdown extends React.Component<Props> {
 
     loadOptions(
         inputValue: string,
-        callback: (options: readonly DropdownOption[]) => void
+        callback: (options: readonly ResultObject[]) => void
     ) {
         const { attributes, where } = this.props;
 

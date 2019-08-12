@@ -8,7 +8,6 @@ import {
     loadLoggedUser
 } from "../../store/AuthController/actions";
 import {
-    UserInformations,
     AuthControllerState
 } from "../../store/AuthController/types";
 import { ThunkDispatch } from "redux-thunk";
@@ -17,6 +16,7 @@ import AsyncComponent from "./AsyncComponent";
 import DashBoard from "../CPanel/DashBoard";
 import { USER_TOKEN_KEY } from "../../constants/config";
 import LoadingPage from "./LoadingPage";
+import { UserInformations } from '../../store/mainTypes';
 
 const HomePage = () => (
     <AsyncComponent

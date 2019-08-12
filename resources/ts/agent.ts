@@ -70,37 +70,12 @@ const Permissions = {
 };
 
 const HomePage = {
-    randomChilds: (cnt?: number, except?: number[]) =>
-        request("user/rand", { count: cnt, except })
+    fetchDonorInfo:()=>request('home/donor')
 };
-
-const SearchPage = {
-    searchResults: (
-        keyword: string,
-        options: {
-            [x: string]: Array<string|number>;
-        },
-        page?:number,
-        perPage?:number,
-        sortBy?:string,
-        sortMode?:string
-    ) => request("search", { keyword, options,page,perPage,sortBy,sortMode }),
-    searchOptions: (keyword: string, optionId: string) =>
-        request("search/" + optionId, { keyword })
-};
-
-const DonationPage = {
-    fetchInfo:(childId?:number|string)=>request('donate/info',{childId}),
-    submit:(amount:string|number,childId?:number)=>request('donate/submit',{childId,amount}),
-    search:(keyword:string,sortBy:string,sortMode:string,page:number|string,perPage:number|string)=>
-        request('donate/search',{keyword,sortBy,sortMode,page,perPage})
-}
 
 export default {
     Auth,
     CRUD,
     Permissions,
-    HomePage,
-    SearchPage,
-    DonationPage
+    HomePage
 };
