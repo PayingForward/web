@@ -1,14 +1,16 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/out/ajax-dropdown-input-1565539251513.js": "/js/out/ajax-dropdown-input-1565539251513.js",
-    "/js/out/avatar-input-1565539251513.js": "/js/out/avatar-input-1565539251513.js",
-    "/js/out/crud-page-1565539251513.js": "/js/out/crud-page-1565539251513.js",
-    "/js/out/home-page-1565539251513.js": "/js/out/home-page-1565539251513.js",
-    "/js/out/vendors~ajax-dropdown-input-1565539251513.js": "/js/out/vendors~ajax-dropdown-input-1565539251513.js",
-    "/js/out/vendors~ajax-dropdown-input~home-page-1565539251513.js": "/js/out/vendors~ajax-dropdown-input~home-page-1565539251513.js",
-    "/js/out/vendors~avatar-input-1565539251513.js": "/js/out/vendors~avatar-input-1565539251513.js",
-    "/js/out/vendors~crud-page~home-page-1565539251513.js": "/js/out/vendors~crud-page~home-page-1565539251513.js",
-    "/js/out/vendors~home-page-1565539251513.js": "/js/out/vendors~home-page-1565539251513.js",
-    "/js/out/vendors~crud-page-1565539251513.js": "/js/out/vendors~crud-page-1565539251513.js"
+    "/js/out/ajax-dropdown-input-1565625549273.js": "/js/out/ajax-dropdown-input-1565625549273.js",
+    "/js/out/avatar-input-1565625549273.js": "/js/out/avatar-input-1565625549273.js",
+    "/js/out/crud-page-1565625549273.js": "/js/out/crud-page-1565625549273.js",
+    "/js/out/home-page-1565625549273.js": "/js/out/home-page-1565625549273.js",
+    "/js/out/vendors~ajax-dropdown-input-1565625549273.js": "/js/out/vendors~ajax-dropdown-input-1565625549273.js",
+    "/js/out/vendors~avatar-input-1565625549273.js": "/js/out/vendors~avatar-input-1565625549273.js",
+    "/js/out/vendors~crud-page-1565625549273.js": "/js/out/vendors~crud-page-1565625549273.js",
+    "/js/out/vendors~crud-page~home-page-1565625549273.js": "/js/out/vendors~crud-page~home-page-1565625549273.js",
+    "/js/out/home-page-child-menu-1565625549273.js": "/js/out/home-page-child-menu-1565625549273.js",
+    "/js/out/home-page-donor-menu-1565625549273.js": "/js/out/home-page-donor-menu-1565625549273.js",
+    "/js/out/home-page-teacher-menu-1565625549273.js": "/js/out/home-page-teacher-menu-1565625549273.js",
+    "/js/out/home-page-signup-form-1565625549273.js": "/js/out/home-page-signup-form-1565625549273.js"
 }

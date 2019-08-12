@@ -25,7 +25,8 @@ export const styler = withStyles(({ spacing }) => ({
         width: "50vw"
     },
     zIndex: {
-        zIndex: 1900
+        zIndex: 1900,
+        minHeight:56
     },
     loadingBar: {
         width:'100vw',

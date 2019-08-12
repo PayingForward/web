@@ -1,16 +1,9 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
 
 import withStyles from "@material-ui/styles/withStyles";
-import Avatar from "@material-ui/core/Avatar";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import Card from "@material-ui/core/Card";
@@ -18,63 +11,15 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import Button from '@material-ui/core/Button';
 
-import { APP_URL } from "../../../constants/config";
 import MainLayout from "../Layout/MainLayout";
 import { AppState } from "../../../rootReducer";
-import {
-    validateName,
-    validateEmail,
-    validatePassword,
-    submit
-} from "../../../store/SignupPage/actions";
-import { SignupPageState } from "../../../store/SignupPage/types";
+import { AuthControllerState } from "../../../store/AuthController/types";
+import AsyncComponent from '../../App/AsyncComponent';
+// import AsyncComponent from "../../App/AsyncComponent";
 
 const styler = withStyles(theme => ({
-    avatar: {
-        background: theme.palette.common.white,
-        width: 100,
-        height: 100,
-        margin: "auto"
-    },
-    wrapper: {
-        paddingTop: 20,
-        paddingBottom: 20
-    },
-    paper: {
-        borderTopRightRadius: 40,
-        borderBottomLeftRadius: 40,
-        marginTop: 10,
-        marginRight: "20%",
-        paddingTop: theme.spacing(8),
-        paddingBottom: theme.spacing(8)
-    },
-    title: {
-        background: theme.palette.common.black,
-        maxWidth: 120,
-        position: "relative"
-    },
-    titleAfter: {
-        width: 0,
-        height: 0,
-        borderTop: "28px solid #000",
-        borderRight: "28px solid transparent",
-        position: "absolute",
-        top: 0,
-        left: "100%"
-    },
-    formWrapper: {
-        width: "80%",
-        margin: "auto",
-        paddingTop: 20
-    },
-    grow: {
-        flexGrow: 1
-    },
-    loginLink: {
-        marginTop: 40,
-        color: "purple"
-    },
     blackGround: {
         background: theme.palette.common.black,
         height: "calc(100vh - " + 56 + "px)",
@@ -116,137 +61,77 @@ const styler = withStyles(theme => ({
     }
 }));
 
-interface Props extends SignupPageState {
+type Props = {
     classes: {
         blackGround: string;
-        avatar: string;
-        wrapper: string;
-        paper: string;
-        title: string;
-        titleAfter: string;
-        formWrapper: string;
-        grow: string;
-        loginLink: string;
         scrollMe: string;
         media: string;
         card: string;
         whiteTriangle: string;
     };
-    onChangeName: (name: string) => void;
-    onChangeEmail: (email: string) => void;
-    onChangePassword: (password: string) => void;
-    onSubmit: (name: string, email: string, password: string) => void;
-}
+    
+} & AuthControllerState;
 
 const mapStateToProps = (state: AppState) => ({
-    ...state.signupPage
+    ...state.authController
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-    onChangeName: (name: string) => dispatch(validateName(name)),
-    onChangeEmail: (email: string) => dispatch(validateEmail(email)),
-    onChangePassword: (password: string) =>
-        dispatch(validatePassword(password)),
-    onSubmit: (name: string, email: string, password: string) =>
-        dispatch(submit(name, email, password))
-});
+const SignupForm = () => (
+    <AsyncComponent
+        Component={React.lazy(() =>
+            import(/* webpackChunkName: "home-page-signup-form" */ "./SignupForm")
+        )}
+    />
+);
+
+// const DonorMenu = () => (
+//     <AsyncComponent
+//         Component={React.lazy(() =>
+//             import(/* webpackChunkName: "home-page-donor-menu" */ "./DonorMenu")
+//         )}
+//     />
+// );
+
+// const ChildMenu = () => (
+//     <AsyncComponent
+//         Component={React.lazy(() =>
+//             import(/* webpackChunkName: "home-page-child-menu" */ "./ChildMenu")
+//         )}
+//     />
+// );
+
+// const TeacherMenu = () => (
+//     <AsyncComponent
+//         Component={React.lazy(() =>
+//             import(
+//                 /* webpackChunkName: "home-page-teacher-menu" */ "./TeacherMenu"
+//             )
+//         )}
+//     />
+// );
 
 class HomePage extends React.Component<Props> {
 
+    public renderSignupForm(){
+        const {user} = this.props;
 
-    constructor(props:Props){
-        super(props);
+        if(user)
+            return null;
 
-        this.handleChangeName = this.handleChangeName.bind(this);
-        this.handleChangeEmail = this.handleChangeEmail.bind(this);
-        this.handleChangePassword = this.handleChangePassword.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChangeName(e:React.ChangeEvent<HTMLInputElement>){
-        this.props.onChangeName(e.target.value);
-    }
-
-    handleChangeEmail(e:React.ChangeEvent<HTMLInputElement>){
-        this.props.onChangeEmail(e.target.value);
-    }
-
-    handleChangePassword(e:React.ChangeEvent<HTMLInputElement>){
-        this.props.onChangePassword(e.target.value);
-    }
-
-    handleSubmit(e:React.FormEvent){
-        e.preventDefault();
-        const {email,name,password,emailError,nameError,passwordError} = this.props;
-
-        if(emailError||nameError||passwordError){
-            return ;
-        }
-
-        this.props.onSubmit(name,email,password);
+        return (
+            <SignupForm />
+        )
     }
 
     public render() {
-        const {
-            classes,
-            email,
-            name,
-            password,
-            nameError,
-            emailError,
-            passwordError
-        } = this.props;
+        const { classes } = this.props;
 
         return (
             <MainLayout>
                 <Grid container>
                     <Grid className={classes.blackGround} item md={6}>
                         <div className={classes.whiteTriangle} />
-                        <div className={classes.wrapper}>
-                            <Avatar
-                                className={classes.avatar}
-                                src={APP_URL + "images/logo.png"}
-                            />
-                            <Paper className={classes.paper}>
-                                <div className={classes.title}>
-                                    <Typography variant="h6">
-                                        Registration
-                                    </Typography>
-                                    <div className={classes.titleAfter} />
-                                </div>
-                                <form onSubmit={this.handleSubmit} className={classes.formWrapper}>
-                                    <TextField label="Name" onChange={this.handleChangeName} value={name} error={!!nameError} helperText={nameError} fullWidth />
-                                    <TextField label="Email" onChange={this.handleChangeEmail} value={email} error={!!emailError} helperText={emailError} fullWidth />
-                                    <TextField
-                                        label="Password"
-                                        fullWidth
-                                        type="password"
-                                        value={password}
-                                        error={!!passwordError}
-                                        helperText={passwordError}
-                                        onChange={this.handleChangePassword}
-                                    />
-                                    <Toolbar variant="dense">
-                                        <IconButton>
-                                            <Avatar src="/images/social/fb.png" />
-                                        </IconButton>
-                                        <IconButton>
-                                            <Avatar src="/images/social/gmail.png" />
-                                        </IconButton>
-                                        <div className={classes.grow} />
-                                        <Button disabled={!!(emailError||passwordError||nameError)} type="submit" variant="contained">
-                                            Signup
-                                        </Button>
-                                    </Toolbar>
-                                </form>
-                            </Paper>
-                        </div>
-                        <Typography
-                            className={classes.loginLink}
-                            align="center"
-                        >
-                            Already Have an account? Login.
-                        </Typography>
+                        {this.renderSignupForm()}
                     </Grid>
                     <Grid item md={6} className={classes.scrollMe}>
                         <Typography variant="h4" align="center">
@@ -333,6 +218,5 @@ class HomePage extends React.Component<Props> {
 }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(styler(HomePage));
