@@ -33,4 +33,13 @@ class Base extends Model
 
         return new $formName;
     }
+
+
+    public static function withFormatingRelations(){
+        return self::query();
+    }
+
+    public function getFormatedArray(){
+        $this->toArray();
+    }
 }

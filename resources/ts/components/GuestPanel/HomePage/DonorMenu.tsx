@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Slider, { Settings } from 'react-slick';
+import { ThunkDispatch } from "redux-thunk";
 
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
@@ -8,8 +9,10 @@ import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import {avatar} from '../../../helpers';
-import {CompleteUserInformations} from '../../../store/mainTypes';
+import {CompleteChildInformations} from '../../../store/mainTypes';
 import {DonorMenuState} from '../../../store/DonorMenu/types';
+import {AppState} from '../../../rootReducer';
+import {fetchInformations} from '../../../store/DonorMenu/actions'
 
 
 const styler = withStyles(theme=>({
@@ -33,17 +36,31 @@ const sliderSettings: Settings = {
     autoplay: true
 };
 
+const mapStateToProps = (state:AppState)=>({
+    ...state.donorMenu
+})
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>)=>({
+    onLoad: ()=>dispatch(fetchInformations())
+})
+
 interface Props extends DonorMenuState {
     classes:{
         slide:string;
         slideAvatar:string;
     },
-
+    onLoad: ()=>void
 }
 
 class DonorMenu extends React.Component<Props> {
 
-    handleChildDonateClick(child:CompleteUserInformations){
+    constructor(props:Props){
+        super(props);
+
+        props.onLoad();
+    }
+
+    handleChildDonateClick(child:CompleteChildInformations){
         return (e:React.MouseEvent<HTMLButtonElement,MouseEvent>)=>{
             console.log(child);
         }

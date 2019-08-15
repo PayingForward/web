@@ -14,7 +14,8 @@ class AddLatLngColumnsToSchoolsTable extends Migration
     public function up()
     {
         Schema::table('schools', function (Blueprint $table) {
-            //
+            $table->decimal('scl_lat',10,8);
+            $table->decimal('scl_lng',11,8);
         });
     }
 
@@ -26,7 +27,8 @@ class AddLatLngColumnsToSchoolsTable extends Migration
     public function down()
     {
         Schema::table('schools', function (Blueprint $table) {
-            //
+            $table->dropColumn('scl_lat');
+            $table->dropColumn('scl_lng');
         });
     }
 }

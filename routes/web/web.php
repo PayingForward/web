@@ -34,4 +34,8 @@ Route::group(['middleware'=>['auth:api','verified']],function(){
         require_once('form.php');
     });
 
+    Route::group(['prefix'=>'home'],function(){
+        Route::post('donor','HomeController@donorMenu');
+    });
+
 });

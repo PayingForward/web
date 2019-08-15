@@ -25,7 +25,7 @@ export interface UserInformations {
     avatar:string;
 }
 
-export interface CompleteUserInformations extends UserInformations {
+export interface CompleteChildInformations extends UserInformations {
     town?:ResultObject,
     country?: ResultObject&{code:string},
     bio?:string,

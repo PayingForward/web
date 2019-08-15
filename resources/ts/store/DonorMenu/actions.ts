@@ -1,4 +1,4 @@
-import { CompleteUserInformations, School, PaymentMethod } from '../mainTypes';
+import { CompleteChildInformations, School, PaymentMethod } from '../mainTypes';
 import { LoadInformation, DONOR_MENU_LOAD_INFO, SelectChild, DONOR_MENU_SELECT_CHILD, DONOR_MENU_SELECT_METHOD, SelectMethod, DONOR_MENU_CHANGE_VALUE, ChangeValue } from './types';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
@@ -6,14 +6,14 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import agent from 'resources/ts/agent';
 import { errorSnack } from '../SnackController/actions';
 
-export const loadedInformations = (childs:CompleteUserInformations[],schools:School[],methods:PaymentMethod[]):LoadInformation=>({
+export const loadedInformations = (childs:CompleteChildInformations[],schools:School[],methods:PaymentMethod[]):LoadInformation=>({
     type: DONOR_MENU_LOAD_INFO,
     childs,
     schools,
     paymentMethods:methods
 });
 
-export const selectChild = (child:CompleteUserInformations):SelectChild=>({
+export const selectChild = (child:CompleteChildInformations):SelectChild=>({
     type: DONOR_MENU_SELECT_CHILD,
     child
 });

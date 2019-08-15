@@ -7,7 +7,7 @@ namespace App\Models;
  * @property string $s_name
  * @property string $s_code
  * @property int $c_id
- * @property Country $state
+ * @property Country $country
  */
 class State extends Base {
     protected $table = "states";
