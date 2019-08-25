@@ -3,7 +3,7 @@ import { LoadInformation, DONOR_MENU_LOAD_INFO, SelectChild, DONOR_MENU_SELECT_C
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import agent from 'resources/ts/agent';
+import agent from '../../agent';
 import { errorSnack } from '../SnackController/actions';
 
 export const loadedInformations = (childs:CompleteChildInformations[],schools:School[],methods:PaymentMethod[]):LoadInformation=>({

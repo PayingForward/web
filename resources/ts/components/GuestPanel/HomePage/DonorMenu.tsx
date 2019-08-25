@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Slider, { Settings } from 'react-slick';
 import { ThunkDispatch } from "redux-thunk";
+import {connect} from 'react-redux';
 
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
@@ -18,13 +19,31 @@ import {fetchInformations} from '../../../store/DonorMenu/actions'
 const styler = withStyles(theme=>({
     slide: {
         textAlign: "center",
-        margin: "auto"
+        margin: "auto",
+        position:'relative'
     },
     slideAvatar: {
         width: 100,
         height: 100,
         margin: "auto"
     },
+    marginTop: {
+        marginTop: 68
+    },
+    countryFlag:{
+        position: 'absolute',
+        top:2,
+        left:0,
+        paddingLeft:'50%',
+        marginLeft:-50
+    },
+    donateButton:{
+        color:"#fff",
+        border: 'solid 2px #fff'
+    },
+    title: {
+        paddingTop: 24
+    }
 }))
 
 const sliderSettings: Settings = {
@@ -33,7 +52,21 @@ const sliderSettings: Settings = {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    autoplay: true
+    autoplay: true,
+    responsive:[
+        {
+            breakpoint:900,
+            settings:{
+                slidesToShow:3
+            }
+        },
+        {
+            breakpoint:600,
+            settings:{
+                slidesToShow:2
+            }
+        }
+    ]
 };
 
 const mapStateToProps = (state:AppState)=>({
@@ -48,6 +81,10 @@ interface Props extends DonorMenuState {
     classes:{
         slide:string;
         slideAvatar:string;
+        marginTop:string;
+        countryFlag:string;
+        donateButton:string;
+        title:string;
     },
     onLoad: ()=>void
 }
@@ -80,10 +117,12 @@ class DonorMenu extends React.Component<Props> {
                 <Typography color="textPrimary" align="center" variant="h6">
                     {child.name}
                 </Typography>
-
+                <span className={classes.countryFlag}>
+                    <img width="24px"  src={"https://www.countryflags.io/"+(child.country?child.country.code.toLowerCase():'us')+"/shiny/64.png"} />
+                </span>
                 <Button
                     variant="outlined"
-                    color="inherit"
+                    className={classes.donateButton}
                     onClick={this.handleChildDonateClick(child)}
                 >
                     Donate
@@ -94,14 +133,22 @@ class DonorMenu extends React.Component<Props> {
 
 
     public render(){
+
+        const {classes} = this.props;
+
         return (
-            <div>
+            <div className={classes.marginTop} >
                 <Slider {...sliderSettings}>
                     {this.renderSliderItems()}
                 </Slider>
+                <Typography color="textPrimary" className={classes.title} variant="h4" >
+                    These childs want your help...
+                </Typography>
+                <Divider/>
+
             </div>
         )
     }
 }
 
-export default styler (DonorMenu);
+export default connect(mapStateToProps,mapDispatchToProps) (styler (DonorMenu));

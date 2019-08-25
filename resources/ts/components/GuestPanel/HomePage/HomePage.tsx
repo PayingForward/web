@@ -84,13 +84,13 @@ const SignupForm = () => (
     />
 );
 
-// const DonorMenu = () => (
-//     <AsyncComponent
-//         Component={React.lazy(() =>
-//             import(/* webpackChunkName: "home-page-donor-menu" */ "./DonorMenu")
-//         )}
-//     />
-// );
+const DonorMenu = () => (
+    <AsyncComponent
+        Component={React.lazy(() =>
+            import(/* webpackChunkName: "home-page-donor-menu" */ "./DonorMenu")
+        )}
+    />
+);
 
 // const ChildMenu = () => (
 //     <AsyncComponent
@@ -115,8 +115,15 @@ class HomePage extends React.Component<Props> {
     public renderSignupForm(){
         const {user} = this.props;
 
-        if(user)
-            return null;
+        if(user){
+            if(user.type&&user.type=='donor'){
+                return (
+                    <DonorMenu/>
+                );
+            } else {
+                return null;
+            }
+        }
 
         return (
             <SignupForm />
