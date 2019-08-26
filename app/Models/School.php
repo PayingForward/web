@@ -35,8 +35,8 @@ class School extends Base {
             'id'=>$this->getKey(),
             'label'=>$this->scl_name,
             'logo'=>$this->scl_logo,
-            'latitude'=>$this->scl_lat,
-            'longitude'=>$this->scl_lng,
+            'latitude'=> (float) $this->scl_lat,
+            'longitude'=> (float) $this->scl_lng,
             'priority'=>'high'
         ];
     }
