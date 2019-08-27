@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDonatorsTable extends Migration
+class CreateOccupationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateDonatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('donators', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('occupations', function (Blueprint $table) {
+            $table->bigIncrements('occ_id');
+
+            $table->string('occ_name');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateDonatorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('donators');
+        Schema::dropIfExists('occupations');
     }
 }

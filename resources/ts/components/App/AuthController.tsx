@@ -36,6 +36,15 @@ const CRUDPage = () => (
     />
 );
 
+const ProfilePage = () => (
+    <AsyncComponent
+        page
+        Component={React.lazy(() =>
+            import(/* webpackChunkName: "profile-page" */ "../GuestPanel/ProfilePage/ProfilePage")
+        )}
+    />
+);
+
 
 const mapStateToProps = (state: AppState) => ({
     ...state.authController
@@ -88,7 +97,13 @@ class AuthController extends React.Component<Props> {
                     exact={true}
                     component={CRUDPage}
                 />
-            ) : null
+            ) : null,
+            <Route
+                key={2}
+                path="/profile"
+                exact={true}
+                component={ProfilePage}
+            />
         ];
     }
 

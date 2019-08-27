@@ -32,3 +32,19 @@ export interface CompleteChildInformations extends UserInformations {
     class?:ResultObject,
     school?:ResultObject&{logo:string}
 }
+
+export interface CompleteDonorInformations extends UserInformations {
+    town?: ResultObject,
+    country?: ResultObject&{code:string},
+    bio?:string,
+    interestCountry?: ResultObject&{code:string},
+    donations:number,
+    occupation?: ResultObject,
+    contactEmail?: string
+}
+
+export interface CompleteUserInformations extends UserInformations {
+    town?:ResultObject,
+    country: ResultObject&{code:string},
+    bio?:string
+}

@@ -104,13 +104,20 @@ const containerElement = <div style={{ height: "260px" }} />;
 const mapElement = <div style={{ height: "260px" }} />;
 
 const GMap = withScriptjs(withGoogleMap((props: { [x: string]: any; schools: School[],onClickMarker:(s:School)=>void }) => (
-    <GoogleMap defaultZoom={9}>
+    <GoogleMap 
+        defaultZoom={9}
+        defaultCenter={{lat:6.927079,lng:79.861244}}
+    >
         {props.schools.map((school,key) => (
             <Marker
                 key={key}
                 position={{ lat: school.latitude, lng: school.longitude }}
-                options={{
-                    url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                icon={{
+                    url:'http://maps.google.com/mapfiles/ms/icons/'+
+                    (school.priority=='high'?'red':(
+                        school.priority=='medium'?'yellow':'green'
+                    ))
+                    +'-dot.png'
                 }}
                 onClick={()=>props.onClickMarker(school)}
             />
