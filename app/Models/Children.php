@@ -88,6 +88,7 @@ class Children extends Base {
                 'id'=>$this->schoolClass->school->getKey(),
                 'label'=>$this->schoolClass->school->scl_name
             ],
+            'has'=>true
         ];
     }
 }

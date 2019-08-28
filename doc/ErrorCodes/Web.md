@@ -44,3 +44,7 @@
 8. Please verify your email address.
 
     When a user is trying to logged in with a not verified email.
+
+9. Can not find a profile for your request parameters.
+
+    When user given an invalid user id to fetch profile informations.

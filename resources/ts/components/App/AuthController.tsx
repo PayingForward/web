@@ -100,7 +100,7 @@ class AuthController extends React.Component<Props> {
             ) : null,
             <Route
                 key={2}
-                path="/profile"
+                path="/profile/:id?/:name?"
                 exact={true}
                 component={ProfilePage}
             />

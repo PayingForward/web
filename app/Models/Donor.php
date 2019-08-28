@@ -92,7 +92,8 @@ class Donor extends Base {
                 'id'=>$this->occupation->getKey(),
                 'label'=>$this->occupation->occ_name
             ],
-            'contactEmail'=>$this->dnr_contact_email
+            'contactEmail'=>$this->dnr_contact_email,
+            'has'=>true
         ];
     }
 }

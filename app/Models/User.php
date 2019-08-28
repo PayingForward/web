@@ -80,6 +80,14 @@ InterfaceMustVerifyEmail
         return $this->hasOne(Children::class,'u_id','u_id');
     }
 
+    public function donor(){
+        return $this->hasOne(Donor::class,'u_id','u_id');
+    }
+
+    public function otherUser(){
+        return $this->hasOne(OtherProfile::class,'u_id','u_id');
+    }
+
     public function getRollName(){
 
         $type = "donor";
@@ -140,6 +148,16 @@ InterfaceMustVerifyEmail
             default:
                 return 0;
         }
+    }
+
+    public function getFormatedArray()
+    {
+        return [
+            'name'=>$this->u_name,
+            'type'=>$this->getRollName(),
+            'id'=>$this->getKey(),
+            'avatar'=>$this->u_avatar
+        ];
     }
 
 }

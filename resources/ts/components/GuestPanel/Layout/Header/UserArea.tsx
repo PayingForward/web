@@ -12,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import ArrowDownIcon from "@material-ui/icons/ArrowDropDown";
 import Typography from '@material-ui/core/Typography';
 import { USER_TOKEN_KEY, APP_URL } from '../../../../constants/config';
+import { Link } from 'react-router-dom';
 
 const mapStateToProps = (state:AppState)=>({
     ...state.authController
@@ -79,12 +80,12 @@ class UserArea extends React.Component<Props,States> {
                     <ArrowDownIcon color="inherit"/>
                 </IconButton>
                 <Menu variant="selectedMenu" classes={{paper:classes.menu}} onClose={this.handleCloseMenu} anchorEl={menuRef} open={!!menuRef}>
-                    {/* <MenuList>
-                        <ListItem button divider>
+                    <MenuList>
+                        <ListItem component={Link} to="/profile" button divider>
                             <Typography color="textSecondary">Profile</Typography>
                         </ListItem>
                     </MenuList>
-                    <MenuList>
+                    {/* <MenuList>
                         <ListItem button divider>
                             <Typography color="textSecondary">Settings</Typography>
                         </ListItem>

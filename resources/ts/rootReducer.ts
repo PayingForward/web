@@ -7,6 +7,7 @@ import sidebar from "./store/Admin/Sidebar/reducers";
 import loginForm from './store/LoginForm/reducers';
 import signupPage from './store/SignupPage/reducers';
 import donorMenu from './store/DonorMenu/reducers';
+import profilePage from './store/ProfilePage/reducers';
 
 const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     sidebar,
     loginForm,
     signupPage,
-    donorMenu
+    donorMenu,
+    profilePage
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

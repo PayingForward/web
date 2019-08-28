@@ -39,3 +39,7 @@ Route::group(['middleware'=>['auth:api','verified']],function(){
     });
 
 });
+
+Route::group(['middleware'=>['auth.optional']],function(){
+    Route::post('profile/load','ProfileController@load');
+});

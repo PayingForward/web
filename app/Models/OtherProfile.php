@@ -65,7 +65,8 @@ class OtherProfile extends Base {
                 'label'=>$this->town->area->region->state->country->c_name,
                 'code'=>$this->town->area->region->state->country->c_code,
             ],
-            'bio'=>$this->chld_bio
+            'bio'=>$this->chld_bio,
+            'has'=>true
         ];
     }
 }

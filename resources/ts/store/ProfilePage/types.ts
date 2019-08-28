@@ -33,7 +33,7 @@ export interface ChangeProfile {
 
 export interface LoadedProfile {
     type: typeof PROFILE_LOAD_INFO;
-    profile: ProfileInformation;
+    profile?: ProfileInformation;
 }
 
 export interface ChangeUser {

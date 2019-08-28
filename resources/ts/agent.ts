@@ -73,9 +73,14 @@ const HomePage = {
     fetchDonorInfo:()=>request('home/donor')
 };
 
+const Profile = {
+    fetchProfileInfo:(userId?:number)=>request('profile/load',{userId})
+}
+
 export default {
     Auth,
     CRUD,
     Permissions,
-    HomePage
+    HomePage,
+    Profile
 };
