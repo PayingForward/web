@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { APP_URL } from "./constants/config";
+import { ProfileInformation } from "./store/ProfilePage/types";
 
 interface Response {
     success: boolean;
@@ -34,8 +35,12 @@ const Auth = {
     getUser: () => request("user/info"),
     login: (email: string, password: string) =>
         request("user/login", { email, password }),
-    signup: (name:string,email:string,password:string,passwordConfirmation:string) =>
-        request('user/signup',{name,email,password,passwordConfirmation})
+    signup: (
+        name: string,
+        email: string,
+        password: string,
+        passwordConfirmation: string
+    ) => request("user/signup", { name, email, password, passwordConfirmation })
 };
 
 const CRUD = {
@@ -70,12 +75,15 @@ const Permissions = {
 };
 
 const HomePage = {
-    fetchDonorInfo:()=>request('home/donor')
+    fetchDonorInfo: () => request("home/donor")
 };
 
 const Profile = {
-    fetchProfileInfo:(userId?:number)=>request('profile/load',{userId})
-}
+    fetchProfileInfo: (userId?: number) => request("profile/load", { userId }),
+    saveAvatar: (avatar: string) => request("profile/save/avatar", { avatar }),
+    save: (profile: ProfileInformation) =>
+        request("profile/save", { profile })
+};
 
 export default {
     Auth,

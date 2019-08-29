@@ -1,4 +1,4 @@
-import { ProfilePageState, ProfileActions, PROFILE_CHANGE_USER, PROFILE_EDIT_INFO, PROFILE_ERRORS, PROFILE_LOADING, PROFILE_LOAD_INFO, PROFILE_SAVED } from './types';
+import { ProfilePageState, ProfileActions, PROFILE_CHANGE_USER, PROFILE_EDIT_INFO, PROFILE_LOADING, PROFILE_LOAD_INFO } from './types';
 
 const initialState:ProfilePageState = {
     loading:true,
@@ -19,11 +19,6 @@ export default (state=initialState,action:ProfileActions):ProfilePageState=>{
                 profileValues: action.profileValues,
                 changed:true
             };
-        case PROFILE_ERRORS:
-            return {
-                ...state,
-                errors:action.errors
-            };
         case PROFILE_LOADING:
             return {
                 ...state,
@@ -36,11 +31,6 @@ export default (state=initialState,action:ProfileActions):ProfilePageState=>{
                 loading:false,
                 changed:false
             };
-        case PROFILE_SAVED:
-            return {
-                ...state,
-                loading:false
-            }
         default:
             return state;
     }

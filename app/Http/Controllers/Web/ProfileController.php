@@ -9,6 +9,8 @@ use App\Models\OtherProfile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller {
     public function load(Request $request){
@@ -56,6 +58,41 @@ class ProfileController extends Controller {
 
         return success_response(['profile'=>$profile?$profile->getFormatedArray():$user->getFormatedArray()]);
     }
+
+    public function saveAvatar(Request $request){
+        $validation = Validator::make($request->all(),[
+            'avatar'=>'required'
+        ]);
+
+        if($validation->fails()){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+        $value = $request->input('avatar');
+
+        $name = time().rand(100, 999);
+
+        $thumbnail_sizes = [32,64,200];
+
+        try {
+            foreach ($thumbnail_sizes as $size) {
+                $img = Image::make($value);
+                $img->resize($size, $size);
+                $img->save(storage_path('app/public/images/uploads/'.$size.'/'.$name.'.jpg'));
+            }
+
+            $img = Image::make($value);
+            $img->save(storage_path('app/public/images/uploads/full/'.$name.'.jpg'));
+
+            return \success_response(['name'=>$name]);
+
+        } catch( \Exception $e){
+            throw new WebApiException("Invalid values supplied.",5);
+        }
+
+    }
+    
+    
 
     public function save(Request $request){
 

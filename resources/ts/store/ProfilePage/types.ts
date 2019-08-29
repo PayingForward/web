@@ -8,13 +8,12 @@ export const PROFILE_LOAD_INFO = "PROFILE_LOAD_INFO";
 export const PROFILE_EDIT_INFO = "PROFILE_EDIT_INFO";
 export const PROFILE_CHANGE_USER = "PROFILE_CHANGE_USER";
 export const PROFILE_LOADING = "PROFILE_LOADING";
-export const PROFILE_SAVED = "PROFILE_SAVED";
-export const PROFILE_ERRORS = "PROFILE_ERRORS";
 
 export type ProfileInformation =
-    | CompleteChildInformations
+    (| CompleteChildInformations
     | CompleteDonorInformations
-    | CompleteUserInformations;
+    | CompleteUserInformations)
+    & {has?:boolean};
 
 export interface ProfilePageState {
     userId?: number;
@@ -38,7 +37,7 @@ export interface LoadedProfile {
 
 export interface ChangeUser {
     type: typeof PROFILE_CHANGE_USER;
-    userId: number;
+    userId?: number;
 }
 
 export interface LoadingProfile {
@@ -46,21 +45,8 @@ export interface LoadingProfile {
     status: boolean;
 }
 
-export interface SaveProfile {
-    type: typeof PROFILE_SAVED;
-}
-
-export interface ErrorProfile {
-    type: typeof PROFILE_ERRORS;
-    errors: {
-        [x: string]: string;
-    };
-}
-
 export type ProfileActions =
     | ChangeProfile
     | LoadedProfile
     | ChangeUser
-    | LoadingProfile
-    | SaveProfile
-    | ErrorProfile;
+    | LoadingProfile;

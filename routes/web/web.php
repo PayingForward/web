@@ -38,6 +38,10 @@ Route::group(['middleware'=>['auth:api','verified']],function(){
         Route::post('donor','HomeController@donorMenu');
     });
 
+    Route::group(['prefix'=>'profile'],function(){
+        Route::post('save/avatar','ProfileController@saveAvatar');
+    });
+
 });
 
 Route::group(['middleware'=>['auth.optional']],function(){
