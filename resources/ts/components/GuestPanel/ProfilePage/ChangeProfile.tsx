@@ -4,7 +4,7 @@ import Card from "@material-ui/core/Card";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import { ProfileInformation } from "../../../store/ProfilePage/types";
-import AvatarBioForm from './AvatarBioForm';
+import AvatarBioForm from "./AvatarBioForm";
 
 interface Props {
     profile: ProfileInformation;
@@ -12,12 +12,12 @@ interface Props {
     classes: {
         card: string;
     };
-    loading:boolean
+    loading: boolean;
 }
 
 interface State {
     avatar?: string;
-    bio:string;
+    bio: string;
 }
 
 const styler = withStyles(theme => ({
@@ -34,15 +34,14 @@ class ChangeProfile extends React.Component<Props, State> {
         this.handleChangeAvatarBio = this.handleChangeAvatarBio.bind(this);
     }
 
-    handleChangeAvatarBio(values:{avatar?:string,bio?:string}){
-        const {onChange,profile} = this.props;
+    handleChangeAvatarBio(values: { avatar?: string; bio?: string }) {
+        const { onChange, profile } = this.props;
 
-        onChange({...profile,...values});
+        onChange({ ...profile, ...values });
     }
 
     public renderAvatarBioBox() {
-        const { profile,loading } = this.props;
-
+        const { profile, loading } = this.props;
 
         if (profile.avatar && profile.bio) {
             return null;
@@ -50,8 +49,8 @@ class ChangeProfile extends React.Component<Props, State> {
             return (
                 <AvatarBioForm
                     values={{
-                        avatar:profile.avatar,
-                        bio:profile.bio
+                        avatar: profile.avatar,
+                        bio: profile.bio
                     }}
                     loading={loading}
                     onChange={this.handleChangeAvatarBio}
@@ -60,11 +59,23 @@ class ChangeProfile extends React.Component<Props, State> {
         }
     }
 
+    public renderProfileInfoBox(){
+        const {profile,loading} = this.props;
+
+        if(!profile.avatar || !profile.bio){
+            return null;
+        }
+
+        return null;
+    }
+
     public render() {
         const { classes } = this.props;
 
         return (
-            <Card className={classes.card}>{[this.renderAvatarBioBox()]}</Card>
+            <Card className={classes.card}>{[
+                this.renderAvatarBioBox()
+            ]}</Card>
         );
     }
 }

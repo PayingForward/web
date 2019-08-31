@@ -40,6 +40,7 @@ Route::group(['middleware'=>['auth:api','verified']],function(){
 
     Route::group(['prefix'=>'profile'],function(){
         Route::post('save/avatar','ProfileController@saveAvatar');
+        Route::post('save','ProfileController@save');
     });
 
 });

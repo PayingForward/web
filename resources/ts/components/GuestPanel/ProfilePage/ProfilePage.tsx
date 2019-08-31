@@ -115,9 +115,9 @@ class ProfilePage extends React.Component<Props&RouteComponentProps> {
                     <Grid className={classes.content} item md={8}>
                         <Typography variant="h6">Profile</Typography>
                         <Divider/>
-                        {profileValues.has?
-                        null:
+                        {!profileValues.avatar||!profileValues.bio?
                             <ChangeProfile loading={loading} onChange={onEditProfile} profile={profileValues} />
+                            :null
                         }
                     </Grid>
                     <Grid item md={2}>

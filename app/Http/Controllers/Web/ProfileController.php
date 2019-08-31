@@ -39,7 +39,6 @@ class ProfileController extends Controller {
             }
         }
 
-
         $profile = null;
 
         $rollName = $user->getRollName();
@@ -92,9 +91,72 @@ class ProfileController extends Controller {
 
     }
     
-    
-
     public function save(Request $request){
+        $avatar = $request->input('profile.avatar');
+        $bio    = $request->input('profile.bio');
 
+        if(!$avatar&&!$bio)
+            throw new WebApiException("Invalid values supplied.",5);
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        $roll = $user->getRollName();
+
+        /** @var Children $children */
+        $children = null;
+        /** @var Donor $donor */
+        $donor = null;
+        /** @var OtherProfile $other */
+        $other = null;
+
+        switch ($roll) {
+            case 'orphan':
+                $children = Children::firstOrCreate([
+                    'u_id'=>$user->getKey()
+                ]);
+                break;
+            case 'donor':
+                $donor = Donor::firstOrCreate([
+                    'u_id'=>$user->getKey()
+                ]);
+                break;
+            default:
+                $other = OtherProfile::firstOrCreate([
+                    'u_id'=>$user->getKey()
+                ]);
+                break;
+        }
+        if($avatar){
+            $user->u_avatar = $avatar;
+        }
+
+        $user->save();
+
+        if($children){
+            
+            if($bio){
+                $children->chld_bio = $bio;
+            }
+
+            $children->save();
+        } else if ($donor){
+            if($bio){
+                $donor->dnr_bio = $bio;
+            }
+
+            $donor->save();
+            return $donor;
+        } else {
+            if($bio){
+                $other->op_bio = $bio;
+            }
+
+            $other->save();
+        }
+
+        return success_response([
+            'message'=>"Successfully saved your profile."
+        ]);
     }
 }
