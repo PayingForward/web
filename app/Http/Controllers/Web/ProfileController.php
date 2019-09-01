@@ -94,6 +94,13 @@ class ProfileController extends Controller {
     public function save(Request $request){
         $avatar = $request->input('profile.avatar');
         $bio    = $request->input('profile.bio');
+        $town = $request->input('profile.town.id');
+        $country = $request->input('profile.country.id');
+        $school = $request->input('profile.school.id');
+        $class = $request->input('profile.class.id');
+        $occupation = $request->input('profile.occupation.id');
+        $interestCountry = $request->input('profile.interestCountry.id');
+        $contactEmail = $request->input('profile.contactEmail');
 
         if(!$avatar&&!$bio)
             throw new WebApiException("Invalid values supplied.",5);

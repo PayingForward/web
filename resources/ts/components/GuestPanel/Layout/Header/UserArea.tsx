@@ -73,8 +73,7 @@ class UserArea extends React.Component<Props,States> {
 
         return (
             <React.Fragment>
-                <Avatar >
-                    <img src={avatar(32,user.avatar)} alt={user.name+" Profile Picture"}/>
+                <Avatar src={avatar(32,user.avatar)} >
                 </Avatar>
                 <IconButton onClick={this.handleOpenMenu} color="inherit">
                     <ArrowDownIcon color="inherit"/>

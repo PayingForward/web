@@ -10,7 +10,7 @@ export const PROFILE_CHANGE_USER = "PROFILE_CHANGE_USER";
 export const PROFILE_LOADING = "PROFILE_LOADING";
 
 export type ProfileInformation =
-    (| CompleteChildInformations
+    ( CompleteChildInformations
     | CompleteDonorInformations
     | CompleteUserInformations)
     & {has?:boolean};
