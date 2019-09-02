@@ -42,4 +42,9 @@ class Base extends Model
     public function getFormatedArray(){
         $this->toArray();
     }
+
+    public function jsonSerialize()
+    {
+        return $this->getFormatedArray();
+    }
 }

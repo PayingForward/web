@@ -13,6 +13,9 @@ namespace App\Models;
  * @property string $scl_logo
  * @property float $scl_lat
  * @property float $scl_lng
+ * 
+ * @property User $user
+ * @property Town $town
  */
 class School extends Base {
     protected $table = "schools";

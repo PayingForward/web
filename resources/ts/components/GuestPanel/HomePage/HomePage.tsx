@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import YouTube from "react-youtube";
 
 import withStyles from "@material-ui/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
@@ -11,12 +12,12 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
 import MainLayout from "../Layout/MainLayout";
 import { AppState } from "../../../rootReducer";
 import { AuthControllerState } from "../../../store/AuthController/types";
-import AsyncComponent from '../../App/AsyncComponent';
+import AsyncComponent from "../../App/AsyncComponent";
 // import AsyncComponent from "../../App/AsyncComponent";
 
 const styler = withStyles(theme => ({
@@ -69,7 +70,6 @@ type Props = {
         card: string;
         whiteTriangle: string;
     };
-    
 } & AuthControllerState;
 
 const mapStateToProps = (state: AppState) => ({
@@ -79,7 +79,9 @@ const mapStateToProps = (state: AppState) => ({
 const SignupForm = () => (
     <AsyncComponent
         Component={React.lazy(() =>
-            import(/* webpackChunkName: "home-page-signup-form" */ "./SignupForm")
+            import(
+                /* webpackChunkName: "home-page-signup-form" */ "./SignupForm"
+            )
         )}
     />
 );
@@ -111,23 +113,18 @@ const DonorMenu = () => (
 // );
 
 class HomePage extends React.Component<Props> {
+    public renderSignupForm() {
+        const { user } = this.props;
 
-    public renderSignupForm(){
-        const {user} = this.props;
-
-        if(user){
-            if(user.type&&user.type=='donor'){
-                return (
-                    <DonorMenu/>
-                );
+        if (user) {
+            if (user.type && user.type == "donor") {
+                return <DonorMenu />;
             } else {
                 return null;
             }
         }
 
-        return (
-            <SignupForm />
-        )
+        return <SignupForm />;
     }
 
     public render() {
@@ -145,6 +142,14 @@ class HomePage extends React.Component<Props> {
                             Title
                         </Typography>
                         <Divider />
+                        <YouTube
+                            opts={{
+                                playerVars: {
+                                    autoplay: 1
+                                }
+                            }}
+                            videoId="MYosStP7Ct4"
+                        />
                         <Typography>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit. Maecenas mollis velit a odio aliquam, eu
@@ -224,6 +229,4 @@ class HomePage extends React.Component<Props> {
     }
 }
 
-export default connect(
-    mapStateToProps
-)(styler(HomePage));
+export default connect(mapStateToProps)(styler(HomePage));

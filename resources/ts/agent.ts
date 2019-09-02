@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { APP_URL } from "./constants/config";
+import { APP_URL, CRYPTO_COMPARE_API_KEY } from "./constants/config";
 import { ProfileInformation } from "./store/ProfilePage/types";
 
 interface Response {
@@ -81,8 +81,45 @@ const HomePage = {
 const Profile = {
     fetchProfileInfo: (userId?: number) => request("profile/load", { userId }),
     saveAvatar: (avatar: string) => request("profile/save/avatar", { avatar }),
-    save: (profile: ProfileInformation) =>
-        request("profile/save", { profile })
+    save: (profile: ProfileInformation) => request("profile/save", { profile })
+};
+
+const DonatePage = {
+    latestPrices: () =>
+        axios.get(
+            "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD&api_key="+CRYPTO_COMPARE_API_KEY
+        ).then(
+            (response: AxiosResponse): Response => ({
+                success: true,
+                prices:response.data as {[x:string]:{USD:number}}
+            })
+        )
+        .catch(
+            (err: AxiosError): Response => ({
+                message:
+                    typeof err.response !== "undefined"
+                        ? err.message
+                        : "",
+                success: false
+            })
+        ),
+    info:(mode:string,modeId:number)=>
+            request('donate/info',{mode,modeId})
+};
+
+const SearchPage = {
+    searchResults: (
+        keyword: string,
+        options: {
+            [x: string]: Array<string|number>;
+        },
+        page?:number,
+        perPage?:number,
+        sortBy?:string,
+        sortMode?:string
+    ) => request("search", { keyword, options,page,perPage,sortBy,sortMode }),
+    searchOptions: (keyword: string, optionId: string) =>
+        request("search/" + optionId, { keyword })
 };
 
 export default {
@@ -90,5 +127,7 @@ export default {
     CRUD,
     Permissions,
     HomePage,
-    Profile
+    Profile,
+    DonatePage,
+    SearchPage
 };

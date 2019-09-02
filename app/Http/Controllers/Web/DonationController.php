@@ -5,80 +5,56 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\WebApiException;
-use App\Models\User;
+use App\Models\Children;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Donation;
+use App\Models\School;
+use App\Models\SchoolClass;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\Builder;
 
 class DonationController extends Controller {
+
     public function getInfo(Request $request){
-        $validation = Validator::make($request->all(),[
-            'childId'=>'required|numeric'
-        ]);
+        $mode = $request->input('mode');
+        $modeId = $request->input('modeId');
 
-        $children = null;
+        $child = null;
+        $school = null;
 
-        $loggedUser = Auth::user();
+        if($mode=='child'){
+            $child = Children::withFormatingRelations()->with('schoolClass.school.user')->where('u_id',$modeId)->first();
 
-        $donationId = strtolower( base64_encode($loggedUser->u_id.time()));
-
-        $donationId = \preg_replace('/([^a-zA-Z0-9]+)/','',$donationId);
-
-        Donation::create([
-            'd_no'=>$donationId,
-            'u_id'=>$loggedUser->getKey()
-        ]);
-
-        if(!$validation->fails()){
-            $user = User::with(['children','children.schoolClass','children.schoolClass.school','children.town'])
-                ->where('ut_id',config('usertypes.children'))
-                ->where('u_id',$request->input('childId'))
-                ->first();
-
-            if(!$user||!$user->children){
+            if(!$child||!$child->schoolClass->school){
                 throw new WebApiException("Invalid values supplied.",5);
             }
 
-            $town = null;
-            $school = null;
-            $schoolClass = null;
+            $school = $child->schoolClass->school;
 
-            if($user->children->town){
-                $town = [
-                    'id'=>$user->children->town->getKey(),
-                    'label'=>$user->children->town->t_name
-                ];
+        } else {
+            $school = School::withFormatingRelations()->with('user')->find($modeId);
+
+            if(!$school){
+                throw new WebApiException("Invalid values supplied.",5);
             }
-
-            if($user->children->schoolClass){
-                $schoolClass = [
-                    'id'=>$user->children->schoolClass->getKey(),
-                    'label'=>$user->children->schoolClass->sc_name
-                ];
-
-                if($user->children->schoolClass->school){
-                    $school = [
-                        'id'=>$user->children->schoolClass->school->getKey(),
-                        'label'=>$user->children->schoolClass->school->scl_name
-                    ];
-                }
-            }
-
-            $children = [
-                'id'=>$user->getKey(),
-                'name'=>$user->u_name,
-                'avatar'=>$user->u_avatar,
-                'town'=>$town,
-                'schoolClass'=>$schoolClass,
-                'school'=>$school
-            ];
         }
 
+        if(!$school|!$school->user){
+            throw new WebApiException("This school has not a teacher.",10);
+        }
+
+        $classIds = SchoolClass::where('scl_id',$school->getKey())->get()->pluck('sc_id');
+
+
+        $childs = Children::withFormatingRelations()->whereIn('sc_id',$classIds)->get();
+
         return success_response([
-            'children'=>$children,
-            'donationId'=>$donationId
+            'info'=>[
+                'school'=>$school,
+                'teacher'=>$school->user,
+                'childrens'=>$childs,
+                'child'=>$child
+            ]
         ]);
     }
 

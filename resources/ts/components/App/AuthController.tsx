@@ -7,22 +7,22 @@ import {
     fetchLoggedUser,
     loadLoggedUser
 } from "../../store/AuthController/actions";
-import {
-    AuthControllerState
-} from "../../store/AuthController/types";
+import { AuthControllerState } from "../../store/AuthController/types";
 import { ThunkDispatch } from "redux-thunk";
 import Axios from "axios";
 import AsyncComponent from "./AsyncComponent";
 import DashBoard from "../CPanel/DashBoard";
 import { USER_TOKEN_KEY } from "../../constants/config";
 import LoadingPage from "./LoadingPage";
-import { UserInformations } from '../../store/mainTypes';
+import { UserInformations } from "../../store/mainTypes";
 
 const HomePage = () => (
     <AsyncComponent
         page
         Component={React.lazy(() =>
-            import(/* webpackChunkName: "home-page" */ "../GuestPanel/HomePage/HomePage")
+            import(
+                /* webpackChunkName: "home-page" */ "../GuestPanel/HomePage/HomePage"
+            )
         )}
     />
 );
@@ -40,11 +40,35 @@ const ProfilePage = () => (
     <AsyncComponent
         page
         Component={React.lazy(() =>
-            import(/* webpackChunkName: "profile-page" */ "../GuestPanel/ProfilePage/ProfilePage")
+            import(
+                /* webpackChunkName: "profile-page" */ "../GuestPanel/ProfilePage/ProfilePage"
+            )
         )}
     />
 );
 
+const DonatePage = () => (
+    <AsyncComponent
+        page
+        Component={React.lazy(() =>
+            import(
+                /* webpackChunkName: "donate-page" */ "../GuestPanel/DonatePage/DonatePage"
+            )
+        )}
+    />
+);
+
+
+const SearchPage = () => (
+    <AsyncComponent
+        page
+        Component={React.lazy(() =>
+            import(
+                /* webpackChunkName: "search-page" */ "../GuestPanel/SearchPage/SearchPage"
+            )
+        )}
+    />
+);
 
 const mapStateToProps = (state: AppState) => ({
     ...state.authController
@@ -103,7 +127,15 @@ class AuthController extends React.Component<Props> {
                 path="/profile/:id?/:name?"
                 exact={true}
                 component={ProfilePage}
-            />
+            />,
+            user.type !== "orphan" ? (
+                <Route
+                    key={3}
+                    path="/donate/:mode/:modeId/:name?"
+                    exact={true}
+                    component={DonatePage}
+                />
+            ) : null
         ];
     }
 
@@ -118,8 +150,13 @@ class AuthController extends React.Component<Props> {
             <React.Fragment>
                 <Router history={history}>
                     <Switch>
-                        <Route path='/' exact={true} component={HomePage}/>
+                        <Route path="/" exact={true} component={HomePage} />
                         {this.renderAuthRoutes()}
+                        <Route
+                            path="/search"
+                            exact={true}
+                            component={SearchPage}
+                        />
                     </Switch>
                 </Router>
             </React.Fragment>

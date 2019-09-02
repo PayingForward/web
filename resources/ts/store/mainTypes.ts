@@ -15,7 +15,7 @@ export interface School extends ResultObject {
 }
 
 export interface PaymentMethod extends ResultObject {
-    logo: number;
+    logo: string;
 }
 
 export interface UserInformations {

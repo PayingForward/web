@@ -24,9 +24,11 @@ import {
 } from "../../../store/ProfilePage/actions";
 import { avatar } from "../../../helpers";
 import ProfileInfo from "./ProfileInfo";
+import { AuthControllerState } from '../../../store/AuthController/types';
 
-const mapStateToProps = (state: AppState): ProfilePageState => ({
-    ...state.profilePage
+const mapStateToProps = (state: AppState): ProfilePageState&AuthControllerState => ({
+    ...state.profilePage,
+    ...state.authController
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
@@ -75,7 +77,7 @@ interface Props extends ProfilePageState {
     onChangeMode: (mode: number) => void;
 }
 
-class ProfilePage extends React.Component<Props & RouteComponentProps> {
+class ProfilePage extends React.Component<Props & RouteComponentProps & AuthControllerState> {
     constructor(props: Props & RouteComponentProps) {
         super(props);
 

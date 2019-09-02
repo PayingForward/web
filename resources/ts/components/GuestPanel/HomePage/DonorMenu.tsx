@@ -2,7 +2,13 @@ import * as React from "react";
 import Slider, { Settings } from "react-slick";
 import { ThunkDispatch } from "redux-thunk";
 import { connect } from "react-redux";
-import { withGoogleMap, Marker, GoogleMap,withScriptjs } from "react-google-maps";
+import {
+    withGoogleMap,
+    Marker,
+    GoogleMap,
+    withScriptjs,
+    InfoWindow
+} from "react-google-maps";
 
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
@@ -10,7 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import { avatar } from "../../../helpers";
+import { avatar, nameToURL } from "../../../helpers";
 import {
     CompleteChildInformations,
     UserInformations,
@@ -21,6 +27,7 @@ import { AuthControllerState } from "../../../store/AuthController/types";
 import { AppState } from "../../../rootReducer";
 import { fetchInformations } from "../../../store/DonorMenu/actions";
 import { GMAP_KEY } from "../../../constants/config";
+import { withRouter, RouteComponentProps } from "react-router";
 
 const styler = withStyles(theme => ({
     slide: {
@@ -73,7 +80,8 @@ const sliderSettings: Settings = {
                 slidesToShow: 2
             }
         }
-    ]
+    ],
+    arrows:false
 };
 
 const mapStateToProps = (state: AppState) => ({
@@ -103,43 +111,120 @@ const loadingElement = <div />;
 const containerElement = <div style={{ height: "260px" }} />;
 const mapElement = <div style={{ height: "260px" }} />;
 
-const GMap = withScriptjs(withGoogleMap((props: { [x: string]: any; schools: School[],onClickMarker:(s:School)=>void }) => (
-    <GoogleMap 
-        defaultZoom={9}
-        defaultCenter={{lat:6.927079,lng:79.861244}}
-    >
-        {props.schools.map((school,key) => (
-            <Marker
-                key={key}
-                position={{ lat: school.latitude, lng: school.longitude }}
-                icon={{
-                    url:'http://maps.google.com/mapfiles/ms/icons/'+
-                    (school.priority=='high'?'red':(
-                        school.priority=='medium'?'yellow':'green'
-                    ))
-                    +'-dot.png'
-                }}
-                onClick={()=>props.onClickMarker(school)}
-            />
-        ))}
-    </GoogleMap>
-)));
+interface MarkerProps {
+    school: School;
+    onClick: (school: School) => void;
+}
 
-class DonorMenu extends React.Component<Props> {
-    constructor(props: Props) {
+class CustomMarker extends React.Component<MarkerProps, { infoOpen: boolean }> {
+    constructor(props: MarkerProps) {
+        super(props);
+
+        this.state = { infoOpen: false };
+
+        this.handleCloseInfoWindow = this.handleCloseInfoWindow.bind(this);
+        this.handleOpenInfoWindow = this.handleOpenInfoWindow.bind(this);
+    }
+
+    handleOpenInfoWindow() {
+        this.setState({ infoOpen: true });
+    }
+
+    handleCloseInfoWindow() {
+        window.setTimeout(()=>{
+            this.setState({ infoOpen: false });
+        },700)
+    }
+
+    public render() {
+        const { school, onClick } = this.props;
+        const { infoOpen } = this.state;
+
+        return (
+            <React.Fragment>
+                <Marker
+                    position={{
+                        lat: school.latitude,
+                        lng: school.longitude
+                    }}
+                    icon={{
+                        url:
+                            "http://maps.google.com/mapfiles/ms/icons/" +
+                            (school.priority == "high"
+                                ? "red"
+                                : school.priority == "medium"
+                                ? "yellow"
+                                : "green") +
+                            "-dot.png"
+                    }}
+                    onClick={() => onClick(school)}
+                    onMouseOver={this.handleOpenInfoWindow}
+                    onMouseOut={this.handleCloseInfoWindow}
+                >
+                {infoOpen && (
+                    <InfoWindow
+                        onCloseClick={this.handleCloseInfoWindow}
+                    >
+                        <div
+                            onMouseOver={this.handleOpenInfoWindow}
+                            onMouseOut={this.handleCloseInfoWindow}
+                        >
+                            <Avatar style={{margin:"auto"}} src={avatar(64,school.logo)} />
+                            <Divider/>
+                            <Typography variant="h6" align="center" >{school.label}</Typography>
+                        </div>
+                    </InfoWindow>
+                )}
+                </Marker>
+            </React.Fragment>
+        );
+    }
+}
+
+const GMap = withScriptjs(
+    withGoogleMap(
+        (props: {
+            [x: string]: any;
+            schools: School[];
+            onClickMarker: (s: School) => void;
+        }) => (
+            <GoogleMap
+                defaultZoom={1}
+                defaultCenter={{ lat: 6.927079, lng: 79.861244 }}
+            >
+                {props.schools.map((school, key) => (
+                    <CustomMarker
+                        key={key}
+                        school={school}
+                        onClick={props.onClickMarker}
+                    />
+                ))}
+            </GoogleMap>
+        )
+    )
+);
+
+class DonorMenu extends React.Component<Props & RouteComponentProps> {
+    constructor(props: Props & RouteComponentProps) {
         super(props);
 
         props.onLoad();
+
+        this.handleClickSchool = this.handleClickSchool.bind(this);
     }
 
     handleChildDonateClick(child: CompleteChildInformations) {
+        const { history } = this.props;
         return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            console.log(child);
+            history.push(
+                "/donate/child/" + child.id + "/" + nameToURL(child.name)
+            );
         };
     }
 
-    handleClickSchool(scl:School){
-        console.log(scl);
+    handleClickSchool(scl: School) {
+        const { history } = this.props;
+        history.push("/donate/school/" + scl.id + "/" + nameToURL(scl.label));
     }
 
     public renderSliderItems() {
@@ -224,4 +309,4 @@ class DonorMenu extends React.Component<Props> {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(styler(DonorMenu));
+)(withRouter(styler(DonorMenu)));

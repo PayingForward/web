@@ -1,5 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
@@ -42,6 +43,7 @@ interface Props {
     type?: string;
     className?: string;
     onSubmit?: () => void;
+    onClickLeftIcon?: (e?:React.MouseEvent<HTMLButtonElement>)=>void;
 }
 
 class IconTextField extends React.Component<Props> {
@@ -68,13 +70,14 @@ class IconTextField extends React.Component<Props> {
             value,
             type,
             className,
-            onSubmit
+            onSubmit,
+            onClickLeftIcon
         } = this.props;
 
         return (
             <form onSubmit={onSubmit}>
                 <Paper className={classNames(classes.root, className)}>
-                    <IconButton className={classes.iconButton}>
+                    <IconButton onClick={onClickLeftIcon} className={classes.iconButton}>
                         {leftIcon}
                     </IconButton>
                     <InputBase

@@ -48,3 +48,7 @@
 9. Can not find a profile for your request parameters.
 
     When user given an invalid user id to fetch profile informations.
+
+10. This school has not a teacher.
+
+    Donator trying to donate and but school has not a teacher allocated.
