@@ -17,7 +17,11 @@ import {
     ProfilePageState,
     ProfileInformation
 } from "../../../store/ProfilePage/types";
-import { fetchProfile, saveProfile } from "../../../store/ProfilePage/actions";
+import {
+    fetchProfile,
+    saveProfile,
+    changeMode
+} from "../../../store/ProfilePage/actions";
 import { avatar } from "../../../helpers";
 import ProfileInfo from "./ProfileInfo";
 
@@ -27,8 +31,9 @@ const mapStateToProps = (state: AppState): ProfilePageState => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     onChangeProfile: (userId?: number) => dispatch(fetchProfile(userId)),
-    onEditProfile: (profileValues: ProfileInformation) =>
-        dispatch(saveProfile(profileValues))
+    onEditProfile: (profileValues: ProfileInformation, mode: number) =>
+        dispatch(saveProfile(profileValues, mode)),
+    onChangeMode: (mode: number) => dispatch(changeMode(mode))
 });
 
 const styler = withStyles(theme => ({
@@ -66,12 +71,15 @@ interface Props extends ProfilePageState {
         card: string;
     };
     onChangeProfile: (userId?: number) => void;
-    onEditProfile: (profileValues: ProfileInformation) => void;
+    onEditProfile: (profileValues: ProfileInformation, mode: number) => void;
+    onChangeMode: (mode: number) => void;
 }
 
 class ProfilePage extends React.Component<Props & RouteComponentProps> {
     constructor(props: Props & RouteComponentProps) {
         super(props);
+
+        this.handleChangeModeToEdit = this.handleChangeModeToEdit.bind(this);
     }
 
     componentDidMount() {
@@ -82,6 +90,10 @@ class ProfilePage extends React.Component<Props & RouteComponentProps> {
         } else {
             onChangeProfile();
         }
+    }
+
+    handleChangeModeToEdit() {
+        this.props.onChangeMode(1);
     }
 
     componentDidUpdate(prevProps: Props & RouteComponentProps) {
@@ -97,7 +109,13 @@ class ProfilePage extends React.Component<Props & RouteComponentProps> {
     }
 
     public render() {
-        const { profileValues, loading, classes, onEditProfile } = this.props;
+        const {
+            profileValues,
+            loading,
+            classes,
+            onEditProfile,
+            updateMode
+        } = this.props;
 
         if (!profileValues) return null;
 
@@ -112,7 +130,7 @@ class ProfilePage extends React.Component<Props & RouteComponentProps> {
                         <Typography variant="h6" align="center">
                             {profileValues.name}
                         </Typography>
-                        <Divider/>
+                        <Divider />
                         {profileValues.bio
                             ? [
                                   <Typography
@@ -132,19 +150,24 @@ class ProfilePage extends React.Component<Props & RouteComponentProps> {
                         ) : null}
                     </Grid>
                     <Grid className={classes.content} item md={8}>
-                        <Typography variant="h6">Profile</Typography>
+                        <Typography variant="h4">Profile</Typography>
                         <Divider />
                         {!profileValues.avatar ||
                         !profileValues.bio ||
                         !profileValues.town ||
-                        !profileValues.country ? (
+                        !profileValues.country ||
+                        updateMode > 0 ? (
                             <ChangeProfile
                                 loading={loading}
                                 onChange={onEditProfile}
                                 profile={profileValues}
+                                mode={updateMode}
                             />
                         ) : (
-                            <ProfileInfo profile={profileValues} />
+                            <ProfileInfo
+                                onEdit={this.handleChangeModeToEdit}
+                                profile={profileValues}
+                            />
                         )}
                     </Grid>
                     <Grid item md={2}>

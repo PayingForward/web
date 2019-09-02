@@ -1,4 +1,4 @@
-import { ProfileInformation, LoadedProfile, PROFILE_LOAD_INFO, ChangeProfile, PROFILE_EDIT_INFO, ChangeUser, PROFILE_CHANGE_USER, LoadingProfile, PROFILE_LOADING } from './types';
+import { ProfileInformation, LoadedProfile, PROFILE_LOAD_INFO, ChangeProfile, PROFILE_EDIT_INFO, ChangeUser, PROFILE_CHANGE_USER, LoadingProfile, PROFILE_LOADING, ChangeUpdateMode, PROFILE_CHANGE_UPDATE_MODE } from './types';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import agent from '../../agent';
@@ -26,6 +26,11 @@ export const loadingProfile = (loading:boolean):LoadingProfile=>({
     status:loading
 });
 
+export const changeMode = (mode:number):ChangeUpdateMode=>({
+    type: PROFILE_CHANGE_UPDATE_MODE,
+    mode
+})
+
 export const fetchProfile = (
     userId?:number
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => async (
@@ -45,11 +50,12 @@ export const fetchProfile = (
 }
 
 export const saveProfile = (
-    profile:ProfileInformation
+    profile:ProfileInformation,
+    mode:number
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => async (
     dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
-
+    dispatch(changeMode(mode));
     dispatch(showLoading());
 
     agent.Profile.save(profile).then(({success,message})=>{

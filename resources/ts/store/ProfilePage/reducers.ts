@@ -1,9 +1,10 @@
-import { ProfilePageState, ProfileActions, PROFILE_CHANGE_USER, PROFILE_EDIT_INFO, PROFILE_LOADING, PROFILE_LOAD_INFO } from './types';
+import { ProfilePageState, ProfileActions, PROFILE_CHANGE_USER, PROFILE_EDIT_INFO, PROFILE_LOADING, PROFILE_LOAD_INFO, PROFILE_CHANGE_UPDATE_MODE } from './types';
 
 const initialState:ProfilePageState = {
     loading:true,
     changed:false,
-    errors:{}
+    errors:{},
+    updateMode:0
 }
 
 export default (state=initialState,action:ProfileActions):ProfilePageState=>{
@@ -31,6 +32,11 @@ export default (state=initialState,action:ProfileActions):ProfilePageState=>{
                 loading:false,
                 changed:false
             };
+        case PROFILE_CHANGE_UPDATE_MODE:
+            return {
+                ...state,
+                updateMode:action.mode
+            }
         default:
             return state;
     }

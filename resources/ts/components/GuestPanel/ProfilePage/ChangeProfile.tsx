@@ -13,11 +13,12 @@ import {
 
 interface Props {
     profile: ProfileInformation;
-    onChange: (profile: ProfileInformation) => void;
+    onChange: (profile: ProfileInformation,mode:number) => void;
     classes: {
         card: string;
     };
     loading: boolean;
+    mode:number;
 }
 
 interface State {
@@ -43,19 +44,18 @@ class ChangeProfile extends React.Component<Props, State> {
     handleChangeAvatarBio(values: { avatar?: string; bio?: string }) {
         const { onChange, profile } = this.props;
 
-        onChange({ ...profile, ...values });
+        onChange({ ...profile, ...values },2);
     }
 
     handleChangeOtherInfo(values: Values) {
         const { onChange, profile } = this.props;
 
-        onChange({ ...profile, donations:0, ...values });
+        onChange({ ...profile, donations:0, ...values },0);
     }
 
     public renderAvatarBioBox() {
-        const { profile, loading } = this.props;
-
-        if (profile.avatar && profile.bio) {
+        const { profile, loading,mode } = this.props;
+        if (profile.avatar && profile.bio && mode!==1) {
             return null;
         } else {
             return (
@@ -73,9 +73,9 @@ class ChangeProfile extends React.Component<Props, State> {
     }
 
     public renderProfileInfoBox() {
-        const { profile, loading } = this.props;
+        const { profile, loading,mode } = this.props;
 
-        if (!profile.avatar || !profile.bio) {
+        if ((!profile.avatar || !profile.bio)||mode!==2) {
             return null;
         }
 
@@ -92,7 +92,8 @@ class ChangeProfile extends React.Component<Props, State> {
                     interestCountry: (profile as CompleteDonorInformations)
                         .interestCountry,
                     contactEmail: (profile as CompleteDonorInformations)
-                        .contactEmail
+                        .contactEmail,
+                    name: profile.name
                 }}
                 loading={loading}
                 userType={profile.type as string}

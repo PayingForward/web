@@ -62,8 +62,7 @@ class Donor extends Base
     public function getFormatedArray()
     {
         if (
-            !$this->user ||
-            !$this->user->userType
+            !$this->user
         ) {
             return null;
         }
@@ -71,7 +70,7 @@ class Donor extends Base
         return [
             'id' => $this->user->getKey(),
             'name' => $this->user->u_name,
-            'type' => $this->user->userType->ut_name,
+            'type' => 'donor',
             'avatar' => $this->user->u_avatar,
             'town' => isset($this->town) ? [
                 'id' => $this->town->getKey(),
