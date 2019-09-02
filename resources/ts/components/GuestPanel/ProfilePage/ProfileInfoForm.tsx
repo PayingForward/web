@@ -70,6 +70,10 @@ class ProfileInfoForm extends React.Component<Props,Values> {
     public renderInputs() {
         const { userType } = this.props;
         const inputTypes = {
+            name:{
+                type: 'text',
+                label: "Full Name"
+            },
             country: {
                 link: "country",
                 type: "ajax_dropdown",
