@@ -259,7 +259,7 @@ class DonatePage extends React.Component<Props & RouteComponentProps, State> {
                                         color="textSecondary"
                                         variant="h6"
                                     >
-                                        {informations.teacher.name}
+                                        {informations.school.label}
                                     </Typography>
                                 </Toolbar>
                                 <Divider />
