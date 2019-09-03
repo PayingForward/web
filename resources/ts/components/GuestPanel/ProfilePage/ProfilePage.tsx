@@ -178,6 +178,7 @@ class ProfilePage extends React.Component<Props & RouteComponentProps & AuthCont
                                 History
                             </Typography>
                             <Divider />
+                            <Typography color="textSecondary" align="center" variant="caption">You haven't any activities.</Typography>
                         </Card>
                     </Grid>
                 </Grid>

@@ -41,7 +41,7 @@ class ChangeProfile extends React.Component<Props, State> {
         this.handleChangeOtherInfo = this.handleChangeOtherInfo.bind(this);
     }
 
-    handleChangeAvatarBio(values: { avatar?: string; bio?: string }) {
+    handleChangeAvatarBio(values: { avatar?: string; bio?: string ; type?:string }) {
         const { onChange, profile } = this.props;
 
         onChange({ ...profile, ...values },2);

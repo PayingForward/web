@@ -31,7 +31,8 @@ export interface Values {
     occupation?: ResultObject;
     interestCountry?: ResultObject&{code:string};
     contactEmail?: string;
-    name?:string
+    name?:string;
+    userType?: ResultObject;
 }
 
 interface Props {
