@@ -1,13 +1,15 @@
 version: 2
 jobs:
   build_backend:
-  
+    docker:
+        # Specify the version you desire here
+        - image: circleci/php:7.3-stretch-node-browsers
+        - image: circleci/mysql:latest
+
     working_directory: ~/builds
 
     steps:
       - checkout
-
-      - run: sudo composer self-update
 
       # Download and cache dependencies
       - restore_cache:
