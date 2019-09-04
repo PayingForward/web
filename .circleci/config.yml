@@ -53,6 +53,11 @@ jobs:
           paths:
             - /node_modules
 
+      - run:
+          name: 'Adding Host key to know_hosts file'
+          command: ssh-keyscan -t rsa ${SSH_HOST} >> ~/.ssh/known_hosts
+
+
       # prepare public files
       - run: npm run prod
 
