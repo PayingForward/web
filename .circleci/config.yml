@@ -24,7 +24,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "${SSH_FINGERPRINT}"
+            - "32:fd:8d:4b:0d:b8:73:c8:f0:ad:ce:9b:22:33:50:62"
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo apt-get install rsync
