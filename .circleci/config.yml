@@ -1,37 +1,77 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
 version: 2
 jobs:
-  build_backend:
+  build:
     docker:
-        # Specify the version you desire here
-        - image: circleci/php:7.3-stretch-node-browsers
-        - image: circleci/mysql:latest
+      # Specify the version you desire here
+      - image: circleci/php:7.1-node-browsers
 
-    working_directory: ~/builds
-
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # Using the RAM variation mitigates I/O contention
+      # for database intensive operations.
+      # - image: circleci/mysql:5.7-ram
+      #
+      # - image: redis:2.8.19
+    branches:
+      only:
+        - master
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - ${fingerprint}
+
+      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo apt-get install rsync
 
       # Download and cache dependencies
+      - run: sudo composer self-update
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "composer.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run: composer install -n --prefer-dist
-
       - save_cache:
+          key: v1-dependencies-{{ checksum "composer.lock" }}
           paths:
-            - ./vendor
-          key: v1-dependencies-{{ checksum "composer.json" }}
+            - /vendor
 
-      # - run:
-      #     name: Setup Laravel stuffs
-      #     command: |
-      #       php artisan migrate --force
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package-lock.json" }}
+            - node-v1-
+      - run: npm install
+      - save_cache:
+          key: node-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - /node_modules
 
-workflows:
-  version: 2
-  notify_deploy:
-    jobs:
-      - build_backend
+      # prepare public files
+      - run: npm run prod
+
+      # Create rsync exclude list
+      - run:
+          name: 'Create rsync exclude list'
+          command: |
+            echo -e '.circleci' > exclude-list.txt
+            echo -e '.git' >> exclude-list.txt
+            echo -e 'node_modules' >> exclude-list.txt
+            echo -e '.editorconfig' >> exclude-list.txt
+            echo -e '.env.example' >> exclude-list.txt
+            echo -e '.gitattributes' >> exclude-list.txt
+            echo -e '.gitignore' >> exclude-list.txt
+            echo -e '.styleci.yml' >> exclude-list.txt
+            echo -e 'exclude-list.txt' >> exclude-list.txt
+
+      # Deploy
+      - deploy:
+          command: |
+            rsync -azvW -e 'ssh -p ${SSH_PORT}' --delete --exclude-from 'exclude-list.txt' ~/crowbid/ ${SSH_USER}@${SSH_HOST}:~/public_html/
+            ssh -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} 'cd public_html/; composer install --optimize-autoloader --no-dev; php artisan migrate --force; php artisan config:cache; php artisan route:cache'

@@ -68,7 +68,6 @@ class LoginTest extends Base
      * @return void
      */
     public function testToUserWithNoUserType(){
-        $this->makeUser();
         $this->user->ut_id=null;
         $this->user->save();
 

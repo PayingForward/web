@@ -4,6 +4,7 @@ namespace Tests\Feature\Helpers;
 
 use App\Models\User;
 use App\Models\UserType;
+use Illuminate\Support\Facades\Hash;
 
 trait WithUser {
     /**
@@ -26,7 +27,19 @@ trait WithUser {
      * @return void
      */
     protected function makeUser(){
-        $this->user = factory(User::class)->create();
+        $user = User::where('u_email','test@payingforward.net')->first();
+        if($user){
+            $this->user = $user;
+        } else {
+            $user = User::create([
+                'u_name' => "Testing user",
+                'u_email' => 'test@payingforward.net',
+                'u_password' => Hash::make('123'),
+                'ut_id'=>1
+            ]);
+
+            $this->user = $user;
+        }
     }
 
     /**
