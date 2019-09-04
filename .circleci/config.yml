@@ -27,7 +27,7 @@ jobs:
             - "7a:9a:12:e0:78:27:ee:2b:12:c6:8a:a2:00:de:fb:c3"
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo apt-get install rsync
+      - run: sudo apt-get install rsync sshpass
 
       # Download and cache dependencies
       - run: sudo composer self-update
@@ -78,5 +78,5 @@ jobs:
       # Deploy
       - deploy:
           command: |
-            rsync -azvW -e "ssh -p $SSH_PORT" --delete --exclude-from 'exclude-list.txt' ~/crowbid/ ${SSH_USER}@${SSH_HOST}:~/public_html/
-            ssh -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} 'cd public_html/; composer install --optimize-autoloader --no-dev; php artisan migrate --force; php artisan config:cache; php artisan route:cache'
+            sshpass -p '' rsync -azvW -e "ssh -p $SSH_PORT" --delete --exclude-from 'exclude-list.txt' ~/crowbid/ ${SSH_USER}@${SSH_HOST}:~/public_html/
+            sshpass -p '' ssh -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} 'cd public_html/; composer install --optimize-autoloader --no-dev; php artisan migrate --force; php artisan config:cache; php artisan route:cache'
