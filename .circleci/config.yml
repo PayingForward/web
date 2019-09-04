@@ -34,4 +34,4 @@ workflows:
   version: 2
   notify_deploy:
     jobs:
-      - build
+      - build_backend
