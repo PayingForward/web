@@ -55,7 +55,7 @@ jobs:
 
       - run:
           name: 'Adding Host key to know_hosts file'
-          command: ssh-keyscan -t rsa ${SSH_HOST} >> ~/.ssh/known_hosts
+          command: ssh-keyscan -p ${SSH_PORT} -t rsa ${SSH_HOST} >> ~/.ssh/known_hosts
 
 
       # prepare public files
