@@ -100,6 +100,7 @@ class ProfileController extends Controller {
         $avatar = $request->input('profile.avatar');
         $bio    = $request->input('profile.bio');
         $name = $request->input('profile.name');
+        $type = $request->input('profile.type');
 
         $town = $request->input('profile.town.id');
         if(isset($town))
@@ -127,9 +128,6 @@ class ProfileController extends Controller {
 
         $contactEmail = $request->input('profile.contactEmail');
 
-        if(!$avatar&&!$bio)
-            throw new WebApiException("Invalid values supplied.",5);
-
         /** @var User $user */
         $user = Auth::user();
 
@@ -141,6 +139,21 @@ class ProfileController extends Controller {
         $donor = null;
         /** @var OtherProfile $other */
         $other = null;
+
+        // Deleting profile type changed
+        if($type&&$type!=$roll){
+            Children::where('u_id',$user->getKey())->delete();
+            Donor::where('u_id',$user->getKey())->delete();
+            OtherProfile::where('u_id',$user->getKey())->delete();
+
+            if($type=='orphan')
+                $type = 'children';
+            if(!in_array($type,['children','donor','teacher','school']))
+                throw new WebApiException("Invalid values supplied.",5);
+
+            $user->ut_id = config('usertypes.'.$type);
+            $roll = $type;
+        }
 
         switch ($roll) {
             case 'orphan':
@@ -159,6 +172,7 @@ class ProfileController extends Controller {
                 ]);
                 break;
         }
+
         if($avatar){
             $user->u_avatar = $avatar;
         }

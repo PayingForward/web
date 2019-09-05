@@ -31,6 +31,7 @@ class SearchController extends Controller {
         $sortMode = $request->input('sortMode','desc');
 
         $query = DB::table('users AS u')
+            ->select(['*','u.u_id'])
             ->join('childrens AS c','c.u_id','u.u_id')
             ->join('school_classes AS sc','sc.sc_id','c.sc_id')
             ->join('towns AS t','t.t_id','c.t_id')
