@@ -107,4 +107,4 @@ jobs:
       - deploy:
           command: |
             rsync -azvW -e "ssh -p $SSH_PORT" --delete --exclude-from 'exclude-list.txt' ~/paying-forward/ ${SSH_USER}@${SSH_HOST}:~/payingforward/
-            ssh -v -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} 'cd ~/payingforward/; composer install --optimize-autoloader --no-dev; php artisan migrate --force ;  ln -s ~/payingforward/public ~/public_html ; php artisan config:cache; php artisan key:genrate ; php artisan storage:link ; php artisan passport:install ; php artisan route:cache ;  php artisan clear-compiled '
+            ssh -v -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} 'cd ~/payingforward/; composer install --optimize-autoloader --no-dev; php artisan migrate --force ;  ln -s ~/payingforward/public ~/public_html ; php artisan config:cache; php artisan key:genrate ; php artisan storage:link ; php artisan passport:install ;  php artisan clear-compiled ; php artisan route:cache'
