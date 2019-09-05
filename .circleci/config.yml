@@ -96,6 +96,7 @@ jobs:
             echo -e '.circleci' > exclude-list.txt
             echo -e '.git' >> exclude-list.txt
             echo -e 'node_modules' >> exclude-list.txt
+            echo -e 'storage' >> exclude-list.txt
             echo -e '.editorconfig' >> exclude-list.txt
             echo -e '.env.example' >> exclude-list.txt
             echo -e '.gitattributes' >> exclude-list.txt
