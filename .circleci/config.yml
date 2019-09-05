@@ -62,6 +62,33 @@ jobs:
       # prepare public files
       - run: npm run prod
 
+      - run:
+          name: 'Creating .env file'
+          command: |
+            cp .env.example .env
+            sed -i "/^APP_NAME/c\APP_NAME=$APP_NAME" .env
+            sed -i "/^APP_ENV/c\APP_ENV=$APP_ENV" .env
+            sed -i "/^APP_KEY/c\APP_KEY=$APP_KEY" .env
+            sed -i "/^APP_DEBUG/c\APP_DEBUG=$APP_DEBUG" .env
+            sed -i "/^APP_URL/c\APP_URL=$APP_URL" .env
+            sed -i "/^DB_CONNECTION/c\DB_CONNECTION=$DB_CONNECTION" .env
+            sed -i "/^DB_HOST/c\DB_HOST=$DB_HOST" .env
+            sed -i "/^DB_PORT/c\DB_PORT=$DB_PORT" .env
+            sed -i "/^DB_DATABASE/c\DB_DATABASE=$DB_DATABASE" .env
+            sed -i "/^DB_USERNAME/c\DB_USERNAME=$DB_USERNAME" .env
+            sed -i "/^DB_PASSWORD/c\DB_PASSWORD=$DB_PASSWORD" .env
+            sed -i "/^MAIL_DRIVER/c\MAIL_DRIVER=$MAIL_DRIVER" .env
+            sed -i "/^MAIL_HOST/c\MAIL_HOST=$MAIL_HOST" .env
+            sed -i "/^MAIL_PORT/c\MAIL_PORT=$MAIL_PORT" .env
+            sed -i "/^MAIL_USERNAME/c\MAIL_USERNAME=$MAIL_USERNAME" .env
+            sed -i "/^MAIL_PASSWORD/c\MAIL_PASSWORD=$MAIL_PASSWORD" .env
+            sed -i "/^MAIL_ENCRYPTION/c\MAIL_ENCRYPTION=$MAIL_ENCRYPTION" .env
+            sed -i "/^MIX_GOOGLE_MAP_KEY/c\MIX_GOOGLE_MAP_KEY=$MIX_GOOGLE_MAP_KEY" .env
+            sed -i "/^MIX_CRYPTO_COMPARE_API_KEY/c\MIX_CRYPTO_COMPARE_API_KEY=$MIX_CRYPTO_COMPARE_API_KEY" .env
+            sed -i "/^FACEBOOK_LOGIN_API_ID/c\FACEBOOK_LOGIN_API_ID=$FACEBOOK_LOGIN_API_ID" .env
+            sed -i "/^FACEBOOK_LOGIN_API_SECRET/c\FACEBOOK_LOGIN_API_SECRET=$FACEBOOK_LOGIN_API_SECRET" .env
+            sed -i "/^FACEBOOK_LOGIN_API_REDIRECT/c\FACEBOOK_LOGIN_API_REDIRECT=$FACEBOOK_LOGIN_API_REDIRECT" .env
+
       # Create rsync exclude list
       - run:
           name: 'Create rsync exclude list'
