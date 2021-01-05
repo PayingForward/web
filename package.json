@@ -24,7 +24,7 @@
         "@types/recompose": "^0.27.1",
         "@types/redux-logger": "^3.0.7",
         "@types/redux-thunk": "^2.1.0",
-        "axios": "^0.18.1",
+        "axios": "^0.21.1",
         "cross-env": "^5.1",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.13",
